@@ -1181,7 +1181,7 @@ const FeaturedSpeakersSection = ({
               className="group block"
             >
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
-                <div className="aspect-square w-full bg-gray-100 dark:bg-gray-700 relative">
+                <div className="aspect-square w-full h-60 bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
                   {speaker.ProfileImage ? (
                     <Image
                       src={getImageUrl(speaker.ProfileImage.url)}
