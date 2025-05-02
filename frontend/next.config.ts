@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '**',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+        pathname: '/uploads/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
