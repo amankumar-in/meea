@@ -41,3 +41,9 @@ yarn-error.log*
 # SQLite database
 **/*.db
 **/*.db-journal
+
+# Custom ignores
+backup/
+frontend/ENV-SETUP.md
+frontend/src/app/page\ copy.tsx
+mea-summit-report.md

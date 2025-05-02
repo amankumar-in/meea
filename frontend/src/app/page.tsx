@@ -348,7 +348,7 @@ const PartnersCarousel = () => {
           Supported by Global Partners
         </h2>
         <div className="w-full overflow-hidden">
-          {/* Responsive speeds: Fast on mobile, medium on tablet, slower on desktop */}
+          {/* Better css masking for smooth marquee edge fading */}
           <div className="w-full mt-8">
             <div
               className="whitespace-nowrap overflow-hidden"
@@ -359,7 +359,7 @@ const PartnersCarousel = () => {
                   "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
               }}
             >
-              <div className="logos-slide-track inline-flex items-center gap-12 animate-marquee">
+              <div className="inline-flex items-center gap-12 animate-marquee" style={{ display: "inline-flex" }}>
                 {logos.map((logo, index) => (
                   <div
                     key={index}

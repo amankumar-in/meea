@@ -35,21 +35,29 @@ body {
   }
 }
 
-/* Mobile - slower animation (12 seconds) */
+/* Faster animation on all devices, with !important to ensure it's applied */
 .animate-marquee {
-  animation: marquee 12s linear infinite;
+  animation: marquee 15s linear infinite !important;
+  will-change: transform;
 }
 
-/* Tablet - medium speed animation (20 seconds) */
-@media (min-width: 640px) {
+/* Mobile - slightly faster animation */
+@media (max-width: 639px) {
   .animate-marquee {
-    animation: marquee 20s linear infinite;
+    animation: marquee 10s linear infinite !important;
   }
 }
 
-/* Desktop - slower animation (40 seconds) */
+/* Tablet - medium speed animation */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .animate-marquee {
+    animation: marquee 15s linear infinite !important;
+  }
+}
+
+/* Desktop */
 @media (min-width: 1024px) {
   .animate-marquee {
-    animation: marquee 40s linear infinite;
+    animation: marquee 20s linear infinite !important;
   }
 }
