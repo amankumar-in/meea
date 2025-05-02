@@ -47,3 +47,4 @@ backup/
 frontend/ENV-SETUP.md
 frontend/src/app/page\ copy.tsx
 mea-summit-report.md
+frontend/.env.production
