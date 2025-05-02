@@ -1,0 +1,5 @@
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="60" fill="#ffffff" stroke="#2563eb" stroke-width="2" rx="5" ry="5"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle" dominant-baseline="middle">Partner 3</text>
+  <text x="60" y="48" font-family="Arial, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">Replace with your logo</text>
+</svg>

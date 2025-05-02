@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchAPI } from "@/lib/api/api-config";
@@ -65,8 +66,8 @@ const formatDate = (dateString: string) => {
 };
 
 const getImageUrl = (path: string) => {
-  if (!path) return '';
-  if (path.startsWith('http')) return path;
+  if (!path) return "";
+  if (path.startsWith("http")) return path;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
   return `${apiUrl}${path}`;
 };
@@ -89,75 +90,96 @@ const DynamicHeroSection = () => {
     };
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-[calc(100svh-60px)] overflow-hidden">
       {/* Sky background layer */}
       <div
         className="absolute inset-0 bg-blue-800"
         style={{ transform: `translateY(${scrollY * 0.1}px)` }}
       ></div>
-      
       {/* City skyline silhouette - translates slower */}
-      <div 
+      <div
         className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-        style={{ 
-          backgroundImage: "url('/images/kampala-skyline.jpg')",
+        style={{
+          backgroundImage: "url('/images/hero-image1.png')",
           backgroundSize: "cover",
           transform: `translateY(${scrollY * 0.2}px)`,
-          opacity: 0.7
+          opacity: 0.7,
         }}
       ></div>
-      
       {/* Content container */}
       <div className="relative h-full flex items-center">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <div 
-            className="bg-black/50 p-8 md:p-12 lg:max-w-3xl backdrop-blur-sm rounded-lg transform transition-all duration-500 hover:scale-[1.02]"
+          <div
+            className="bg-black/50 p-6 sm:p-8 md:p-12 lg:max-w-3xl backdrop-blur-sm rounded-lg transform transition-all duration-500 hover:scale-[1.02]"
             style={{ boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)" }}
           >
-            <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 mb-6 rounded-sm">
-              <span className="text-sm text-white uppercase tracking-wider font-bold">
+            <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6 rounded-sm">
+              <span className="text-xs sm:text-sm text-white uppercase tracking-wider font-bold">
                 September 15-16, 2025 • Dubai, UAE
               </span>
             </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
-              <div className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 inline-block">
+
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight text-white">
+              <div className="sm:inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400">
                 MIDDLE EAST
               </div>
-              <span className="mx-2 text-white">•</span>
-              <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 inline-block">
+              <span className="mx-2 text-white hidden sm:inline-block">•</span>
+              <span className="mx-2 text-white inline-block sm:hidden">•</span>
+              <div className="sm:inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400">
                 EAST AFRICA
               </div>
-              <div className="text-white mt-2">INVESTMENT SUMMIT</div>
+              <div className="text-white mt-1 sm:mt-2">INVESTMENT SUMMIT</div>
             </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-100 mb-8 font-light">
-              Catalyzing $100+ billion in strategic partnerships across energy, agriculture, technology, and infrastructure
+
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-100 mb-6 sm:mb-8 font-light">
+              Catalyzing $100+ billion in strategic partnerships across energy,
+              agriculture, technology, and infrastructure
             </p>
-            
-            <div className="flex flex-wrap gap-4">
-              <a 
-                href="/tickets" 
-                className="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-md shadow-lg transition-all duration-300"
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a
+                href="/tickets"
+                className="w-full sm:w-auto text-center inline-block px-6 py-2.5 sm:px-8 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-md shadow-lg transition-all duration-300"
               >
                 Register Now
               </a>
-              <a
-                href="/about"
-                className="inline-block px-8 py-3 backdrop-blur-md bg-white/10 border border-white/30 text-white font-bold rounded-md hover:bg-white/20 transition-all duration-300"
+              <button
+                onClick={() => scrollToSection("speakers")}
+                className="w-full sm:w-auto text-center inline-block px-6 py-2.5 sm:px-8 sm:py-3 backdrop-blur-md bg-white/10 border border-white/30 text-white font-bold rounded-md hover:bg-white/20 transition-all duration-300"
               >
-                Summit Overview
-              </a>
+                Speakers
+              </button>
             </div>
           </div>
         </div>
       </div>
-      
       {/* Floating indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      <div
+        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer"
+        onClick={() => scrollToSection("stats-section")}
+        aria-label="Scroll to next section"
+      >
+        <svg
+          className="w-8 h-8 sm:w-10 sm:h-10 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          ></path>
         </svg>
       </div>
     </section>
@@ -190,16 +212,40 @@ const AnimatedStatsSection = () => {
   }, []);
 
   const stats = [
-    { value: "$100B+", label: "Investment Volume", description: "Gulf investments in Africa over the past decade", color: "bg-blue-600" },
-    { value: "$59.4B", label: "UAE Investment", description: "Making UAE Africa's fourth-largest investor globally", color: "bg-yellow-500" },
-    { value: "300M+", label: "Regional Market", description: "Access to East African Community and COMESA markets", color: "bg-purple-600" },
-    { value: "48%", label: "Growth Rate", description: "MENA cryptocurrency market year-on-year increase", color: "bg-green-600" }
+    {
+      value: "$100B+",
+      label: "Investment Volume",
+      description: "Gulf investments in Africa over the past decade",
+      color: "bg-blue-600",
+    },
+    {
+      value: "$59.4B",
+      label: "UAE Investment",
+      description: "Making UAE Africa's fourth-largest investor globally",
+      color: "bg-yellow-500",
+    },
+    {
+      value: "300M+",
+      label: "Regional Market",
+      description: "Access to East African Community and COMESA markets",
+      color: "bg-purple-600",
+    },
+    {
+      value: "48%",
+      label: "Growth Rate",
+      description: "MENA cryptocurrency market year-on-year increase",
+      color: "bg-green-600",
+    },
   ];
 
   return (
-    <section ref={sectionRef} className="relative py-20 overflow-hidden">
+    <section
+      id="stats-section"
+      ref={sectionRef}
+      className="relative py-20 overflow-hidden"
+    >
       {/* Magic UI Warp Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-blue-900">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-blue-900 dark:opacity-80">
         <div className="absolute inset-0 opacity-20 overflow-hidden">
           <svg width="100%" height="100%">
             <defs>
@@ -208,7 +254,14 @@ const AnimatedStatsSection = () => {
                 <stop offset="50%" stopColor="#8b5cf6" />
                 <stop offset="100%" stopColor="#ec4899" />
               </linearGradient>
-              <pattern id="pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <pattern
+                id="pattern"
+                x="0"
+                y="0"
+                width="40"
+                height="40"
+                patternUnits="userSpaceOnUse"
+              >
                 <circle cx="20" cy="20" r="2" fill="url(#gradient)" />
               </pattern>
             </defs>
@@ -216,7 +269,7 @@ const AnimatedStatsSection = () => {
           </svg>
         </div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold mb-4">
@@ -227,20 +280,25 @@ const AnimatedStatsSection = () => {
           </h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <div 
+            <div
               key={index}
               className="relative bg-black/30 backdrop-filter backdrop-blur-lg rounded-lg overflow-hidden border border-gray-800 transform transition-all hover:scale-105 hover:shadow-2xl"
               style={{
                 transitionDelay: `${index * 100}ms`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(50px)",
-                transition: "opacity 0.8s ease, transform 0.8s ease"
+                transition: "opacity 0.8s ease, transform 0.8s ease",
               }}
             >
-              <div className="absolute top-0 left-0 w-full h-1" style={{ background: `linear-gradient(to right, transparent, ${stat.color}, transparent)` }}></div>
+              <div
+                className="absolute top-0 left-0 w-full h-1"
+                style={{
+                  background: `linear-gradient(to right, transparent, ${stat.color}, transparent)`,
+                }}
+              ></div>
               <div className="p-8">
                 <div className="text-4xl md:text-5xl font-bold mb-3 text-white">
                   {stat.value}
@@ -248,9 +306,7 @@ const AnimatedStatsSection = () => {
                 <div className="text-sm uppercase tracking-wider text-yellow-400 font-semibold mb-3">
                   {stat.label}
                 </div>
-                <div className="text-gray-300">
-                  {stat.description}
-                </div>
+                <div className="text-gray-300">{stat.description}</div>
               </div>
             </div>
           ))}
@@ -262,76 +318,78 @@ const AnimatedStatsSection = () => {
 
 // 3. Scrolling Partners Carousel with Gradient Background
 const PartnersCarousel = () => {
-  const logoContainerRef = useRef(null);
-  
-  // Create 12 logo placeholders
-  const logos = Array(12).fill('/images/logo-darkmode.svg');
+  // Use 12 separate logo files
+  const logos = [
+    "/images/partners/partner-logo-1.svg",
+    "/images/partners/partner-logo-2.svg",
+    "/images/partners/partner-logo-3.svg",
+    "/images/partners/partner-logo-4.svg",
+    "/images/partners/partner-logo-5.svg",
+    "/images/partners/partner-logo-6.svg",
+    "/images/partners/partner-logo-7.svg",
+    "/images/partners/partner-logo-8.svg",
+    "/images/partners/partner-logo-9.svg",
+    "/images/partners/partner-logo-10.svg",
+    "/images/partners/partner-logo-11.svg",
+    "/images/partners/partner-logo-12.svg",
+  ];
 
   return (
     <section className="py-10 relative overflow-hidden">
-      <div 
-        className="absolute inset-0"
-        style={{ 
-          background: "linear-gradient(90deg, #004aad 0%, #cb6ce6 100%)"
+      <div
+        className="absolute inset-0 dark:opacity-70"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.24) 35%, rgba(91, 33, 182, 0.24) 70%, rgba(91, 33, 182, 0) 100%)",
         }}
       ></div>
-      
-      <div className="max-w-full mx-auto px-4 relative">
-        <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-white">
-            Supported by Global Partners
-          </h3>
-        </div>
-        
-        <div ref={logoContainerRef} className="relative overflow-hidden py-4">
-          <div className="flex logos-slide animate-scroll-x">
-            {/* First set of logos */}
-            {logos.map((logo, index) => (
-              <div key={`logo-1-${index}`} className="flex-shrink-0 mx-8">
-                <div className="w-40 h-20 flex items-center justify-center">
-                  <Image
-                    src={logo}
-                    alt={`Partner ${index + 1}`}
-                    width={120}
-                    height={60}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 relative container text-center">
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white pb-4">
+          Supported by Global Partners
+        </h2>
+        <div className="w-full overflow-hidden">
+          {/* Responsive speeds: Fast on mobile, medium on tablet, slower on desktop */}
+          <div className="w-full mt-8">
+            <div
+              className="whitespace-nowrap overflow-hidden"
+              style={{
+                maskImage:
+                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+              }}
+            >
+              <div className="logos-slide-track inline-flex items-center gap-12 animate-marquee">
+                {logos.map((logo, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
+                  >
+                    <img
+                      src={logo}
+                      alt={`Partner ${index + 1}`}
+                      className="max-h-full w-full object-contain"
+                    />
+                  </div>
+                ))}
+                {/* Duplicate logos for continuous loop */}
+                {logos.map((logo, index) => (
+                  <div
+                    key={`dup-${index}`}
+                    className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
+                  >
+                    <img
+                      src={logo}
+                      alt={`Partner ${index + 1}`}
+                      className="max-h-full w-full object-contain"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-            
-            {/* Duplicate set for seamless scrolling */}
-            {logos.map((logo, index) => (
-              <div key={`logo-2-${index}`} className="flex-shrink-0 mx-8">
-                <div className="w-40 h-20 flex items-center justify-center">
-                  <Image
-                    src={logo}
-                    alt={`Partner ${index + 1}`}
-                    width={120}
-                    height={60}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-              </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
-      
-      <style jsx global>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        .animate-scroll-x {
-          animation: scroll 40s linear infinite;
-        }
-      `}</style>
     </section>
   );
 };
@@ -341,34 +399,40 @@ const StrategicSectorsGrid = () => {
   const sectors = [
     {
       title: "Energy Transformation",
-      description: "Renewable projects with $7B investment by ACWA Power and 10 GW green energy capacity by Masdar",
-      image: "/images/east-africa-map.jpg"
+      description:
+        "Renewable projects with $7B investment by ACWA Power and 10 GW green energy capacity by Masdar",
+      image: "/images/east-africa-map.jpg",
     },
     {
       title: "Agricultural Security",
-      description: "Strategic investments addressing food security for Gulf nations that import 80-90% of their food",
-      image: "/images/natural-resources.jpg"
+      description:
+        "Strategic investments addressing food security for Gulf nations that import 80-90% of their food",
+      image: "/images/natural-resources.jpg",
     },
     {
       title: "Infrastructure Projects",
-      description: "Port development with $1.72B DP World investment creating logistics networks across East Africa",
-      image: "/images/economic-powerhouse.jpeg"
+      description:
+        "Port development with $1.72B DP World investment creating logistics networks across East Africa",
+      image: "/images/economic-powerhouse.jpeg",
     },
     {
       title: "Financial Integration",
-      description: "Cross-regional frameworks with Gulf banks establishing East African operations and $1B fund of funds",
-      image: "/images/uganda-landscape.jpg"
+      description:
+        "Cross-regional frameworks with Gulf banks establishing East African operations and $1B fund of funds",
+      image: "/images/uganda-landscape.jpg",
     },
     {
       title: "Digital Economy",
-      description: "Technology partnerships with UAE and Ethiopia developing data centers up to 1,000 megawatts",
-      image: "/images/kampala-skyline.jpg"
+      description:
+        "Technology partnerships with UAE and Ethiopia developing data centers up to 1,000 megawatts",
+      image: "/images/kampala-skyline.jpg",
     },
     {
       title: "Smart City Initiatives",
-      description: "Urban innovation with Rwandan partnerships leveraging Dubai's experience in smart implementation",
-      image: "/images/banner-1.svg"
-    }
+      description:
+        "Urban innovation with Rwandan partnerships leveraging Dubai's experience in smart implementation",
+      image: "/images/banner-1.svg",
+    },
   ];
 
   return (
@@ -382,46 +446,70 @@ const StrategicSectorsGrid = () => {
             Sectors Driving Regional Integration
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            High-impact investment areas creating sustainable economic partnerships between the Middle East and East Africa
+            High-impact investment areas creating sustainable economic
+            partnerships between the Middle East and East Africa
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {sectors.map((sector, index) => (
-            <div 
-              key={index} 
-              className="group overflow-hidden rounded-xl shadow-xl transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative"
+            <div
+              key={index}
+              className="group bg-white dark:bg-gray-800 overflow-hidden rounded-xl shadow-xl transform transition-all duration-300 hover:scale-105 hover:shadow-2xl flex flex-col h-full"
             >
-              <div className="h-48 overflow-hidden">
-                <Image 
+              <div className="relative h-48 overflow-hidden">
+                <Image
                   src={sector.image}
                   alt={sector.title}
                   width={400}
                   height={250}
                   className="w-full h-full object-cover transform transition-all duration-700 scale-100 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-blue-600/30 to-blue-900/50"></div>
+                <div className="absolute top-0 left-0 w-full p-4">
+                  <span className="bg-blue-600 text-white px-3 py-1 text-xs uppercase tracking-wider rounded-full">
+                    {index === 0
+                      ? "Energy"
+                      : index === 1
+                      ? "Agriculture"
+                      : index === 2
+                      ? "Infrastructure"
+                      : index === 3
+                      ? "Finance"
+                      : index === 4
+                      ? "Digital"
+                      : "Urban"}
+                  </span>
+                </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-xl font-bold mb-2 group-hover:text-blue-300 transition-colors">
+              <div className="p-6 flex-grow bg-white dark:bg-gray-800">
+                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {sector.title}
                 </h3>
-                <p className="text-gray-200 text-sm">
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
                   {sector.description}
                 </p>
               </div>
+              <div className="px-6 pb-4 pt-2 border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
+                <button className="text-blue-600 dark:text-blue-400 text-sm font-semibold flex items-center group-hover:text-blue-800">
+                  Learn more
+                  <svg
+                    className="h-4 w-4 ml-1 transform transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           ))}
-        </div>
-        
-        <div className="mt-12 text-center">
-          <Button 
-            variant="primary" 
-            href="/sectors" 
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 border-none shadow-xl"
-          >
-            Explore All Sectors
-          </Button>
         </div>
       </div>
     </section>
@@ -433,17 +521,28 @@ const BlockchainSection = () => {
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Blockchain-inspired animated background */}
-      <div className="absolute inset-0 bg-gray-900">
+      <div className="absolute inset-0 bg-gray-900 dark:opacity-80">
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
-            <pattern id="blockchain-grid" width="50" height="50" patternUnits="userSpaceOnUse">
-              <path d="M 50 0 L 0 0 0 50" fill="none" stroke="currentColor" strokeWidth="1" className="text-blue-500"/>
+            <pattern
+              id="blockchain-grid"
+              width="50"
+              height="50"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 50 0 L 0 0 0 50"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-blue-500"
+              />
             </pattern>
             <rect width="100%" height="100%" fill="url(#blockchain-grid)" />
           </svg>
         </div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -454,30 +553,39 @@ const BlockchainSection = () => {
               Blockchain & Digital Finance Revolution
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-8"></div>
-            
+
             <div className="space-y-6 text-gray-300">
               <p className="text-xl">
-                The Middle East has emerged as a global blockchain innovation hub, with the UAE and neighboring countries becoming preferred destinations for crypto companies seeking regulatory clarity and institutional support.
+                The Middle East has emerged as a global blockchain innovation
+                hub, with the UAE and neighboring countries becoming preferred
+                destinations for crypto companies seeking regulatory clarity and
+                institutional support.
               </p>
               <p className="text-xl">
-                In 2025, Circle (USDC issuer) received official approval from the UAE's financial regulators, while Dubai's International Financial Centre recognized USDC and EURC as the first approved stablecoins in the region.
+                In 2025, Circle (USDC issuer) received official approval from
+                the UAE&apos;s financial regulators, while Dubai&apos;s
+                International Financial Centre recognized USDC and EURC as the
+                first approved stablecoins in the region.
               </p>
               <p className="text-xl">
-                Beyond cryptocurrencies, the region is pioneering real-world applications in cross-border payments, supply chain verification, digital identity, and asset tokenization that connect businesses across Middle East and East African markets.
+                Beyond cryptocurrencies, the region is pioneering real-world
+                applications in cross-border payments, supply chain
+                verification, digital identity, and asset tokenization that
+                connect businesses across Middle East and East African markets.
               </p>
             </div>
-            
+
             <div className="mt-10">
-              <Button 
-                variant="primary" 
-                href="/blockchain" 
+              <Button
+                variant="primary"
+                href="/blockchain"
                 className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 border-none shadow-xl"
               >
                 Digital Finance Agenda
               </Button>
             </div>
           </div>
-          
+
           <div className="relative">
             {/* Blockchain visualization element */}
             <div className="relative bg-gradient-to-br from-blue-900 to-purple-900 p-1 rounded-xl shadow-2xl">
@@ -485,14 +593,14 @@ const BlockchainSection = () => {
                 <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4">
                   Regional Blockchain Innovations
                 </h3>
-                
+
                 <div className="space-y-6">
                   {[
                     "UAE ranks 3rd globally in crypto adoption with comprehensive regulatory frameworks",
                     "Circle's USDC receives regulatory approval from Abu Dhabi Global Market (ADGM)",
                     "Dubai International Financial Centre (DIFC) recognizes stablecoins for institutional use",
                     "Cross-border payment corridors linking Gulf states with East African markets",
-                    "Blockchain-powered trade finance solutions reducing settlement time by 80%"
+                    "Blockchain-powered trade finance solutions reducing settlement time by 80%",
                   ].map((item, i) => (
                     <div key={i} className="flex items-start">
                       <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center mr-4 text-white font-bold">
@@ -504,21 +612,36 @@ const BlockchainSection = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-8 p-4 rounded-lg bg-blue-900 bg-opacity-50">
                   <div className="flex items-center">
-                    <svg className="w-8 h-8 text-yellow-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <svg
+                      className="w-8 h-8 text-yellow-400 mr-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
                     </svg>
-                    <h4 className="text-lg font-bold text-white">UAE Stablecoin Initiative</h4>
+                    <h4 className="text-lg font-bold text-white">
+                      UAE Stablecoin Initiative
+                    </h4>
                   </div>
                   <p className="mt-2 text-gray-300">
-                    ADQ, First Abu Dhabi Bank, and IHC have partnered to launch a UAE dirham-backed stablecoin to enhance digital payment infrastructure
+                    ADQ, First Abu Dhabi Bank, and IHC have partnered to launch
+                    a UAE dirham-backed stablecoin to enhance digital payment
+                    infrastructure
                   </p>
                 </div>
               </div>
             </div>
-            
+
             {/* Decorative elements */}
             <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500 rounded-full opacity-20 blur-xl"></div>
             <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-purple-500 rounded-full opacity-20 blur-xl"></div>
@@ -530,28 +653,37 @@ const BlockchainSection = () => {
 };
 
 // 6. Investment Landscape Interactive Cards
-const InvestmentLandscapeSection = () => {
+interface InvestmentLandscapeSectionProps {
+  onInvestmentClick: () => void;
+}
+
+const InvestmentLandscapeSection = ({
+  onInvestmentClick,
+}: InvestmentLandscapeSectionProps) => {
   const [activeCard, setActiveCard] = useState(0);
-  
+
   const investmentData = [
     {
       title: "Sovereign Wealth Funds",
       amount: "$2.4 Trillion+",
-      description: "Combined assets of ADIA ($993B), PIF ($925B), and QIA ($475-500B) with increasing allocations to East African markets",
-      color: "from-blue-600 to-blue-800"
+      description:
+        "Combined assets of ADIA ($993B), PIF ($925B), and QIA ($475-500B) with increasing allocations to East African markets",
+      color: "from-blue-600 to-blue-800",
     },
     {
       title: "Private Equity & VC",
       amount: "$7.58 Billion",
-      description: "MENA deal value in first half of 2023, targeting financial services, technology, healthcare, agriculture, and renewable energy",
-      color: "from-purple-600 to-purple-800"
+      description:
+        "MENA deal value in first half of 2023, targeting financial services, technology, healthcare, agriculture, and renewable energy",
+      color: "from-purple-600 to-purple-800",
     },
     {
       title: "UAE Foreign Direct Investment",
       amount: "$110 Billion",
-      description: "UAE's commitment to projects between 2019 and 2023, including $72 billion in renewable energy development",
-      color: "from-green-600 to-green-800"
-    }
+      description:
+        "UAE's commitment to projects between 2019 and 2023, including $72 billion in renewable energy development",
+      color: "from-green-600 to-green-800",
+    },
   ];
 
   return (
@@ -565,20 +697,21 @@ const InvestmentLandscapeSection = () => {
             Investment Landscape
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Major financial institutions driving economic integration between the Middle East and East Africa
+            Major financial institutions driving economic integration between
+            the Middle East and East Africa
           </p>
         </div>
-        
+
         <div className="relative">
           {/* Card navigation tabs */}
           <div className="flex justify-center mb-8 relative z-10">
             {investmentData.map((item, index) => (
               <button
                 key={index}
-                className={`px-6 py-3 text-sm font-medium rounded-t-lg transition-all duration-300 ${
-                  activeCard === index 
-                    ? `bg-gradient-to-r ${item.color} text-white shadow-lg` 
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300'
+                className={`px-6 py-3 text-sm font-medium rounded-t-lg transition-all duration-300 cursor-pointer ${
+                  activeCard === index
+                    ? `bg-gradient-to-r ${item.color} text-white shadow-lg`
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                 }`}
                 onClick={() => setActiveCard(index)}
               >
@@ -586,30 +719,49 @@ const InvestmentLandscapeSection = () => {
               </button>
             ))}
           </div>
-          
+
           {/* Card display area */}
           <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-xl overflow-hidden p-0.5">
-            <div className={`absolute inset-0 bg-gradient-to-r ${investmentData[activeCard].color} opacity-30 rounded-lg`}></div>
-            
+            <div
+              className={`absolute inset-0 bg-gradient-to-r ${investmentData[activeCard].color} opacity-30 dark:opacity-20 rounded-lg`}
+            ></div>
+
             <div className="relative p-8 md:p-12 bg-white dark:bg-gray-900 rounded-lg m-0.5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
-                  <div className={`text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${investmentData[activeCard].color}`}>
+                  <div
+                    className={`text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${investmentData[activeCard].color}`}
+                  >
                     {investmentData[activeCard].amount}
                   </div>
                   <p className="text-xl text-gray-600 dark:text-gray-300">
                     {investmentData[activeCard].description}
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   {[1, 2, 3, 4].map((item) => (
-                    <div key={item} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                    <div
+                      key={item}
+                      className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700"
+                    >
                       <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        {item === 1 ? '84%' : item === 2 ? '57%' : item === 3 ? '32%' : '91%'}
+                        {item === 1
+                          ? "84%"
+                          : item === 2
+                          ? "57%"
+                          : item === 3
+                          ? "32%"
+                          : "91%"}
                       </div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
-                        {item === 1 ? 'Sustainable Finance' : item === 2 ? 'Technology Ventures' : item === 3 ? 'Infrastructure Projects' : 'Long-term Growth'}
+                        {item === 1
+                          ? "Sustainable Finance"
+                          : item === 2
+                          ? "Technology Ventures"
+                          : item === 3
+                          ? "Infrastructure Projects"
+                          : "Long-term Growth"}
                       </div>
                     </div>
                   ))}
@@ -618,11 +770,11 @@ const InvestmentLandscapeSection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-12 text-center">
-          <Button 
-            variant="primary" 
-            href="/investment" 
+          <Button
+            variant="primary"
+            onClick={onInvestmentClick}
             className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black border-none shadow-xl"
           >
             Investment Opportunities
@@ -670,63 +822,102 @@ const GlobalSignificanceSection = () => {
             Strategic Global Significance
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Middle East-East Africa partnerships are reshaping global trade routes and geopolitical dynamics
+            Middle East-East Africa partnerships are reshaping global trade
+            routes and geopolitical dynamics
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-14 auto-rows-fr">
           {[
             {
               title: "Maritime Infrastructure",
-              description: "UAE-based DP World's investments in East African ports enhancing connectivity along critical global shipping lanes",
+              description:
+                "UAE-based DP World's investments in East African ports enhancing connectivity along critical global shipping lanes",
               image: "/images/east-africa-map.jpg",
               icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  ></path>
                 </svg>
               ),
               stat: "30%",
-              statLabel: "Red Sea shipping volume reduction during 2023-2024 security challenges"
+              statLabel:
+                "Red Sea shipping volume reduction during 2023-2024 security challenges",
             },
             {
               title: "Geopolitical Influence",
-              description: "Gulf states established as pivotal actors in a region traditionally influenced by Western powers and China",
+              description:
+                "Gulf states established as pivotal actors in a region traditionally influenced by Western powers and China",
               image: "/images/economic-powerhouse.jpeg",
               icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               ),
               stat: "8",
-              statLabel: "Countries in the Council of Arab and African States Bordering the Red Sea"
+              statLabel:
+                "Countries in the Council of Arab and African States Bordering the Red Sea",
             },
             {
               title: "Alternative Frameworks",
-              description: "Emerging alternative to China's Belt and Road Initiative with different investment approaches and equity stakes",
+              description:
+                "Emerging alternative to China's Belt and Road Initiative with different investment approaches and equity stakes",
               image: "/images/natural-resources.jpg",
               icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  ></path>
                 </svg>
               ),
               stat: "G20",
-              statLabel: "Saudi Arabia supporting AU's successful bid"
-            }
+              statLabel: "Saudi Arabia supporting AU's successful bid",
+            },
           ].map((card, index) => (
-            <div 
-              key={index} 
-              className="group relative transform transition-all duration-500 perspective hover:scale-[1.01]"
+            <div
+              key={index}
+              className="group relative transform transition-all duration-500 perspective hover:scale-[1.01] h-full lg:mx-4"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 transform -rotate-6 rounded-xl opacity-20 transition-all duration-500 group-hover:opacity-100 group-hover:rotate-0"></div>
-              <div className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-xl transform transition-all duration-500 group-hover:shadow-2xl">
+              <div className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-xl transform transition-all duration-500 group-hover:shadow-2xl h-full flex flex-col">
                 <div className="h-48 overflow-hidden">
                   <div
                     className="w-full h-full bg-cover bg-center transform transition-all duration-700 scale-100 group-hover:scale-110"
                     style={{ backgroundImage: `url(${card.image})` }}
                   ></div>
                 </div>
-                
-                <div className="p-6">
+
+                <div className="p-6 flex-grow flex flex-col">
                   <div className="flex items-center mb-4">
                     <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-200 mr-3">
                       {card.icon}
@@ -735,12 +926,12 @@ const GlobalSignificanceSection = () => {
                       {card.title}
                     </h3>
                   </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">
                     {card.description}
                   </p>
-                  
-                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
                     <div className="flex items-center">
                       <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mr-3">
                         {card.stat}
@@ -941,7 +1132,7 @@ const FeaturedSpeakersSection = ({
   speakers: Speaker[];
   loading: boolean;
 }) => (
-  <section className="py-20 bg-white dark:bg-gray-900">
+  <section id="speakers" className="py-20 bg-white dark:bg-gray-900">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
         <div>
@@ -952,7 +1143,8 @@ const FeaturedSpeakersSection = ({
             Distinguished Speakers
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Connect with decision makers shaping Middle East-East Africa partnerships
+            Connect with decision makers shaping Middle East-East Africa
+            partnerships
           </p>
         </div>
         <Button
@@ -981,14 +1173,14 @@ const FeaturedSpeakersSection = ({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 auto-rows-fr">
           {speakers.map((speaker) => (
             <Link
               href={`/speakers/${speaker.Slug}`}
               key={speaker.id}
               className="group block"
             >
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
                 <div className="aspect-square w-full bg-gray-100 dark:bg-gray-700 relative">
                   {speaker.ProfileImage ? (
                     <Image
@@ -1013,11 +1205,11 @@ const FeaturedSpeakersSection = ({
                     </div>
                   )}
                 </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-bold mb-1 group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
+                <div className="p-5 flex-grow">
+                  <h3 className="text-lg font-bold group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
                     {speaker.Name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
                     {speaker.Title}
                   </p>
                 </div>
@@ -1042,7 +1234,8 @@ const SponsorsGridSection = ({ sponsors }: { sponsors: Sponsor[] }) => (
           MEA Summit 2025 Partners
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Leading organizations supporting Middle East-East Africa economic integration
+          Leading organizations supporting Middle East-East Africa economic
+          integration
         </p>
       </div>
 
@@ -1063,10 +1256,7 @@ const SponsorsGridSection = ({ sponsors }: { sponsors: Sponsor[] }) => (
                     Partner Name
                   </div>
                   <div className="mt-1">
-                    <Chip
-                      variant="primary"
-                      size="sm"
-                    >
+                    <Chip variant="primary" size="sm">
                       Partner Tier
                     </Chip>
                   </div>
@@ -1126,11 +1316,7 @@ const SponsorsGridSection = ({ sponsors }: { sponsors: Sponsor[] }) => (
       </div>
 
       <div className="mt-12 text-center">
-        <Button 
-          variant="primary" 
-          buttonType="outline" 
-          href="/sponsors"
-        >
+        <Button variant="primary" buttonType="outline" href="/sponsors">
           View All Partners
         </Button>
       </div>
@@ -1145,34 +1331,36 @@ const ImmersiveCTASection = () => (
       className="absolute inset-0 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/uganda-landscape.jpg')" }}
     ></div>
-    
+
     {/* Dark overlay */}
-    <div className="absolute inset-0 bg-black opacity-70"></div>
-    
+    <div className="absolute inset-0 bg-black opacity-70 dark:opacity-80"></div>
+
     {/* Animated gradient background */}
-    <div className="absolute inset-0 animate-gradient-bg opacity-80"></div>
-    
+    <div className="absolute inset-0 animate-gradient-bg opacity-80 dark:opacity-60"></div>
+
     <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
       <span className="inline-block px-4 py-1 rounded-full bg-blue-500/80 backdrop-filter backdrop-blur-sm text-white text-sm font-semibold mb-6">
         JOIN THE FUTURE
       </span>
-      
+
       <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-        Shape the Strategic Integration Roadmap
+        Forge the Future of Cross-Continental Commerce
       </h2>
-      
+
       <p className="text-xl text-gray-100 mb-10 max-w-3xl mx-auto">
-        MEA Summit 2025 is implementing a phased integration framework to address structural, political, and institutional barriers to deeper Middle East-East Africa economic partnership.
+        MEA Summit 2025 is implementing a phased integration framework to
+        address structural, political, and institutional barriers to deeper
+        Middle East-East Africa economic partnership.
       </p>
-      
+
       <div className="flex flex-wrap justify-center gap-4">
-        <a 
-          href="/tickets" 
+        <a
+          href="/tickets"
           className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white font-bold rounded-md shadow-lg transition-all duration-300"
         >
           Register for MEA Summit
         </a>
-        
+
         <a
           href="/contact"
           className="inline-block px-8 py-3 backdrop-blur-md bg-white/20 border border-white/30 text-white font-bold rounded-md hover:bg-white/30 transition-all duration-300"
@@ -1181,7 +1369,7 @@ const ImmersiveCTASection = () => (
         </a>
       </div>
     </div>
-    
+
     <style jsx global>{`
       @keyframes gradient {
         0% {
@@ -1194,7 +1382,7 @@ const ImmersiveCTASection = () => (
           background-position: 0% 50%;
         }
       }
-      
+
       .animate-gradient-bg {
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         background-size: 400% 400%;
@@ -1204,9 +1392,9 @@ const ImmersiveCTASection = () => (
   </section>
 );
 
-// 13. Modern Contact Form
-const ModernContactForm = () => (
-  <section className="py-20 bg-white dark:bg-gray-900">
+// 13. Modern Contact Form with dynamic gradient border
+const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
+  <section ref={ref} className="py-20 bg-white dark:bg-gray-900">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <div>
@@ -1216,7 +1404,7 @@ const ModernContactForm = () => (
           <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
             Contact Us
           </h2>
-          
+
           <div className="space-y-8 mt-10">
             <div className="flex items-start">
               <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center mr-6 shadow-lg">
@@ -1314,32 +1502,60 @@ const ModernContactForm = () => (
               </div>
             </div>
           </div>
-          
+
           <div className="mt-10 flex space-x-4">
             {[
-              { name: "linkedin", icon: (
-                <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              ) },
-              { name: "twitter", icon: (
-                <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              ) },
-              { name: "facebook", icon: (
-                <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                </svg>
-              ) },
-              { name: "instagram", icon: (
-                <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.014-4.849-.072-3.26-.149-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              ) }
+              {
+                name: "linkedin",
+                icon: (
+                  <svg
+                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                ),
+              },
+              {
+                name: "twitter",
+                icon: (
+                  <svg
+                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                  </svg>
+                ),
+              },
+              {
+                name: "facebook",
+                icon: (
+                  <svg
+                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                  </svg>
+                ),
+              },
+              {
+                name: "instagram",
+                icon: (
+                  <svg
+                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                ),
+              },
             ].map((social) => (
-              <a 
-                key={social.name} 
+              <a
+                key={social.name}
                 href={`#${social.name}`}
                 className="h-10 w-10 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center transition-transform hover:scale-110"
               >
@@ -1348,14 +1564,14 @@ const ModernContactForm = () => (
             ))}
           </div>
         </div>
-        
+
         <div>
           <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 p-1 rounded-xl shadow-2xl">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
               <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
                 Send a Message
               </h3>
-              
+
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -1426,12 +1642,12 @@ const ModernContactForm = () => (
                   ></textarea>
                 </div>
 
-                <Button 
-                  variant="primary" 
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 border-none shadow-xl py-3"
+                <button
+                  type="submit"
+                  className="w-full py-3 px-6 rounded-lg font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg"
                 >
                   Send Message
-                </Button>
+                </button>
               </form>
             </div>
           </div>
@@ -1439,17 +1655,19 @@ const ModernContactForm = () => (
       </div>
     </div>
   </section>
-);
+));
+
+ModernContactForm.displayName = "ModernContactForm";
 
 // 14. Newsletter Section
 const NewsletterSection = () => (
   <section className="relative py-12 overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600"></div>
-    
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 dark:opacity-70"></div>
+
     {/* Decorative circles */}
-    <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-yellow-500 opacity-10 blur-3xl"></div>
-    <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-300 opacity-10 blur-3xl"></div>
-    
+    <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-yellow-500 opacity-10 dark:opacity-5 blur-3xl"></div>
+    <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-300 opacity-10 dark:opacity-5 blur-3xl"></div>
+
     <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
         <div className="md:col-span-8">
@@ -1457,17 +1675,18 @@ const NewsletterSection = () => (
             Stay Updated on MEA Summit 2025
           </h2>
           <p className="text-white text-opacity-80">
-            Subscribe to receive policy briefings, investment insights, and program announcements
+            Subscribe to receive policy briefings, investment insights, and
+            program announcements
           </p>
         </div>
         <div className="md:col-span-4">
-          <form className="flex flex-col sm:flex-row gap-4">
+          <form className="flex flex-col sm:flex-row gap-2">
             <input
               type="email"
               placeholder="Your email"
-              className="flex-grow px-4 py-3 rounded-l-lg bg-white/20 backdrop-filter backdrop-blur-sm border border-white border-opacity-30 text-white dark:text-white placeholder-gray-700 dark:placeholder-white dark:placeholder-opacity-60 placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-40"
+              className="flex-grow w-full sm:w-3/4 px-4 py-3 rounded-l-lg bg-white/20 backdrop-filter backdrop-blur-sm border border-white border-opacity-30 text-white dark:text-white placeholder-gray-700 dark:placeholder-white dark:placeholder-opacity-60 placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-40"
             />
-            <Button 
+            <Button
               variant="primary"
               className="rounded-r-lg bg-white text-blue-600 hover:bg-gray-100 border-none shadow-xl"
             >
@@ -1494,6 +1713,13 @@ export default function HomePage() {
     speakers: true,
     sponsors: true,
   });
+  const contactFormRef = useRef<HTMLElement>(null);
+
+  const scrollToSection = (sectionRef: RefObject<HTMLElement | null>) => {
+    if (sectionRef && sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   // Fetch events
   useEffect(() => {
@@ -1560,12 +1786,14 @@ export default function HomePage() {
       <FeaturedSpeakersSection speakers={speakers} loading={loading.speakers} />
       <BannerSection />
       <BlockchainSection />
-      <InvestmentLandscapeSection />
+      <InvestmentLandscapeSection
+        onInvestmentClick={() => scrollToSection(contactFormRef)}
+      />
       <EventsGridSection events={events} />
       <GlobalSignificanceSection />
       <ImmersiveCTASection />
       <SponsorsGridSection sponsors={sponsors} />
-      <ModernContactForm />
+      <ModernContactForm ref={contactFormRef} />
       <NewsletterSection />
     </main>
   );
