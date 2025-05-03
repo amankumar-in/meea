@@ -1,0 +1,37 @@
+/* Explicit blob animations */
+@keyframes blob1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  25% { transform: translate(50px, -60px) scale(1.2); opacity: 0.9; }
+  50% { transform: translate(-50px, 50px) scale(0.8); opacity: 0.6; }
+  75% { transform: translate(60px, 60px) scale(1.1); opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+}
+
+@keyframes blob2 {
+  0% { transform: translate(0, 0) scale(0.9); opacity: 0.7; }
+  33% { transform: translate(-60px, 40px) scale(1.1); opacity: 0.9; }
+  66% { transform: translate(60px, -50px) scale(0.8); opacity: 0.6; }
+  100% { transform: translate(0, 0) scale(0.9); opacity: 0.7; }
+}
+
+@keyframes blob3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  40% { transform: translate(70px, 50px) scale(1.2); opacity: 0.9; }
+  80% { transform: translate(-70px, -40px) scale(0.9); opacity: 0.7; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+}
+
+.blockchain-blob-1 {
+  animation: blob1 20s infinite ease-in-out;
+  will-change: transform, opacity;
+}
+
+.blockchain-blob-2 {
+  animation: blob2 25s infinite ease-in-out;
+  will-change: transform, opacity;
+}
+
+.blockchain-blob-3 {
+  animation: blob3 30s infinite ease-in-out;
+  will-change: transform, opacity;
+}

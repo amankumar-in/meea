@@ -138,7 +138,7 @@ const DynamicHeroSection = () => {
           >
             <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6 rounded-sm">
               <span className="text-xs sm:text-sm text-white uppercase tracking-wider font-bold">
-                September 15-16, 2025 • Dubai, UAE
+                June 25-27, 2025 • Kampala, Uganda
               </span>
             </div>
 
@@ -336,17 +336,17 @@ const PartnersCarousel = () => {
   // Use 12 separate logo files
   const logos = [
     "/images/partners/partner-logo-1.svg",
-    "/images/partners/partner-logo-2.svg",
+    "/images/partners/partner-logo-2.png",
     "/images/partners/partner-logo-3.svg",
-    "/images/partners/partner-logo-4.svg",
-    "/images/partners/partner-logo-5.svg",
+    "/images/partners/partner-logo-4.png",
+    "/images/partners/partner-logo-5.png",
     "/images/partners/partner-logo-6.svg",
-    "/images/partners/partner-logo-7.svg",
-    "/images/partners/partner-logo-8.svg",
+    "/images/partners/partner-logo-7.png",
+    "/images/partners/partner-logo-8.webp",
     "/images/partners/partner-logo-9.svg",
-    "/images/partners/partner-logo-10.svg",
-    "/images/partners/partner-logo-11.svg",
-    "/images/partners/partner-logo-12.svg",
+    "/images/partners/partner-logo-10.webp",
+    "/images/partners/partner-logo-11.png",
+    "/images/partners/partner-logo-12.png",
   ];
 
   return (

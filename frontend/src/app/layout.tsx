@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "@/styles/blockchain-animations.css";
 import ReactQueryProvider from "@/lib/react-query-provider";
 import SiteLayout from "@/components/layout/SiteLayout";
 import { ThemeProvider } from "next-themes";
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "MEA 2025",
     images: [
       {
-        url: "https://unite-backend-gg5m.onrender.com/uploads/og_image1_eb1ac92835.jpg",
+        url: "https://unite-backend-gg5m.onrender.com/uploads/mea_og_630_374bc758c3.jpg",
         width: 1200,
         height: 630,
         alt: "MEA 2025 - Middle East & Africa Investment Summit",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
       "The Middle East & Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and Africa region.",
     images: [
       {
-        url: "https://unite-backend-gg5m.onrender.com/uploads/og_image2_f4440ac129.jpg",
+        url: "https://unite-backend-gg5m.onrender.com/uploads/mea_og_600_147ea48926.jpg",
         width: 1200,
         height: 600,
         alt: "MEA 2025 - Middle East & Africa Investment Summit",
