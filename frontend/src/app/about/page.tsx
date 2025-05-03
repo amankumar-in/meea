@@ -2,24 +2,39 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
 import { RetroGrid } from "@/components/ui/retro-grid";
 import { BentoGrid } from "@/components/ui/bento-grid";
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { GradientHeading, Heading, Paragraph, SectionTitle } from "@/components/ui/typography";
 import { fetchAPI } from "@/lib/api/api-config";
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
   return (
-    <main className="bg-white dark:bg-gray-900">
+    <main className="min-h-screen">
+      {/* Hero Section */}
       <HeroSection />
-      <WhyAttendSection />
+      
+      {/* About MEA Summit Section */}
       <AboutSummitSection />
+      
+      {/* Why Attend Section */}
+      <WhyAttendSection />
+      
+      {/* Thematic Areas Section */}
       <ThematicAreasSection />
+      
+      {/* Blockchain Section */}
       <BlockchainSection />
-      <OrganizersSection />
+      
+      {/* Timeline Section */}
       <TimelineSection />
+      
+      {/* Excellerate Section */}
+      <ExcellerateSection />
+      
+      {/* CTA Section */}
       <CTASection />
     </main>
   );
@@ -250,7 +265,7 @@ function WhyAttendSection() {
       description: "Meet the people powering MEA's digital future. Network with Heads of State, CEOs, investors, and youth changemakers—all in one place.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-blue-500">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.479m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.479m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
         </svg>
       ),
       status: "High Value",
@@ -295,14 +310,13 @@ function WhyAttendSection() {
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-            Why Attend <AnimatedGradientText className="font-bold" colorFrom="#ffaa40" colorTo="#9c40ff">MEA Summit</AnimatedGradientText>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Join us for a transformative experience that will reshape your perspective on digital innovation and economic growth in the Middle East and Africa.
-          </p>
-        </div>
+        <SectionTitle theme="secondary" centered>
+          Why Attend MEA Summit
+        </SectionTitle>
+        
+        <Paragraph centered size="lg" className="mb-16 max-w-3xl mx-auto">
+          Join us for a transformative experience that will reshape your perspective on digital innovation and economic growth in the Middle East and Africa.
+        </Paragraph>
 
         <BentoGrid items={bentoItems} />
       </div>
@@ -326,21 +340,9 @@ function AboutSummitSection() {
       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px] dark:bg-[radial-gradient(#fff_1px,transparent_1px)]"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center justify-center text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mb-6"></div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-            <AnimatedGradientText 
-              colorFrom="#3b82f6" 
-              colorTo="#8b5cf6"
-              speed={0.8}
-              className="font-bold"
-            >
-              MEA Summit
-            </AnimatedGradientText>
-            : Bridging Two Dynamic Regions
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto mt-2 mb-6"></div>
-        </div>
+        <SectionTitle theme="ocean" withAccent={true} accentPosition="top">
+          MEA Summit: Bridging Two Dynamic Regions
+        </SectionTitle>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left side content - Map visualization */}
@@ -353,7 +355,7 @@ function AboutSummitSection() {
                   <span className="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-6">
                     JUNE 25-27, 2025
                   </span>
-                  <h3 className="text-xl font-bold text-white mb-6">Key Summit Features</h3>
+                  <Heading as="h3" size="xl" color="text-white" className="mb-6">Key Summit Features</Heading>
                   
                   <div className="space-y-5">
                     <div className="flex items-start space-x-4 group">
@@ -410,32 +412,32 @@ function AboutSummitSection() {
             <div className="space-y-6 relative">
               <div className="relative">
                 <span className="inline-block h-1 w-16 bg-blue-600 mb-4"></span>
-                <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white flex flex-col sm:flex-row gap-2 sm:items-center">
+                <Heading as="h3" size="3xl" className="mb-6 flex flex-col sm:flex-row gap-2 sm:items-center">
                   <span>Bridging</span> 
                   <div className="relative inline-flex">
-                    <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                    <GradientHeading theme="primary" as="span" className="relative z-10">
                       Two Dynamic Regions
-                    </span>
+                    </GradientHeading>
                     <span className="absolute bottom-0 left-0 right-0 h-3 bg-blue-100 dark:bg-blue-900 opacity-30 -z-10 transform -skew-x-3"></span>
                   </div>
-                </h3>
+                </Heading>
               </div>
               
               <div className="prose prose-lg dark:prose-invert max-w-none">
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative group">
+                <Paragraph className="relative group">
                   <span className="absolute -left-4 top-0 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   The Middle East and Africa (MEA) Investment Summit is a premier platform designed to catalyze investment, foster partnerships, and drive sustainable growth across these two dynamic regions.
-                </p>
+                </Paragraph>
                 
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative group">
+                <Paragraph className="relative group">
                   <span className="absolute -left-4 top-0 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   Hosted in <span className="font-medium text-blue-600 dark:text-blue-400">Kampala, Uganda</span>, the summit brings together Heads of State, Ministers, CEOs, investors, and youth changemakers to explore opportunities in digital transformation, financial inclusion, and cross-border integration.
-                </p>
+                </Paragraph>
                 
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative group">
+                <Paragraph className="relative group">
                   <span className="absolute -left-4 top-0 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   Through high-level dialogues, panel discussions, and networking sessions, the summit aims to unlock the immense potential of collaboration between the Middle East and Africa, driving economic prosperity and fostering innovation.
-                </p>
+                </Paragraph>
 
                 <div className="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg backdrop-blur-sm bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer">
                   Explore Summit Agenda
@@ -599,19 +601,10 @@ function ThematicAreasSection() {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="font-bold text-3xl md:text-5xl mb-4 text-gray-900 dark:text-white">
-            <span className="mr-2">Thematic</span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-yellow-500 dark:to-pink-500">
-              Investment Areas
-            </span>
-          </h2>
-          <p className="text-gray-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            The MEA Summit focuses on key investment areas that are driving economic growth and 
-            innovation across the Middle East and Africa regions.
-          </p>
-        </div>
-
+        <SectionTitle theme="purple">
+          Thematic Investment Areas
+        </SectionTitle>
+        
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Side - Investment Area Tabs */}
           <div className="lg:w-1/3 flex flex-col space-y-3">
@@ -743,7 +736,7 @@ function ThematicAreasSection() {
                     
                     {/* CTA Button */}
                     <div className="inline-flex">
-                      <a 
+                      <Link 
                         href="/tickets"
                         className="px-6 py-3 rounded-lg flex items-center transition-transform duration-300 hover:translate-y-[-2px] text-white shadow-md"
                         style={{ 
@@ -761,7 +754,7 @@ function ThematicAreasSection() {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 ml-2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -958,12 +951,12 @@ function BlockchainSection() {
             <span className="px-3 text-sm font-medium text-blue-600 dark:text-blue-400">FEATURED TRACK</span>
             <div className="h-px w-10 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
           </div>
-          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 inline-block">
+          <GradientHeading theme="danger" size="4xl" centered className="mb-4">
             Blockchain & Digital Currencies
-          </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+          </GradientHeading>
+          <Paragraph centered className="max-w-2xl mx-auto">
             Exploring the transformative power of blockchain technology and digital currencies across the Middle East and Africa.
-          </p>
+          </Paragraph>
         </div>
 
         {/* Main content - Uses Framer Motion for animations */}
@@ -1281,530 +1274,104 @@ function BlockchainSection() {
 }
 
 // -------------------------------------------------------------------
-// Organizers Section
-// -------------------------------------------------------------------
-function OrganizersSection() {
-  const organizers = [
-    {
-      name: "HiPipo",
-      role: "Lead Organizer",
-      description:
-        "Driving digital innovation and financial inclusion across Africa.",
-      logoPlaceholder: "HP",
-    },
-    {
-      name: "COMESA Business Council",
-      role: "Strategic Partner",
-      description: "Representing private sector interests across the COMESA region.",
-      logoPlaceholder: "CBC",
-    },
-    {
-      name: "Ministry of ICT, Uganda",
-      role: "Co-organizer",
-      description: "Providing policy guidance and government partnership.",
-      logoPlaceholder: "MICT",
-    },
-    {
-      name: "Timepledge.org",
-      role: "Strategic Partner",
-      description: "Fostering financial inclusion and entrepreneurship globally.",
-      logoPlaceholder: "TPG",
-    },
-  ];
-
-  return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-          <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-            Organizing Partners
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-            MEA Summit 2025 is a collaborative effort between government agencies, private sector organizations, and international partners from across the Middle East and Africa.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {organizers.map((org) => (
-            <div
-              key={org.name}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              <div className="h-32 flex items-center justify-center bg-gradient-to-r from-blue-700 to-blue-900">
-                <span className="text-3xl font-bold text-white">
-                  {org.logoPlaceholder}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">
-                  {org.name}
-                </h3>
-                <div className="mb-3">
-                  <Chip variant="primary" size="sm">
-                    {org.role}
-                  </Chip>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {org.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-10 text-center">
-          <Button
-            variant="primary"
-            buttonType="outline"
-            href="/about/organizers"
-          >
-            Learn More About Our Partners
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// -------------------------------------------------------------------
-// Timeline Section (Using Agenda from MEA Summit)
+// Timeline Section
 // -------------------------------------------------------------------
 function TimelineSection() {
-  const [activeDay, setActiveDay] = useState(0);
-  
-  // Timeline data for each day
-  const days = [
+  const timelineEvents = [
     {
-      date: "June 25, 2025",
-      title: "Day 1",
-      events: [
-        {
-          time: "9:00 AM - 11:00 AM",
-          title: "Opening Ceremony",
-          host: "Innocent Kawooya (CEO, HiPipo)",
-          color: "blue" as const,
-          participants: [
-            "Welcome Remarks: Innocent Kawooya, CEO, HiPipo",
-            "Welcome Address: CEO, COMESA Business Council",
-            "Guest of Honour: Hon. Dr. Chris Baryomunsi, Minister of ICT",
-            "Keynote Address: H.E. Invited Head of State"
-          ]
-        },
-        {
-          time: "11:30 AM - 1:00 PM",
-          title: "Digital Policy For Inclusive Growth",
-          host: "Regional ICT Expert (COMESA)",
-          color: "purple" as const,
-          participants: [
-            "Minister of ICT",
-            "Executive Director, National ICT Authority",
-            "Director, COMESA Digital Transformation",
-            "CEO, National Telecom Regulatory Authority"
-          ]
-        },
-        {
-          time: "2:00 PM - 3:30 PM",
-          title: "Building Resilient Systems",
-          host: "Regional SDG Integration Expert",
-          color: "indigo" as const,
-          participants: [
-            "Ministry of Agriculture, Uganda",
-            "Founder & CEO, AgriTech Startup, Kenya",
-            "Director of Digital Health, WHO Africa",
-            "VC, Makerere University"
-          ]
-        },
-        {
-          time: "4:00 PM - 5:30 PM",
-          title: "Financial Inclusion for Communities",
-          host: "FinTech and Financial Services Consultant",
-          color: "pink" as const,
-          participants: [
-            "Deputy Governor, Central Bank",
-            "CEO, Women-led FinTech, HiPipo",
-            "Country Director, UNCDF Uganda",
-            "Executive, MTN Mobile Money"
-          ]
-        }
-      ]
+      year: "2023",
+      title: "Inaugural MEA Summit",
+      description: "The first MEA Summit brought together 2,500+ delegates from 35 countries to explore digital transformation opportunities across the Middle East and Africa.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        </svg>
+      ),
+      color: "bg-yellow-400"
     },
     {
-      date: "June 26, 2025",
-      title: "Day 2",
-      events: [
-        {
-          time: "9:00 AM - 10:30 AM",
-          title: "Smart Agriculture for Climate Resilience",
-          host: "Innocent Kawooya (NIM)",
-          color: "green" as const,
-          participants: [
-            "Prof. Lawrence Mugisha, Digital Farming Platform",
-            "Director, Research Institute for Agriculture and Climate",
-            "Regional Lead, IFAD Digital Initiatives",
-            "Agronomist, East African Farmer Cooperative"
-          ]
-        },
-        {
-          time: "11:00 AM - 12:30 PM",
-          title: "Reimagining Health Through Digital Transformation",
-          host: "Global Digital Health Advisor, WHO",
-          color: "teal" as const,
-          participants: [
-            "Director, National Telemedicine Initiative, Rwanda",
-            "CTO, HealthTech Startup, My Doctor",
-            "Dean, School of Public Health, University",
-            "CEO, Africa Digital Health Network"
-          ]
-        }
-      ]
+      year: "2024",
+      title: "Strategic Partnerships",
+      description: "The Summit expanded to include strategic partnership announcements, with $500M+ in investment commitments across MEA digital projects.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      ),
+      color: "bg-green-400"
     },
     {
-      date: "June 27, 2025",
-      title: "Day 3",
-      events: [
-        {
-          time: "9:00 AM - 10:30 AM",
-          title: "Heads of State High-Level Dialogue",
-          host: "H.E Yoweri Kaguta Museveni",
-          color: "amber" as const,
-          participants: [
-            "H.E. President of Uganda",
-            "H.E. President of Zambia",
-            "H.E. Prime Minister of UAE",
-            "H.E. President of Rwanda"
-          ]
-        },
-        {
-          time: "7:00 PM Onwards",
-          title: "Grand Music Gala & Youth Recognition Awards",
-          host: "Innocent Kawooya (NIM)",
-          color: "rose" as const,
-          participants: [
-            "Performances from MEA's Top Artists",
-            "Youth Innovation Awards",
-            "Cultural Showcase & Networking"
-          ]
-        }
-      ]
+      year: "2025",
+      title: "Growth & Innovation",
+      description: "The upcoming Summit will focus on scaling successful digital innovations, with dedicated tracks for FinTech, HealthTech, and EdTech solutions.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ),
+      color: "bg-blue-400"
+    },
+    {
+      year: "2026",
+      title: "Future Vision",
+      description: "The long-term roadmap includes expanding to multiple cities across MEA, with satellite events and year-round programming to sustain momentum.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      ),
+      color: "bg-purple-400"
     }
   ];
-
-  // Color mapping for events
-  const colorMap = {
-    blue: {
-      bg: "bg-blue-500",
-      bgHover: "hover:bg-blue-600",
-      text: "text-blue-600",
-      border: "border-blue-500",
-      light: "bg-blue-50",
-      dark: "bg-blue-900/20",
-      timeline: "from-blue-600 to-blue-400",
-      darkTimeline: "from-blue-500 to-blue-300",
-      dot: "bg-blue-600",
-    },
-    purple: {
-      bg: "bg-purple-500",
-      bgHover: "hover:bg-purple-600",
-      text: "text-purple-600",
-      border: "border-purple-500",
-      light: "bg-purple-50",
-      dark: "bg-purple-900/20",
-      timeline: "from-purple-600 to-purple-400",
-      darkTimeline: "from-purple-500 to-purple-300",
-      dot: "bg-purple-600",
-    },
-    indigo: {
-      bg: "bg-indigo-500",
-      bgHover: "hover:bg-indigo-600",
-      text: "text-indigo-600",
-      border: "border-indigo-500",
-      light: "bg-indigo-50",
-      dark: "bg-indigo-900/20",
-      timeline: "from-indigo-600 to-indigo-400",
-      darkTimeline: "from-indigo-500 to-indigo-300",
-      dot: "bg-indigo-600",
-    },
-    pink: {
-      bg: "bg-pink-500",
-      bgHover: "hover:bg-pink-600",
-      text: "text-pink-600",
-      border: "border-pink-500",
-      light: "bg-pink-50",
-      dark: "bg-pink-900/20",
-      timeline: "from-pink-600 to-pink-400",
-      darkTimeline: "from-pink-500 to-pink-300",
-      dot: "bg-pink-600",
-    },
-    green: {
-      bg: "bg-green-500",
-      bgHover: "hover:bg-green-600",
-      text: "text-green-600",
-      border: "border-green-500",
-      light: "bg-green-50",
-      dark: "bg-green-900/20",
-      timeline: "from-green-600 to-green-400",
-      darkTimeline: "from-green-500 to-green-300",
-      dot: "bg-green-600",
-    },
-    teal: {
-      bg: "bg-teal-500",
-      bgHover: "hover:bg-teal-600",
-      text: "text-teal-600",
-      border: "border-teal-500",
-      light: "bg-teal-50",
-      dark: "bg-teal-900/20",
-      timeline: "from-teal-600 to-teal-400",
-      darkTimeline: "from-teal-500 to-teal-300",
-      dot: "bg-teal-600",
-    },
-    amber: {
-      bg: "bg-amber-500",
-      bgHover: "hover:bg-amber-600",
-      text: "text-amber-600",
-      border: "border-amber-500",
-      light: "bg-amber-50",
-      dark: "bg-amber-900/20",
-      timeline: "from-amber-600 to-amber-400",
-      darkTimeline: "from-amber-500 to-amber-300",
-      dot: "bg-amber-600",
-    },
-    rose: {
-      bg: "bg-rose-500",
-      bgHover: "hover:bg-rose-600",
-      text: "text-rose-600",
-      border: "border-rose-500",
-      light: "bg-rose-50",
-      dark: "bg-rose-900/20",
-      timeline: "from-rose-600 to-rose-400",
-      darkTimeline: "from-rose-500 to-rose-300",
-      dot: "bg-rose-600",
-    }
-  };
-
-  // Define color type to match colorMap keys
-  type ColorType = keyof typeof colorMap;
-
+  
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff20_1px,transparent_1px)] bg-[size:40px_40px] dark:bg-[linear-gradient(to_right,#88888820_1px,transparent_1px)]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] bg-[size:40px_40px] dark:bg-[linear-gradient(to_bottom,#88888820_1px,transparent_1px)]"></div>
-      </div>
-
-      {/* Floating gradient orbs */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-400 rounded-full opacity-[0.07] blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-400 rounded-full opacity-[0.07] blur-[100px] translate-y-1/3 -translate-x-1/3"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-20">
-          <div className="inline-flex items-center justify-center mb-4">
-            <div className="h-px w-8 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-            <span className="mx-3 text-sm font-medium uppercase tracking-wider text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full bg-blue-100/50 dark:bg-blue-900/30">
-              June 25-27, 2025
-            </span>
-            <div className="h-px w-8 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-          </div>
+    <section className="py-24 overflow-hidden bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle theme="sunset">
+          MEA Summit Timeline
+        </SectionTitle>
+        
+        <div className="relative mt-12 mb-16">
+          {/* Timeline bar */}
+          <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-orange-500 via-red-500 to-purple-500 transform -translate-x-1/2"></div>
           
-          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 mb-4">
-            Summit Agenda
-          </h2>
-          
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Three days of transformative discussions, knowledge sharing, and networking to drive 
-            digital innovation and investment across MEA.
-          </p>
-        </div>
-
-        {/* Day Selection Tabs */}
-        <div className="relative z-10 mb-12">
-          <div className="flex flex-wrap justify-center">
-            <div className="bg-white dark:bg-gray-800 p-1.5 rounded-xl shadow-lg inline-flex">
-              {days.map((day, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveDay(index)}
-                  className={`relative px-5 py-2.5 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
-                    activeDay === index
-                      ? "text-white"
-                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  {activeDay === index && (
-                    <motion.div
-                      layoutId="activeDayIndicator"
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-lg"
-                      initial={false}
-                      transition={{ type: "spring", duration: 0.5 }}
-                    />
-                  )}
-                  <span className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-1">
-                    <span className="font-semibold">{day.title}:</span>
-                    <span className={`text-xs sm:text-sm ${activeDay === index ? "text-blue-100" : "text-gray-500 dark:text-gray-400"}`}>
-                      {day.date}
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline Content */}
-        <div className="max-w-4xl mx-auto">
-          {days.map((day, dayIndex) => (
-            <div
-              key={dayIndex}
-              className={`transition-all duration-500 ${
-                activeDay === dayIndex ? "block" : "hidden"
-              }`}
-            >
-              <div className="relative">
-                {/* Timeline center line */}
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-200 via-purple-200 to-blue-200 dark:from-blue-800 dark:via-purple-800 dark:to-blue-800 ml-6 sm:ml-8 z-0"></div>
-
-                {/* Timeline events */}
-                <div className="space-y-12 relative z-10">
-                  {day.events.map((event, eventIndex) => {
-                    const color = colorMap[event.color as ColorType];
-
-                    return (
-                      <motion.div
-                        key={eventIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: eventIndex * 0.1,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
-                        className="relative pl-16 sm:pl-20"
-                      >
-                        {/* Timeline dot */}
-                        <div className="absolute left-0 mt-1.5 w-[18px] h-[18px] rounded-full bg-white dark:bg-gray-900 border-[3px] border-blue-600 dark:border-blue-400 ml-[5px] sm:ml-[7px] shadow-md flex items-center justify-center">
-                          <div className={`w-[6px] h-[6px] rounded-full ${color.dot} animate-pulse`}></div>
-                        </div>
-
-                        {/* Event card */}
-                        <div className="rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-                          {/* Colored top band */}
-                          <div className={`h-1.5 w-full bg-gradient-to-r ${color.timeline} dark:${color.darkTimeline}`}></div>
-                          
-                          <div className="p-5">
-                            {/* Time badge */}
-                            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 text-blue-600 dark:text-blue-300 mb-3 border border-blue-100 dark:border-blue-800/50">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-1.5">
-                                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clipRule="evenodd" />
-                              </svg>
-                              {event.time}
-                            </div>
-                            
-                            {/* Title */}
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                              {event.title}
-                            </h3>
-                            
-                            {/* Host */}
-                            <div className="mb-4">
-                              <div className={`inline-flex items-center px-3 py-1 rounded-md ${color.light} dark:${color.dark} ${color.text} dark:text-gray-900 text-sm`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-1.5">
-                                  <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
-                                </svg>
-                                Hosted by: {event.host}
-                              </div>
-                            </div>
-                            
-                            {/* Participants */}
-                            <div className="space-y-2">
-                              {event.participants.map((participant, pIndex) => (
-                                <div key={pIndex} className="flex items-start text-gray-700 dark:text-gray-300">
-                                  <div className={`mr-2 text-lg ${color.text} dark:text-white/80`}>•</div>
-                                  <div>{participant}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Youth Program Section */}
-        <div className="mt-24 overflow-hidden rounded-2xl shadow-lg relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 dark:from-blue-700 dark:to-purple-800"></div>
-          
-          {/* Pattern overlay */}
-          <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-10"></div>
-          
-          <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-purple-500 rounded-full opacity-20 blur-[80px] -translate-y-1/2 translate-x-1/4"></div>
-          <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-blue-500 rounded-full opacity-20 blur-[80px] translate-y-1/2 -translate-x-1/4"></div>
-          
-          <div className="relative p-8 md:p-12">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="md:w-2/3">
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 backdrop-blur-sm mb-4">
-                  PARALLEL PROGRAM
+          {/* Timeline events */}
+          <div className="space-y-20">
+            {timelineEvents.map((event, i) => (
+              <div
+                key={i}
+                className={`relative flex items-center ${
+                  i % 2 === 0 ? "flex-row" : "flex-row-reverse"
+                } md:flex-row-reverse md:odd:flex-row`}
+              >
+                {/* Timeline node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                  <div className={`w-10 h-10 rounded-full ${event.color} flex items-center justify-center text-white shadow-lg z-10`}>
+                    {event.icon}
+                  </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                  MEA Summit Youth Program
-                </h3>
-                
-                <p className="text-blue-50 mb-6">
-                  Running parallel to the main summit, the Youth Program focuses on empowering young innovators and entrepreneurs from across the Middle East and Africa regions.
-                </p>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  {[
-                    "Youth-Led Innovation Workshops",
-                    "From Campus to Global Impact – University Startups",
-                    "Youth Innovation Pitch Competition",
-                    "Digital Skills for the Future"
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-start">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-400/20 flex items-center justify-center mr-3 mt-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-yellow-400">
-                          <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-white">{item}</span>
-                    </div>
-                  ))}
+                {/* Year marker on opposite side */}
+                <div className={`hidden md:flex w-1/2 justify-${
+                  i % 2 === 0 ? "end pr-12" : "start pl-12"
+                } md:justify-${i % 2 === 0 ? "start pl-12" : "end pr-12"} items-center font-bold text-gray-900 dark:text-white text-4xl opacity-30`}>
+                  {event.year}
                 </div>
                 
-                <a 
-                  href="https://www.measummit.com/youth-program/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-medium transition-colors duration-300"
-                >
-                  <span>View Youth Program Details</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 ml-2">
-                    <path fillRule="evenodd" d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-              
-              <div className="md:w-1/3 flex justify-center">
-                <div className="relative w-[240px] h-[240px]">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-400/30 animate-pulse"></div>
-                  <div className="absolute inset-[15%] rounded-full bg-gradient-to-r from-blue-400/40 to-purple-400/40 animate-pulse" style={{animationDelay: '500ms'}}></div>
-                  <div className="absolute inset-[30%] rounded-full bg-gradient-to-r from-blue-400/50 to-purple-400/50 animate-pulse" style={{animationDelay: '1000ms'}}></div>
-                  <div className="relative bg-white/10 backdrop-blur-sm h-24 w-24 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-white">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.375 7.058 8.287 8.287 0 0 0 9 9.75c.85.004 1.705.115 2.504.337a6.833 6.833 0 0 0 1.909-3.409 6.749 6.749 0 0 1 4.603 3.483 8.29 8.29 0 0 0-2.653-4.947Z" />
-                    </svg>
+                {/* Event content card */}
+                <div className="w-full md:w-1/2 ml-12 md:ml-0 md:mr-0 md:px-12 relative">
+                  {/* Small year indicator for mobile */}
+                  <div className="md:hidden absolute -left-8 top-1/2 transform -translate-y-1/2 font-bold text-gray-700 dark:text-gray-300 opacity-80">
+                    {event.year}
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                    <Heading as="h3" size="xl" className="mb-2">{event.title}</Heading>
+                    <Paragraph>{event.description}</Paragraph>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -1817,42 +1384,181 @@ function TimelineSection() {
 // -------------------------------------------------------------------
 function CTASection() {
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900"></div>
-      
-      {/* Pattern overlay */}
-      <RetroGrid 
-        angle={60}
-        cellSize={80}
-        opacity={0.2}
-        lightLineColor="white" 
-        darkLineColor="white"
-        className="z-0"
-      />
+    <section className="py-20 md:py-32 bg-gradient-to-r from-blue-900 to-indigo-900 text-white relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-black/5 opacity-20 z-0"></div>
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-500/20 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-indigo-500/20 to-transparent"></div>
+      </div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500 rounded-full opacity-10 blur-[100px]"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full opacity-10 blur-[100px]"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
-            Shape the Future of Digital Innovation in MEA
-          </h2>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-10">
-            Join us at MEA Summit 2025 and be part of the movement to transform economies and lives through technology and investment.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button variant="light" size="lg" href="/tickets">
-              Register Now
-            </Button>
-            <Button
-              variant="dark"
-              buttonType="outline"
-              size="lg"
-              href="/contact"
-              className="border-white text-white hover:bg-white/10"
+          <GradientHeading theme="info" size="4xl" centered>
+            Join Us at MEA Summit 2025
+          </GradientHeading>
+          
+          <Paragraph centered size="lg" color="text-white/80" className="mt-6 mb-10 max-w-3xl mx-auto">
+            Be part of the transformation shaping the digital future of the Middle East and Africa regions. Connect with leaders, innovators, and investors driving the next wave of growth.
+          </Paragraph>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+            <Link 
+              href="/tickets" 
+              className="inline-flex items-center justify-center px-8 py-4 rounded-lg text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 transform transition-all duration-200 hover:-translate-y-1"
             >
-              Become a Partner
-            </Button>
+              Register Now
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Link>
+            
+            <Link 
+              href="/events" 
+              className="inline-flex items-center justify-center px-8 py-4 rounded-lg text-lg font-medium text-blue-100 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 transition-all duration-200 hover:-translate-y-1"
+            >
+              View Schedule
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+              </svg>
+            </Link>
           </div>
+          
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">35+</div>
+              <div className="text-blue-200 text-sm md:text-base mt-1">Countries</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">250+</div>
+              <div className="text-blue-200 text-sm md:text-base mt-1">Speakers</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">5,000+</div>
+              <div className="text-blue-200 text-sm md:text-base mt-1">Attendees</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">$500M+</div>
+              <div className="text-blue-200 text-sm md:text-base mt-1">Investment Deals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// -------------------------------------------------------------------
+// Excellerate Section
+// -------------------------------------------------------------------
+function ExcellerateSection() {
+  return (
+    <section className="py-24 relative overflow-hidden bg-white dark:bg-gray-900">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50 to-transparent dark:from-transparent dark:via-blue-950/30 dark:to-transparent"></div>
+      <div className="absolute inset-0 opacity-40 dark:opacity-20">
+        <RetroGrid />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <SectionTitle theme="peach" withAccent>
+          Join Us at MEA Excellence
+        </SectionTitle>
+        
+        {/* Feature Cards Grid - Slightly enhancing current design */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16 mb-20">
+          {/* Card 1 - Innovation */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600">
+            <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-600 dark:text-blue-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Innovation</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Gain exclusive access to cutting-edge technologies, startups, and innovation showcases from across MEA.
+            </Paragraph>
+          </div>
+          
+          {/* Card 2 - Connections */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-600">
+            <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-purple-600 dark:text-purple-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.479m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Connections</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Network with Ministers, CEOs, investors, and disruptors who are shaping the future of technology in the region.
+            </Paragraph>
+          </div>
+          
+          {/* Card 3 - Investment */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-green-300 dark:hover:border-green-600">
+            <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-600 dark:text-green-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Investment</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Discover investment opportunities and build partnerships with fast-growing companies across MEA&apos;s digital economy.
+            </Paragraph>
+          </div>
+          
+          {/* Card 4 - Knowledge */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-yellow-300 dark:hover:border-yellow-600">
+            <div className="w-12 h-12 rounded-xl bg-yellow-100 dark:bg-yellow-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-yellow-600 dark:text-yellow-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Knowledge</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Learn from industry pioneers through workshops, keynotes, and panel discussions led by global thought leaders.
+            </Paragraph>
+          </div>
+          
+          {/* Card 5 - Policy */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-red-300 dark:hover:border-red-600">
+            <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-red-600 dark:text-red-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Policy</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Engage with policymakers shaping the regulatory landscape for technology and digital economies in MEA.
+            </Paragraph>
+          </div>
+          
+          {/* Card 6 - Growth */}
+          <div className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800/80 hover:shadow-md transition-all duration-300 hover:border-pink-300 dark:hover:border-pink-600">
+            <div className="w-12 h-12 rounded-xl bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-pink-600 dark:text-pink-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+              </svg>
+            </div>
+            <Heading as="h3" size="xl" className="mb-2">Growth</Heading>
+            <Paragraph className="text-gray-600 dark:text-gray-300">
+              Accelerate your business growth by connecting with potential partners, clients, and talent from across the region.
+            </Paragraph>
+          </div>
+        </div>
+        
+        {/* Bottom CTA */}
+        <div className="text-center">
+          <Link 
+            href="/tickets" 
+            className="inline-flex items-center px-8 py-4 rounded-lg text-lg font-semibold text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 dark:from-pink-600 dark:to-orange-500 dark:hover:from-pink-700 dark:hover:to-orange-600 shadow-lg hover:shadow-xl transform transition-all duration-200 hover:-translate-y-1"
+          >
+            Register for MEA Summit
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
