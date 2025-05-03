@@ -114,6 +114,21 @@ const DynamicHeroSection = () => {
           opacity: 0.7,
         }}
       ></div>
+      {/* Logo overlay - positioned on the right side */}
+      <div 
+        className="absolute right-0 top-0 bottom-0 my-auto w-[50%] opacity-10 pointer-events-none flex items-center justify-end"
+        style={{ transform: `translateY(${scrollY * 0.05}px)` }}
+      >
+        <div className="w-full h-[70%]">
+          <Image 
+            src="/MEA-original-logo.png" 
+            alt="MEA Logo Overlay" 
+            fill
+            className="object-contain object-right"
+            priority
+          />
+        </div>
+      </div>
       {/* Content container */}
       <div className="relative h-full flex items-center">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
@@ -134,7 +149,7 @@ const DynamicHeroSection = () => {
               <span className="mx-2 text-white hidden sm:inline-block">•</span>
               <span className="mx-2 text-white inline-block sm:hidden">•</span>
               <div className="sm:inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400">
-                EAST AFRICA
+                AFRICA
               </div>
               <div className="text-white mt-1 sm:mt-2">INVESTMENT SUMMIT</div>
             </h1>
@@ -227,7 +242,7 @@ const AnimatedStatsSection = () => {
     {
       value: "300M+",
       label: "Regional Market",
-      description: "Access to East African Community and COMESA markets",
+      description: "Access to African Community and COMESA markets",
       color: "bg-purple-600",
     },
     {
@@ -412,13 +427,13 @@ const StrategicSectorsGrid = () => {
     {
       title: "Infrastructure Projects",
       description:
-        "Port development with $1.72B DP World investment creating logistics networks across East Africa",
+        "Port development with $1.72B DP World investment creating logistics networks across Africa",
       image: "/images/economic-powerhouse.jpeg",
     },
     {
       title: "Financial Integration",
       description:
-        "Cross-regional frameworks with Gulf banks establishing East African operations and $1B fund of funds",
+        "Cross-regional frameworks with Gulf banks establishing African operations and $1B fund of funds",
       image: "/images/uganda-landscape.jpg",
     },
     {
@@ -447,7 +462,7 @@ const StrategicSectorsGrid = () => {
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             High-impact investment areas creating sustainable economic
-            partnerships between the Middle East and East Africa
+            partnerships between the Middle East and Africa
           </p>
         </div>
 
@@ -571,7 +586,7 @@ const BlockchainSection = () => {
                 Beyond cryptocurrencies, the region is pioneering real-world
                 applications in cross-border payments, supply chain
                 verification, digital identity, and asset tokenization that
-                connect businesses across Middle East and East African markets.
+                connect businesses across Middle East and African markets.
               </p>
             </div>
 
@@ -599,7 +614,7 @@ const BlockchainSection = () => {
                     "UAE ranks 3rd globally in crypto adoption with comprehensive regulatory frameworks",
                     "Circle's USDC receives regulatory approval from Abu Dhabi Global Market (ADGM)",
                     "Dubai International Financial Centre (DIFC) recognizes stablecoins for institutional use",
-                    "Cross-border payment corridors linking Gulf states with East African markets",
+                    "Cross-border payment corridors linking Gulf states with African markets",
                     "Blockchain-powered trade finance solutions reducing settlement time by 80%",
                   ].map((item, i) => (
                     <div key={i} className="flex items-start">
@@ -667,7 +682,7 @@ const InvestmentLandscapeSection = ({
       title: "Sovereign Wealth Funds",
       amount: "$2.4 Trillion+",
       description:
-        "Combined assets of ADIA ($993B), PIF ($925B), and QIA ($475-500B) with increasing allocations to East African markets",
+        "Combined assets of ADIA ($993B), PIF ($925B), and QIA ($475-500B) with increasing allocations to African markets",
       color: "from-blue-600 to-blue-800",
     },
     {
@@ -698,7 +713,7 @@ const InvestmentLandscapeSection = ({
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Major financial institutions driving economic integration between
-            the Middle East and East Africa
+            the Middle East and Africa
           </p>
         </div>
 
@@ -822,7 +837,7 @@ const GlobalSignificanceSection = () => {
             Strategic Global Significance
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Middle East-East Africa partnerships are reshaping global trade
+            Middle East-Africa partnerships are reshaping global trade
             routes and geopolitical dynamics
           </p>
         </div>
@@ -832,7 +847,7 @@ const GlobalSignificanceSection = () => {
             {
               title: "Maritime Infrastructure",
               description:
-                "UAE-based DP World's investments in East African ports enhancing connectivity along critical global shipping lanes",
+                "UAE-based DP World's investments in African ports enhancing connectivity along critical global shipping lanes",
               image: "/images/east-africa-map.jpg",
               icon: (
                 <svg
@@ -1143,7 +1158,7 @@ const FeaturedSpeakersSection = ({
             Distinguished Speakers
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Connect with decision makers shaping Middle East-East Africa
+            Connect with decision makers shaping Middle East-Africa
             partnerships
           </p>
         </div>
@@ -1234,7 +1249,7 @@ const SponsorsGridSection = ({ sponsors }: { sponsors: Sponsor[] }) => (
           MEA Summit 2025 Partners
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Leading organizations supporting Middle East-East Africa economic
+          Leading organizations supporting Middle East-Africa economic
           integration
         </p>
       </div>
@@ -1350,7 +1365,7 @@ const ImmersiveCTASection = () => (
       <p className="text-xl text-gray-100 mb-10 max-w-3xl mx-auto">
         MEA Summit 2025 is implementing a phased integration framework to
         address structural, political, and institutional barriers to deeper
-        Middle East-East Africa economic partnership.
+        Middle East-Africa economic partnership.
       </p>
 
       <div className="flex flex-wrap justify-center gap-4">

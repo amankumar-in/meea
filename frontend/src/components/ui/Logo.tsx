@@ -54,10 +54,10 @@ export function Logo({ className = "", forceMode }: LogoProps) {
     >
       <Image
         src={effectiveDarkMode ? "/logo-darkmode.svg" : "/logo-lightmode.svg"}
-        alt="UNITE Expo 2025"
+        alt="MEA Summit 2025"
         width={112}
         height={40}
-        className="h-10 w-auto"
+        className="h-12 w-auto"
         priority
       />
     </Link>

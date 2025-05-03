@@ -9,19 +9,19 @@ import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MEEA - Middle East & East Africa Investment Summit 2025",
+  title: "MEA Summit 2025",
   description:
-    "The Middle East & East Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and East Africa region.",
+    "The Middle East & Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and Africa region.",
   keywords: [
     "Middle East",
-    "East Africa",
+    "Africa",
     "Investment",
     "Summit",
     "International Collaboration",
   ],
   viewport: "width=device-width, initial-scale=1",
   appleWebApp: {
-    title: "MEEA 2025",
+    title: "MEA 2025",
     capable: true,
     statusBarStyle: "default",
   },
@@ -30,43 +30,43 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "MEEA - Middle East & East Africa Investment Summit 2025",
+    title: "MEA - Middle East & Africa Investment Summit 2025",
     description:
-      "The Middle East & East Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and East Africa region.",
+      "The Middle East & Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and Africa region.",
     type: "website",
-    siteName: "MEEA 2025",
+    siteName: "MEA 2025",
     images: [
       {
         url: "https://unite-backend-gg5m.onrender.com/uploads/og_image1_eb1ac92835.jpg",
         width: 1200,
         height: 630,
-        alt: "MEEA 2025 - Middle East & East Africa Investment Summit",
+        alt: "MEA 2025 - Middle East & Africa Investment Summit",
       },
     ],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MEEA - Middle East & East Africa Investment Summit 2025",
+    title: "MEA - Middle East & Africa Investment Summit 2025",
     description:
-      "The Middle East & East Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and East Africa region.",
+      "The Middle East & Africa Investment Summit 2025 is a platform for investors, policymakers, and industry leaders to discuss the latest trends and opportunities in the Middle East and Africa region.",
     images: [
       {
         url: "https://unite-backend-gg5m.onrender.com/uploads/og_image2_f4440ac129.jpg",
         width: 1200,
         height: 600,
-        alt: "MEEA 2025 - Middle East & East Africa Investment Summit",
+        alt: "MEA 2025 - Middle East & Africa Investment Summit",
       },
     ],
-    creator: "@meea2025",
-    site: "@meea2025",
+    creator: "@mea2025",
+    site: "@mea2025",
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://meea.coinsforcollege.org",
+    canonical: "https://mea.coinsforcollege.org",
   },
 };
 
