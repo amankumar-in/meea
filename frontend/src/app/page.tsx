@@ -1745,7 +1745,7 @@ export default function HomePage() {
     const fetchSpeakers = async () => {
       try {
         const response = await fetchAPI(
-          "/speakers?filters[Featured][$eq]=true&populate=*&pagination[limit]=8"
+          "/speakers?filters[Featured][$eq]=true&populate=*&sort[0]=SortOrder:asc&sort[1]=Name:asc&pagination[limit]=8"
         );
         if (response && response.data) {
           setSpeakers(response.data);
