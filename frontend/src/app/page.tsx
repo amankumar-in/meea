@@ -7,6 +7,9 @@ import Image from "next/image";
 import { fetchAPI } from "@/lib/api/api-config";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { Marquee } from "@/components/magicui/marquee";
+import { Globe } from "@/components/magicui/globe";
+import { AuroraText } from "@/components/magicui/aurora-text";
 
 // -------------------------------------------------------------------
 // Type Definitions - Maintained from original for Strapi compatibility
@@ -78,124 +81,108 @@ const getImageUrl = (path: string) => {
 
 // 1. Dynamic Parallax Hero
 const DynamicHeroSection = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
+  // Smooth scroll handler for Speakers button
+  const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const section = document.getElementById('speakers');
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <section className="relative h-[calc(100svh-60px)] overflow-hidden">
-      {/* Sky background layer */}
-      <div
-        className="absolute inset-0 bg-blue-800"
-        style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-      ></div>
-      {/* City skyline silhouette - translates slower */}
-      <div
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: "url('/images/hero-image1.png')",
-          backgroundSize: "cover",
-          transform: `translateY(${scrollY * 0.2}px)`,
-          opacity: 0.7,
-        }}
-      ></div>
-      {/* Logo overlay - positioned on the right side */}
-      <div 
-        className="absolute right-0 top-0 bottom-0 my-auto w-[50%] opacity-10 pointer-events-none flex items-center justify-end"
-        style={{ transform: `translateY(${scrollY * 0.05}px)` }}
-      >
-        <div className="w-full h-[70%]">
-          <Image 
-            src="/MEA-original-logo.png" 
-            alt="MEA Logo Overlay" 
-            fill
-            className="object-contain object-right"
-            priority
-          />
-        </div>
+    <section className="relative flex items-center min-h-[calc(100vh-60px)] overflow-hidden">
+      {/* Background skyline image below gradient */}
+      <div className="absolute inset-0 z-0">
+        <img src="/images/skyline.png" alt="Skyline" className="w-full h-full object-cover object-bottom opacity-70" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
+        <div className="absolute inset-0 animate-gradient-bg" style={{ zIndex: 1 }} />
+        {/* Soft dark overlay for contrast */}
+        <div className="absolute inset-0 bg-black opacity-70 dark:opacity-80"></div>
       </div>
+      <style jsx global>{`
+        @keyframes hero-gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .animate-gradient-bg {
+          background: linear-gradient(-45deg, #1e293b, #312e81, #6d28d9, #7c3aed, #be185d, #f43f5e, #f59e42, #312e81);
+          background-size: 400% 400%;
+          animation: hero-gradient 36s ease-in-out infinite;
+          opacity: 0.92;
+        }
+      `}</style>
       {/* Content container */}
-      <div className="relative h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <div
-            className="bg-black/50 p-6 sm:p-8 md:p-12 lg:max-w-3xl backdrop-blur-sm rounded-lg transform transition-all duration-500 hover:scale-[1.02]"
-            style={{ boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)" }}
-          >
-            <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6 rounded-sm">
-              <span className="text-xs sm:text-sm text-white uppercase tracking-wider font-bold">
-                June 25-27, 2025 • Kampala, Uganda
-              </span>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full">
+        {/* Left: Content card */}
+        <div className="max-w-2xl w-full py-16 md:py-0 flex flex-col justify-center">
+          <div className="bg-black/40 backdrop-blur-5xl rounded-3xl shadow-2xl border border-white/30 dark:border-white/10 p-10 flex flex-col gap-8">
+            {/* MEA Logo - hidden on mobile, visible on md+ */}
+            <div className="hidden md:flex justify-start items-center mb-2">
+              <img src="/mea-icon.svg" alt="MEA Summit Icon" className="w-16 h-16 drop-shadow-xl" style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }} />
             </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight text-white">
-              <div className="sm:inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400">
-                MIDDLE EAST
-              </div>
-              <span className="mx-2 text-white hidden sm:inline-block">•</span>
-              <span className="mx-2 text-white inline-block sm:hidden">•</span>
-              <div className="sm:inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400">
-                AFRICA
-              </div>
-              <div className="text-white mt-1 sm:mt-2">INVESTMENT SUMMIT</div>
+            {/* Heading with animated gradient */}
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+              <AuroraText className="block" colors={["#fff", "#a5b4fc", "#f472b6", "#38bdf8"]}>Middle East <span className="mx-2">•</span> Africa</AuroraText>
+              <br />
+              <AuroraText className="text-2xl md:text-3xl font-semibold block mt-2" speed={1.5} colors={["#fff", "#a5b4fc", "#f472b6", "#38bdf8"]}>Investment Summit 2025</AuroraText>
             </h1>
-
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-100 mb-6 sm:mb-8 font-light">
-              Catalyzing $100+ billion in strategic partnerships across energy,
-              agriculture, technology, and infrastructure
+            {/* Date/location - smaller and tighter on mobile */}
+            <div className="inline-flex items-center bg-yellow-400/90 px-2 py-0.5 rounded-md text-black mb-2 shadow-lg w-fit text-xs font-bold tracking-wide md:px-3 md:py-1 md:rounded-full md:mb-4 md:text-sm">
+              JUNE 25-27, 2025 • KAMPALA, UGANDA
+            </div>
+            {/* Description - less margin on mobile */}
+            <p className="text-lg md:text-xl text-white/90 font-light max-w-xl mt-2 mb-6 md:mt-0">
+              Catalyzing <span className="font-semibold text-yellow-500">$100+ billion</span> in strategic partnerships across energy, agriculture, technology, and infrastructure.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            {/* CTAs - smaller and always in a row on mobile */}
+            <div className="flex flex-row gap-2 mt-2 items-center flex-nowrap">
+              {/* Primary CTA: Register Now */}
               <a
                 href="/tickets"
-                className="w-full sm:w-auto text-center inline-block px-6 py-2.5 sm:px-8 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-md shadow-lg transition-all duration-300"
+                className="relative inline-block px-4 py-2 rounded-lg text-base font-bold text-white shadow-xl border border-white/30 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 hover:scale-105 hover:brightness-110 md:px-8 md:py-3 md:rounded-xl md:text-lg"
+                style={{ backgroundSize: '200% 200%', backgroundPosition: '0% 50%' }}
               >
                 Register Now
               </a>
-              <button
-                onClick={() => scrollToSection("speakers")}
-                className="w-full sm:w-auto text-center inline-block px-6 py-2.5 sm:px-8 sm:py-3 backdrop-blur-md bg-white/10 border border-white/30 text-white font-bold rounded-md hover:bg-white/20 transition-all duration-300"
+              {/* Secondary CTA: Speakers */}
+              <a
+                href="#speakers"
+                onClick={handleScrollToSpeakers}
+                className="relative inline-block px-4 py-2 rounded-lg text-base font-bold border border-white bg-white text-blue-700 shadow-md backdrop-blur-md transition-all duration-300 hover:bg-blue-50 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 md:px-8 md:py-3 md:rounded-xl md:text-lg"
               >
                 Speakers
-              </button>
+              </a>
             </div>
           </div>
         </div>
-      </div>
-      {/* Floating indicator */}
-      <div
-        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 cursor-pointer"
-        onClick={() => scrollToSection("stats-section")}
-        aria-label="Scroll to next section"
-      >
-        <svg
-          className="w-8 h-8 sm:w-10 sm:h-10 text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          ></path>
-        </svg>
+        {/* Right: Globe and concentric orbit */}
+        <div className="hidden md:flex flex-1 items-center justify-center relative min-w-[340px] aspect-[1/1] overflow-visible">
+          <div className="relative w-full h-full flex items-center justify-center aspect-[1/1] overflow-visible">
+            {/* Concentric orbit ring */}
+            <div className="absolute inset-0 rounded-full border-4 border-yellow-300/30 z-0 aspect-[1/1]" />
+            {/* Animated Globe - perfectly round, not clipped */}
+            <div className="absolute inset-0 flex items-center justify-center z-10 aspect-[1/1] overflow-visible">
+              <Globe className="w-full h-full max-w-[420px] max-h-[420px] aspect-[1/1]" />
+            </div>
+            {/* Orbiting dots */}
+            <div className="absolute w-full h-full animate-reverse-spin z-0 aspect-[1/1]">
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-yellow-400 shadow-lg shadow-yellow-400/50" />
+            </div>
+            <div className="absolute w-full h-full animate-reverse-spin-slow z-0 aspect-[1/1]">
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-8 h-8 rounded-full bg-blue-400 shadow-lg shadow-blue-400/50" />
+            </div>
+            <div className="absolute w-full h-full animate-spin-med z-0 aspect-[1/1]">
+              <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 shadow-lg shadow-purple-400/50" />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -363,44 +350,119 @@ const PartnersCarousel = () => {
           Supported by Global Partners
         </h2>
         <div className="w-full overflow-hidden">
-          {/* Better css masking for smooth marquee edge fading */}
-          <div className="w-full mt-8">
-            <div
-              className="whitespace-nowrap overflow-hidden"
-              style={{
-                maskImage:
-                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-                WebkitMaskImage:
-                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-              }}
-            >
-              <div className="inline-flex items-center gap-12 animate-marquee" style={{ display: "inline-flex" }}>
-                {logos.map((logo, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
+          {/* Masking for smooth marquee edge fading */}
+          <div className="w-full mt-8" style={{
+            maskImage:
+              "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+          }}>
+            <Marquee className="gap-12" pauseOnHover repeat={2}>
+              {logos.map((logo, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
+                >
+                  <img
+                    src={logo}
+                    alt={`Partner ${index + 1}`}
+                    className="max-h-full w-full object-contain"
+                  />
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// 3D Partners Marquee Section (experimental)
+const PartnersMarquee3D = () => {
+  const logos = [
+    "/images/partners/partner-logo-1.svg",
+    "/images/partners/partner-logo-2.png",
+    "/images/partners/partner-logo-3.svg",
+    "/images/partners/partner-logo-4.png",
+    "/images/partners/partner-logo-5.png",
+    "/images/partners/partner-logo-6.svg",
+    "/images/partners/partner-logo-7.png",
+    "/images/partners/partner-logo-8.webp",
+    "/images/partners/partner-logo-9.svg",
+    "/images/partners/partner-logo-10.webp",
+    "/images/partners/partner-logo-11.png",
+    "/images/partners/partner-logo-12.png",
+  ];
+
+  // Split logos into 4 rows for the 3D effect
+  const rowCount = 4;
+  const logosPerRow = Math.ceil(logos.length / rowCount);
+  const rows = Array.from({ length: rowCount }, (_, i) =>
+    logos.slice(i * logosPerRow, (i + 1) * logosPerRow)
+  );
+
+  // If not enough logos to fill all rows, repeat from start
+  for (let i = 0; i < rowCount; i++) {
+    if (rows[i].length < logosPerRow) {
+      rows[i] = rows[i].concat(logos.slice(0, logosPerRow - rows[i].length));
+    }
+  }
+
+  const directions = [false, true, true, false];
+
+  return (
+    <section className="py-16 relative overflow-hidden bg-white dark:bg-[#0a1622]">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-10">
+          {/* Title and description: left on desktop, top on mobile */}
+          <div className="md:w-1/3 flex-shrink-0 text-center md:text-left mb-6 md:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white pb-4">
+              Supported by Global Partners
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto md:mx-0">
+              Leading organizations supporting Middle East-Africa economic integration
+            </p>
+          </div>
+          {/* 3D Marquee: right on desktop, below on mobile */}
+          <div className="flex-1">
+            <div className="relative flex h-96 w-full flex-row items-center justify-center gap-4 overflow-hidden [perspective:600px] bg-transparent border-none shadow-none">
+              <div
+                className="flex flex-row items-center gap-4"
+                style={{
+                  transform:
+                    "translateX(-100px) translateY(0px) translateZ(-100px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg)",
+                }}
+              >
+                {rows.map((row, i) => (
+                  <Marquee
+                    key={i}
+                    pauseOnHover
+                    vertical
+                    reverse={directions[i]}
+                    className="[--duration:20s] gap-6"
+                    style={{ minWidth: 0 }}
                   >
-                    <img
-                      src={logo}
-                      alt={`Partner ${index + 1}`}
-                      className="max-h-full w-full object-contain"
-                    />
-                  </div>
-                ))}
-                {/* Duplicate logos for continuous loop */}
-                {logos.map((logo, index) => (
-                  <div
-                    key={`dup-${index}`}
-                    className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
-                  >
-                    <img
-                      src={logo}
-                      alt={`Partner ${index + 1}`}
-                      className="max-h-full w-full object-contain"
-                    />
-                  </div>
+                    {row.map((logo, idx) => (
+                      <div
+                        key={idx}
+                        className="relative h-32 w-36 sm:w-40 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 rounded-xl border border-gray-200 dark:border-gray-700 shadow-md mx-auto p-4 transition-transform hover:scale-105"
+                      >
+                        <img
+                          src={logo}
+                          alt={`Partner ${i * logosPerRow + idx + 1}`}
+                          className="max-h-20 max-w-full object-contain mx-auto"
+                        />
+                      </div>
+                    ))}
+                  </Marquee>
                 ))}
               </div>
+              {/* Edge gradients for 3D effect */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-white dark:from-[#0a1622]"></div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-white dark:from-[#0a1622]"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white dark:from-[#0a1622]"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-white dark:from-[#0a1622]"></div>
             </div>
           </div>
         </div>
@@ -1791,12 +1853,21 @@ export default function HomePage() {
     fetchSponsors();
   }, []);
 
+  // Smooth scroll handler for Speakers button
+  const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const section = document.getElementById('speakers');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <main className="bg-white dark:bg-gray-900">
       {/* Completely new layout and sections */}
       <DynamicHeroSection />
       <AnimatedStatsSection />
-      <PartnersCarousel />
+      <PartnersMarquee3D />
       <StrategicSectorsGrid />
       <FeaturedSpeakersSection speakers={speakers} loading={loading.speakers} />
       <BannerSection />
