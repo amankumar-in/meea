@@ -5,6 +5,7 @@ import Link from "next/link";
 import { fetchAPI } from "@/lib/api/api-config";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { BorderBeam } from '@/components/magicui/border-beam';
 
 interface Speaker {
   id: number;
@@ -140,86 +141,71 @@ export default function SpeakersPage() {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-8 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                Find Speakers
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Search by name, title, organization, or expertise
-              </p>
-            </div>
-
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
-              {/* Search Input */}
-              <div className="w-full md:w-64">
-                <label htmlFor="search" className="sr-only">
-                  Search speakers
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    id="search"
-                    type="search"
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-yellow-500"
-                    placeholder="Search speakers"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-6 bg-white dark:bg-gray-900">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              Find Speakers
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Search by name, title, organization, or expertise
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {/* Search Input */}
+            <div className="w-full md:w-64">
+              <label htmlFor="search" className="sr-only">
+                Search speakers
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
                 </div>
-              </div>
-
-              {/* Featured Only Toggle */}
-              <div className="flex items-center">
                 <input
-                  id="featured-only"
-                  type="checkbox"
-                  className="h-4 w-4 border-gray-300 dark:border-gray-600 focus:ring-0"
-                  checked={showFeaturedOnly}
-                  onChange={(e) => setShowFeaturedOnly(e.target.checked)}
+                  id="search"
+                  type="search"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-yellow-500 rounded-full"
+                  placeholder="Search speakers"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <label
-                  htmlFor="featured-only"
-                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
-                >
-                  Featured speakers only
-                </label>
               </div>
+            </div>
+            {/* Featured Only Toggle */}
+            <div className="flex items-center">
+              <input
+                id="featured-only"
+                type="checkbox"
+                className="h-4 w-4 border-gray-300 dark:border-gray-600 focus:ring-0"
+                checked={showFeaturedOnly}
+                onChange={(e) => setShowFeaturedOnly(e.target.checked)}
+              />
+              <label
+                htmlFor="featured-only"
+                className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+              >
+                Featured speakers only
+              </label>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Speakers Grid */}
-      <section className="py-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <section className="pt-0 pb-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-              Distinguished Speakers
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-              Learn from industry leaders, policymakers, and innovators at the
-              forefront of Uganda's economic transformation
-            </p>
-          </div>
-
           {loading ? (
             <div className="flex flex-col items-center justify-center py-16 border border-gray-200 dark:border-gray-600">
               <div className="mb-6">
@@ -282,82 +268,102 @@ export default function SpeakersPage() {
                 </div>
               ) : (
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {filteredSpeakers.map((speaker) => (
+                  {filteredSpeakers.map((speaker, idx) => (
                     <Link
                       href={`/speakers/${speaker.Slug}`}
                       key={speaker.id}
-                      className="group"
+                      className="group h-full focus:outline-none"
                     >
-                      <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 h-full flex flex-col hover:border-yellow-500 transition-colors">
+                      <div
+                        className="h-full flex flex-col overflow-hidden transition-all duration-300 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 shadow-xl group-hover:border-2 group-hover:border-transparent group-hover:shadow-[0_0_0_4px_rgba(59,130,246,0.5),0_8px_32px_0_rgba(236,72,153,0.15)] group-hover:bg-white/80 dark:group-hover:bg-gray-900/80 relative"
+                        style={{ borderRadius: 20 }}
+                      >
                         {/* Speaker Image */}
-                        <div className="aspect-square w-full bg-gray-100 dark:bg-gray-700 relative">
+                        <div className="aspect-square w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden rounded-xl">
                           {speaker.ProfileImage ? (
                             <img
                               src={`${process.env.NEXT_PUBLIC_API_URL}${speaker.ProfileImage.url}`}
                               alt={speaker.Name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 rounded-xl"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-black dark:bg-white">
-                              <span className="text-white dark:text-black text-6xl font-bold">
+                            <div className="w-full h-full flex items-center justify-center rounded-xl">
+                              <span className="text-gray-400 text-6xl font-bold">
                                 {speaker.Name.charAt(0)}
                               </span>
                             </div>
                           )}
-
-                          {/* Featured indicator */}
+                          {/* Featured indicator - top right */}
                           {speaker.Featured && (
-                            <div className="absolute top-0 right-0 p-4">
-                              <Chip variant="primary" size="sm">
-                                Featured
-                              </Chip>
+                            <div className="absolute top-4 right-4 z-20">
+                              <span
+                                className="relative overflow-hidden inline-flex items-center justify-center px-2 py-0.5 text-[11px] font-semibold tracking-wide min-w-[48px] min-h-[20px] text-yellow-800 dark:text-yellow-200 bg-white/80 dark:bg-gray-900/80 rounded-xl"
+                                style={{ fontSize: '0.72rem', lineHeight: 1.1 }}
+                                tabIndex={-1}
+                                aria-label="Featured Speaker"
+                              >
+                                <span className="relative z-10">Featured</span>
+                                <BorderBeam size={28} duration={2.5} colorFrom="#FFD700" colorTo="#EC4899" />
+                              </span>
                             </div>
                           )}
                         </div>
-
                         {/* Speaker Info */}
-                        <div className="p-6 flex-grow flex flex-col">
-                          <h3 className="text-xl font-bold mb-1 group-hover:text-yellow-500 transition-colors text-gray-900 dark:text-white">
+                        <div className="p-6 flex-grow flex flex-col z-10">
+                          <h3 className="text-xl font-bold mb-1 group-hover:text-pink-500 transition-colors text-gray-900 dark:text-white">
                             {speaker.Name}
                           </h3>
-                          <p className="text-yellow-500 mb-1">
-                            {speaker.Title}
-                          </p>
-                          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                            {speaker.Organization}
-                          </p>
-
-                          <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">
+                          <div className="flex items-center gap-2 mb-4">
+                            <span className="text-yellow-500 text-sm font-medium">{speaker.Title}</span>
+                            <span className="text-gray-400 dark:text-gray-500 text-lg">•</span>
+                            <span className="text-gray-600 dark:text-gray-400 text-sm">{speaker.Organization}</span>
+                          </div>
+                          <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow text-sm">
                             {speaker.ShortBio.length > 150
                               ? `${speaker.ShortBio.substring(0, 150)}...`
                               : speaker.ShortBio}
                           </p>
-
-                          {/* Event Count */}
-                          {speaker.events && speaker.events.length > 0 && (
-                            <div className="mt-auto mb-4 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4">
-                              Speaking at {speaker.events.length}{" "}
-                              {speaker.events.length === 1 ? "event" : "events"}
+                          {/* Event Count and View Profile - same line */}
+                          {(speaker.events && speaker.events.length > 0) ? (
+                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 text-sm">
+                              <span className="text-gray-600 dark:text-gray-400">
+                                Speaking at {speaker.events.length} {speaker.events.length === 1 ? "event" : "events"}
+                              </span>
+                              <span className="inline-flex items-center font-medium text-black dark:text-white group-hover:text-pink-500 transition-colors cursor-pointer">
+                                View Profile
+                                <svg
+                                  className="ml-2 h-5 w-5"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-end mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 text-sm">
+                              <span className="inline-flex items-center font-medium text-black dark:text-white group-hover:text-pink-500 transition-colors cursor-pointer">
+                                View Profile
+                                <svg
+                                  className="ml-2 h-5 w-5"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                  />
+                                </svg>
+                              </span>
                             </div>
                           )}
-
-                          <div className="flex justify-end">
-                            <span className="inline-flex items-center text-sm font-medium text-black dark:text-white group-hover:text-yellow-500 transition-colors">
-                              View Profile
-                              <svg
-                                className="ml-2 h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                          </div>
                         </div>
                       </div>
                     </Link>
