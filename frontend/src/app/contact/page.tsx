@@ -142,7 +142,7 @@ function HeroSection() {
               Contact Us
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              Get in touch with our team about UNITE Expo 2025
+              Get in touch with our team about MEA Summit 2025
             </p>
             <div className="flex flex-wrap gap-4">
               <Button variant="primary" href="#contact-form">
@@ -181,7 +181,7 @@ function HeroSection() {
                   </div>
                   <div>
                     <p className="font-bold">Email</p>
-                    <p>info@uniteexpo.org</p>
+                    <p>info@meaexpo.org</p>
                   </div>
                 </li>
                 <li className="flex items-start">
@@ -251,7 +251,7 @@ function ContactOptionsSection() {
       title: "General Inquiries",
       description:
         "Have questions about the expo? Our team is ready to assist you.",
-      email: "info@uniteexpo.org",
+      email: "info@meaexpo.org",
       phone: "+256 700 000 000",
       icon: (
         <svg
@@ -272,8 +272,8 @@ function ContactOptionsSection() {
     {
       title: "Sponsorship Opportunities",
       description:
-        "Interested in sponsoring UNITE Expo? Explore our sponsorship packages.",
-      email: "sponsors@uniteexpo.org",
+        "Interested in sponsoring MEA Summit? Explore our sponsorship packages.",
+      email: "sponsors@meaexpo.org",
       phone: "+256 700 000 001",
       icon: (
         <svg
@@ -295,7 +295,7 @@ function ContactOptionsSection() {
       title: "Media & Press",
       description:
         "For media inquiries, press passes, and promotional materials.",
-      email: "media@uniteexpo.org",
+      email: "media@meaexpo.org",
       phone: "+256 700 000 002",
       icon: (
         <svg
@@ -681,7 +681,7 @@ function ContactFormSection({
                     </div>
                     <div className="text-gray-700 dark:text-gray-300">
                       <p className="font-medium text-black dark:text-white">
-                        UNITE Expo Headquarters
+                        MEA Summit Headquarters
                       </p>
                       <p>Plot 123, Kampala Road</p>
                       <p>Kampala, Uganda</p>
@@ -732,7 +732,7 @@ function ContactFormSection({
                       <p className="font-medium text-black dark:text-white">
                         Email
                       </p>
-                      <p>info@uniteexpo.org</p>
+                      <p>info@meaexpo.org</p>
                     </div>
                   </div>
                 </div>
@@ -782,7 +782,7 @@ function SocialMediaSection() {
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-3xl mx-auto mb-8">
           <a
-            href="https://twitter.com/uniteexpo"
+            href="https://twitter.com/meaexpo"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white dark:border-black p-4 h-16 flex items-center justify-center hover:bg-yellow-500 hover:text-black hover:border-yellow-500 dark:hover:bg-yellow-500 dark:hover:text-black dark:hover:border-yellow-500 transition-colors"
@@ -794,7 +794,7 @@ function SocialMediaSection() {
           </a>
 
           <a
-            href="https://facebook.com/uniteexpo"
+            href="https://facebook.com/meaexpo"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white dark:border-black p-4 h-16 flex items-center justify-center hover:bg-yellow-500 hover:text-black hover:border-yellow-500 dark:hover:bg-yellow-500 dark:hover:text-black dark:hover:border-yellow-500 transition-colors"
@@ -810,7 +810,7 @@ function SocialMediaSection() {
           </a>
 
           <a
-            href="https://instagram.com/uniteexpo"
+            href="https://instagram.com/meaexpo"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white dark:border-black p-4 h-16 flex items-center justify-center hover:bg-yellow-500 hover:text-black hover:border-yellow-500 dark:hover:bg-yellow-500 dark:hover:text-black dark:hover:border-yellow-500 transition-colors"
@@ -826,7 +826,7 @@ function SocialMediaSection() {
           </a>
 
           <a
-            href="https://linkedin.com/company/uniteexpo"
+            href="https://linkedin.com/company/meaexpo"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white dark:border-black p-4 h-16 flex items-center justify-center hover:bg-yellow-500 hover:text-black hover:border-yellow-500 dark:hover:bg-yellow-500 dark:hover:text-black dark:hover:border-yellow-500 transition-colors"
@@ -838,7 +838,7 @@ function SocialMediaSection() {
           </a>
 
           <a
-            href="https://youtube.com/uniteexpo"
+            href="https://youtube.com/meaexpo"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white dark:border-black p-4 h-16 flex items-center justify-center hover:bg-yellow-500 hover:text-black hover:border-yellow-500 dark:hover:bg-yellow-500 dark:hover:text-black dark:hover:border-yellow-500 transition-colors"
@@ -851,7 +851,7 @@ function SocialMediaSection() {
         </div>
 
         <p className="text-lg">
-          Follow us on social media for the latest updates about UNITE Expo 2025
+          Follow us on social media for the latest updates about MEA Summit 2025
         </p>
       </div>
     </section>
