@@ -79,8 +79,8 @@ const getImageUrl = (path: string) => {
 // Completely New Section Components
 // -------------------------------------------------------------------
 
-// 1. Dynamic Parallax Hero
-const DynamicHeroSection = () => {
+// 1. Impactful Hero Section with Vertical Marquee of Speakers
+const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
   // Smooth scroll handler for Speakers button
   const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -90,97 +90,116 @@ const DynamicHeroSection = () => {
     }
   };
 
+  // Helper for speaker image
+  const getSpeakerImage = (url?: string) => {
+    if (!url) return "/mea-icon.svg";
+    return getImageUrl(url);
+  };
+
+  // Split speakers into two columns for the marquee
+  const col1 = speakers.filter((_, i) => i % 2 === 0);
+  const col2 = speakers.filter((_, i) => i % 2 === 1);
+
   return (
-    <section className="relative flex items-center min-h-[calc(100vh-60px)] overflow-hidden">
-      {/* Background skyline image below gradient */}
-      <div className="absolute inset-0 z-0">
-        <img src="/images/skyline.png" alt="Skyline" className="w-full h-full object-cover object-bottom opacity-70" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
-        <div className="absolute inset-0 animate-gradient-bg" style={{ zIndex: 1 }} />
-        {/* Soft dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black opacity-70 dark:opacity-80"></div>
+    <section className="relative flex items-center min-h-[calc(100vh-60px)] overflow-hidden bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-[#0a1622] dark:via-[#1e2233] dark:to-[#10131a]">
+      {/* Subtle SVG grid pattern overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
+        <svg width="100%" height="100%">
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
       </div>
-      <style jsx global>{`
-        @keyframes hero-gradient {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-        .animate-gradient-bg {
-          background: linear-gradient(-45deg, #1e293b, #312e81, #6d28d9, #7c3aed, #be185d, #f43f5e, #f59e42, #312e81);
-          background-size: 400% 400%;
-          animation: hero-gradient 36s ease-in-out infinite;
-          opacity: 0.92;
-        }
-      `}</style>
-      {/* Content container */}
+      {/* Soft blue accent in top-left corner */}
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-300 opacity-20 blur-3xl rounded-full pointer-events-none z-0 dark:bg-blue-500" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full">
-        {/* Left: Content card */}
-        <div className="max-w-2xl w-full py-16 md:py-0 flex flex-col justify-center">
-          <div className="bg-black/40 backdrop-blur-5xl rounded-3xl shadow-2xl border border-white/30 dark:border-white/10 p-10 flex flex-col gap-8">
-            {/* MEA Logo - hidden on mobile, visible on md+ */}
-            <div className="hidden md:flex justify-start items-center mb-2">
-              <img src="/mea-icon.svg" alt="MEA Summit Icon" className="w-16 h-16 drop-shadow-xl" style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }} />
-            </div>
-            {/* Heading with animated gradient */}
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-              <AuroraText className="block" colors={["#fff", "#a5b4fc", "#f472b6", "#38bdf8"]}>Middle East <span className="mx-2">•</span> Africa</AuroraText>
-              <br />
-              <AuroraText className="text-2xl md:text-3xl font-semibold block mt-2" speed={1.5} colors={["#fff", "#a5b4fc", "#f472b6", "#38bdf8"]}>Investment Summit 2025</AuroraText>
-            </h1>
-            {/* Date/location - smaller and tighter on mobile */}
-            <div className="inline-flex items-center bg-yellow-400/90 px-2 py-0.5 rounded-md text-black mb-2 shadow-lg w-fit text-xs font-bold tracking-wide md:px-3 md:py-1 md:rounded-full md:mb-4 md:text-sm">
-              JUNE 25-27, 2025 • KAMPALA, UGANDA
-            </div>
-            {/* Description - less margin on mobile */}
-            <p className="text-lg md:text-xl text-white/90 font-light max-w-xl mt-2 mb-6 md:mt-0">
-              Catalyzing <span className="font-semibold text-yellow-500">$100+ billion</span> in strategic partnerships across energy, agriculture, technology, and infrastructure.
-            </p>
-            {/* CTAs - smaller and always in a row on mobile */}
-            <div className="flex flex-row gap-2 mt-2 items-center flex-nowrap">
-              {/* Primary CTA: Register Now */}
-              <a
-                href="/tickets"
-                className="relative inline-block px-4 py-2 rounded-lg text-base font-bold text-white shadow-xl border border-white/30 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 hover:scale-105 hover:brightness-110 md:px-8 md:py-3 md:rounded-xl md:text-lg"
-                style={{ backgroundSize: '200% 200%', backgroundPosition: '0% 50%' }}
-              >
-                Register Now
-              </a>
-              {/* Secondary CTA: Speakers */}
-              <a
-                href="#speakers"
-                onClick={handleScrollToSpeakers}
-                className="relative inline-block px-4 py-2 rounded-lg text-base font-bold border border-white bg-white text-blue-700 shadow-md backdrop-blur-md transition-all duration-300 hover:bg-blue-50 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 md:px-8 md:py-3 md:rounded-xl md:text-lg"
-              >
-                Speakers
-              </a>
-            </div>
+        {/* Left: Content */}
+        <div className="w-full md:w-1/2 max-w-2xl py-16 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+          {/* Logo and event year */}
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/mea-icon.svg" alt="MEA Summit Icon" className="w-14 h-14 drop-shadow-xl" style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }} />
+            <span className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-lg text-xs shadow-md">2025</span>
+          </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 text-slate-900 dark:text-white leading-tight">
+            Unleashing the Future of <span className="text-orange-400 dark:text-blue-300">Middle East</span> & <span className="text-pink-400 dark:text-pink-300">Africa</span>
+          </h1>
+          {/* Subheadline */}
+          <p className="text-lg md:text-2xl text-slate-700 dark:text-white/90 font-light max-w-xl mb-6">
+            Join global leaders, innovators, and investors at the region&apos;s most influential summit.
+          </p>
+          {/* Date/location */}
+          <div className="inline-flex items-center bg-yellow-400/90 px-3 py-1 rounded-full text-black mb-4 shadow-lg text-sm font-bold tracking-wide">
+            JUNE 25-27, 2025 • KAMPALA, UGANDA
+          </div>
+          {/* CTAs */}
+          <div className="flex flex-row gap-3 mt-2 items-center flex-nowrap justify-center md:justify-start">
+            <a
+              href="/tickets"
+              className="relative inline-block px-6 py-3 rounded-lg text-lg font-bold text-white shadow-xl border border-white/30 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 hover:scale-105 hover:brightness-110"
+              style={{ backgroundSize: '200% 200%', backgroundPosition: '0% 50%' }}
+            >
+              Register Now
+            </a>
+            <a
+              href="#speakers"
+              onClick={handleScrollToSpeakers}
+              className="relative inline-block px-6 py-3 rounded-lg text-lg font-bold border border-white bg-white text-blue-700 shadow-md backdrop-blur-md transition-all duration-300 hover:bg-blue-50 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            >
+              Speakers
+            </a>
           </div>
         </div>
-        {/* Right: Globe and concentric orbit */}
-        <div className="hidden md:flex flex-1 items-center justify-center relative min-w-[340px] aspect-[1/1] overflow-visible">
-          <div className="relative w-full h-full flex items-center justify-center aspect-[1/1] overflow-visible">
-            {/* Concentric orbit ring */}
-            <div className="absolute inset-0 rounded-full border-4 border-yellow-300/30 z-0 aspect-[1/1]" />
-            {/* Animated Globe - perfectly round, not clipped */}
-            <div className="absolute inset-0 flex items-center justify-center z-10 aspect-[1/1] overflow-visible">
-              <Globe className="w-full h-full max-w-[420px] max-h-[420px] aspect-[1/1]" />
-            </div>
-            {/* Orbiting dots */}
-            <div className="absolute w-full h-full animate-reverse-spin z-0 aspect-[1/1]">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-yellow-400 shadow-lg shadow-yellow-400/50" />
-            </div>
-            <div className="absolute w-full h-full animate-reverse-spin-slow z-0 aspect-[1/1]">
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-8 h-8 rounded-full bg-blue-400 shadow-lg shadow-blue-400/50" />
-            </div>
-            <div className="absolute w-full h-full animate-spin-med z-0 aspect-[1/1]">
-              <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-purple-400 shadow-lg shadow-purple-400/50" />
-            </div>
+        {/* Right: Two-column Vertical Marquee of Speakers (desktop only) */}
+        <div className="hidden md:flex flex-1 items-center justify-center relative min-w-[380px] max-w-lg h-[480px] gap-4">
+          {/* Column 1: scrolls up */}
+          <div className="w-1/2 h-full">
+            <Marquee vertical pauseOnHover className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+              {col1 && col1.length > 0 ? (
+                col1.map((speaker) => (
+                  <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                    <img
+                      src={getSpeakerImage(speaker.ProfileImage?.url)}
+                      alt={speaker.Name}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
+                      <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
+                      <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+              )}
+            </Marquee>
+          </div>
+          {/* Column 2: scrolls down (reverse) */}
+          <div className="w-1/2 h-full">
+            <Marquee vertical pauseOnHover reverse className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+              {col2 && col2.length > 0 ? (
+                col2.map((speaker) => (
+                  <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                    <img
+                      src={getSpeakerImage(speaker.ProfileImage?.url)}
+                      alt={speaker.Name}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
+                      <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
+                      <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+              )}
+            </Marquee>
           </div>
         </div>
       </div>
@@ -319,64 +338,6 @@ const AnimatedStatsSection = () => {
 };
 
 // 3. Scrolling Partners Carousel with Gradient Background
-const PartnersCarousel = () => {
-  // Use 12 separate logo files
-  const logos = [
-    "/images/partners/partner-logo-1.svg",
-    "/images/partners/partner-logo-2.png",
-    "/images/partners/partner-logo-3.svg",
-    "/images/partners/partner-logo-4.png",
-    "/images/partners/partner-logo-5.png",
-    "/images/partners/partner-logo-6.svg",
-    "/images/partners/partner-logo-7.png",
-    "/images/partners/partner-logo-8.webp",
-    "/images/partners/partner-logo-9.svg",
-    "/images/partners/partner-logo-10.webp",
-    "/images/partners/partner-logo-11.png",
-    "/images/partners/partner-logo-12.png",
-  ];
-
-  return (
-    <section className="py-10 relative overflow-hidden">
-      <div
-        className="absolute inset-0 dark:opacity-70"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(37, 99, 235, 0) 0%, rgba(37, 99, 235, 0.24) 35%, rgba(91, 33, 182, 0.24) 70%, rgba(91, 33, 182, 0) 100%)",
-        }}
-      ></div>
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 relative container text-center">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white pb-4">
-          Supported by Global Partners
-        </h2>
-        <div className="w-full overflow-hidden">
-          {/* Masking for smooth marquee edge fading */}
-          <div className="w-full mt-8" style={{
-            maskImage:
-              "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-          }}>
-            <Marquee className="gap-12" pauseOnHover repeat={2}>
-              {logos.map((logo, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-center h-20 rounded-lg p-2 min-w-[160px]"
-                >
-                  <img
-                    src={logo}
-                    alt={`Partner ${index + 1}`}
-                    className="max-h-full w-full object-contain"
-                  />
-                </div>
-              ))}
-            </Marquee>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // 3D Partners Marquee Section (experimental)
 const PartnersMarquee3D = () => {
@@ -1854,18 +1815,11 @@ export default function HomePage() {
   }, []);
 
   // Smooth scroll handler for Speakers button
-  const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const section = document.getElementById('speakers');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <main className="bg-white dark:bg-gray-900">
-      {/* Completely new layout and sections */}
-      <DynamicHeroSection />
+      {/* New impactful hero section with marquee */}
+      <ImpactfulHeroSection speakers={speakers} />
       <AnimatedStatsSection />
       <PartnersMarquee3D />
       <StrategicSectorsGrid />
