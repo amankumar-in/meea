@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
 import { motion } from 'framer-motion';
+import { BorderBeam } from '@/components/magicui/border-beam';
 
 interface Event {
   id: number;
@@ -160,50 +161,37 @@ export default function EventsPage() {
       <BlockchainSection />
 
       {/* Filter Section */}
-      <section className="py-8 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between flex-wrap">
-            <div className="mb-4 md:mb-0">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                Event Categories
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Filter events by type
-              </p>
-            </div>
-            <div className="flex flex-wrap">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 font-medium mr-0 border border-gray-200 dark:border-gray-600 ${
-                    activeCategory === category
-                      ? "bg-black text-white dark:bg-white dark:text-black"
-                      : "bg-white text-black hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-600"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Events List */}
-      <section className="py-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-              Upcoming Events
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-6 bg-white dark:bg-gray-900">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              Event Categories
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-              Discover the highlights of UNITE Expo 2025, from keynote
-              presentations to specialized workshops
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Filter events by type
             </p>
           </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-4 py-2 font-medium border rounded-md transition-colors duration-150 ${
+                  activeCategory === category
+                    ? "bg-black text-white dark:bg-white dark:text-black border-black dark:border-white"
+                    : "bg-transparent text-black dark:text-white border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
+      {/* Events List */}
+      <section className="pt-0 pb-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-16 border border-gray-200 dark:border-gray-600">
               <div className="mb-6">
@@ -264,148 +252,110 @@ export default function EventsPage() {
                 </div>
               ) : (
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {filteredEvents.map((event) => (
-                    <Link
-                      href={`/events/${event.Slug}`}
+                  {filteredEvents.map((event, idx) => (
+                    <motion.div
                       key={event.id}
-                      className="group"
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.08, type: 'spring', stiffness: 80, damping: 18 }}
+                      whileHover={{ scale: 1.03 }}
+                      className="h-full"
                     >
-                      <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 h-full flex flex-col">
-                        {/* Event Image */}
-                        <div className="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 relative">
-                          {event.Image ? (
-                            <img
-                              src={`${process.env.NEXT_PUBLIC_API_URL}${event.Image.url}`}
-                              alt={event.Image.alternativeText || event.Title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-gray-400 text-xl">
-                                UNITE 2025
-                              </span>
-                            </div>
-                          )}
-
-                          {/* Category indicator - top left */}
-                          <div className="absolute top-0 left-0 p-4">
-                            <Chip variant="primary" size="sm">
-                              {event.Enumeration}
-                            </Chip>
-                          </div>
-
-                          {/* Featured indicator - top right */}
-                          {event.FeaturedEvent && (
-                            <div className="absolute top-0 right-0 p-4">
-                              <Chip variant="black" size="sm">
-                                Featured
+                      <Link href={`/events/${event.Slug}`} className="block h-full group focus:outline-none">
+                        <div
+                          className="h-full flex flex-col overflow-hidden transition-all duration-300 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 shadow-xl group-hover:border-2 group-hover:border-transparent group-hover:shadow-[0_0_0_4px_rgba(59,130,246,0.5),0_8px_32px_0_rgba(236,72,153,0.15)] group-hover:bg-white/80 dark:group-hover:bg-gray-900/80 relative"
+                          style={{ borderRadius: 20 }}
+                        >
+                          {/* Event Image */}
+                          <div className="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden rounded-xl">
+                            {event.Image ? (
+                              <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}${event.Image.url}`}
+                                alt={event.Image.alternativeText || event.Title}
+                                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 rounded-xl"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center rounded-xl">
+                                <span className="text-gray-400 text-xl">UNITE 2025</span>
+                              </div>
+                            )}
+                            {/* Gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none rounded-xl" />
+                            {/* Category indicator - top left */}
+                            <div className="absolute top-4 left-4 z-20">
+                              <Chip variant="primary" size="sm" className="backdrop-blur-md bg-white/70 dark:bg-gray-900/70 shadow-md border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white">
+                                {event.Enumeration}
                               </Chip>
                             </div>
-                          )}
-                        </div>
-
-                        {/* Card Body */}
-                        <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors text-gray-900 dark:text-white">
-                            {event.Title}
-                          </h3>
-
-                          {/* Event Details */}
-                          <div className="mb-4">
-                            <div className="flex items-center text-gray-600 dark:text-gray-300 mb-2">
-                              <svg
-                                className="h-5 w-5 mr-3 text-yellow-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                />
-                              </svg>
-                              <span className="text-sm">
-                                {formatDate(event.StartDate)}
-                              </span>
-                            </div>
-
-                            <div className="flex items-center text-gray-600 dark:text-gray-300 mb-2">
-                              <svg
-                                className="h-5 w-5 mr-3 text-yellow-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                />
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                              </svg>
-                              <span className="text-sm">
-                                {event.Location}
-                                {event.RoomNumber &&
-                                  ` - Room ${event.RoomNumber}`}
-                              </span>
-                            </div>
-
-                            {event.MaxAttendees && (
-                              <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <svg
-                                  className="h-5 w-5 mr-3 text-yellow-500"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
+                            {/* Featured indicator - top right */}
+                            {event.FeaturedEvent && (
+                              <div className="absolute top-4 right-4 z-20">
+                                <span
+                                  className="relative overflow-hidden inline-flex items-center justify-center px-2 py-0.5 text-[11px] font-semibold tracking-wide min-w-[48px] min-h-[20px] text-yellow-800 dark:text-yellow-200 bg-white/80 dark:bg-gray-900/80 rounded-xl"
+                                  style={{ fontSize: '0.72rem', lineHeight: 1.1 }}
+                                  tabIndex={-1}
+                                  aria-label="Featured Event"
                                 >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                                  />
-                                </svg>
-                                <span className="text-sm">
-                                  Capacity: {event.MaxAttendees} attendees
+                                  <span className="relative z-10">Featured</span>
+                                  <BorderBeam size={28} duration={2.5} colorFrom="#FFD700" colorTo="#EC4899" />
                                 </span>
                               </div>
                             )}
                           </div>
-
-                          <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
-                            {event.ShortDescription.length > 150
-                              ? `${event.ShortDescription.substring(0, 150)}...`
-                              : event.ShortDescription}
-                          </p>
-
-                          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                            <span className="inline-flex items-center text-sm font-medium text-black dark:text-white group-hover:text-yellow-500 transition-colors">
-                              View Details
-                              <svg
-                                className="ml-2 h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
+                          {/* Card Body */}
+                          <div className="p-6 flex flex-col flex-grow z-10">
+                            <h3 className="text-2xl font-bold mb-2 group-hover:text-pink-500 transition-colors text-gray-900 dark:text-white">
+                              <AnimatedGradientText colorFrom="#3B82F6" colorTo="#EC4899" className="font-bold">
+                                {event.Title}
+                              </AnimatedGradientText>
+                            </h3>
+                            {/* Event Details */}
+                            <div className="mb-3 flex flex-wrap gap-3 text-sm text-gray-500 dark:text-gray-400">
+                              {event.StartDate && (
+                                <div className="flex items-center">
+                                  <svg className="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                  </svg>
+                                  <span>{formatDate(event.StartDate)}</span>
+                                </div>
+                              )}
+                              {event.Location && (
+                                <div className="flex items-center">
+                                  <svg className="h-4 w-4 mr-1 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  </svg>
+                                  <span>{event.Location}{event.RoomNumber && ` - Room ${event.RoomNumber}`}</span>
+                                </div>
+                              )}
+                              {event.MaxAttendees && (
+                                <div className="flex items-center">
+                                  <svg className="h-4 w-4 mr-1 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                  </svg>
+                                  <span>Capacity: {event.MaxAttendees} attendees</span>
+                                </div>
+                              )}
+                            </div>
+                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow">
+                              {event.ShortDescription.length > 150 ? `${event.ShortDescription.substring(0, 150)}...` : event.ShortDescription}
+                            </p>
+                            <div className="mt-auto pt-4">
+                              <Button 
+                                variant="primary" 
+                                className="w-full shadow-md bg-gradient-to-r from-blue-500 to-pink-500 text-white hover:from-pink-500 hover:to-blue-500 transition-all duration-200 cursor-pointer border-0 backdrop-blur-md"
+                                style={{ cursor: 'pointer' }}
                               >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
+                                View Details
+                                <svg className="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                              </Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </motion.div>
                   ))}
                 </div>
               )}
@@ -465,6 +415,31 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      {/* Shimmer border animation for Featured chip */}
+      <style jsx global>{`
+        @keyframes shimmer-beam {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+        .shimmer-border {
+          background: linear-gradient(120deg, gold 10%, #fffbe6 30%, gold 60%, #FFD600 80%, gold 100%);
+          background-size: 200% 200%;
+          animation: shimmer-beam 1.8s linear infinite;
+          border-radius: 16px;
+          z-index: 1;
+          box-sizing: border-box;
+          border: 2px solid transparent;
+          mask-image: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-image: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          -webkit-mask-composite: xor;
+        }
+      `}</style>
     </main>
   );
 }
@@ -780,8 +755,18 @@ function BlockchainSection() {
                     <div className="flex flex-wrap gap-3 text-sm text-gray-500 dark:text-gray-400 mb-3">
                       {event.StartDate && (
                         <div className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          <svg
+                            className="h-4 w-4 mr-1 text-blue-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
                           </svg>
                           <span>{formatDate(event.StartDate)}</span>
                         </div>
@@ -789,9 +774,24 @@ function BlockchainSection() {
                       
                       {event.Location && (
                         <div className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <svg
+                            className="h-4 w-4 mr-1 text-blue-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
                           </svg>
                           <span>{event.Location}</span>
                         </div>
