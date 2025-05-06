@@ -495,7 +495,7 @@ const StrategicSectorsGrid = () => {
       title: "Smart City Initiatives",
       description:
         "Urban innovation with Rwandan partnerships leveraging Dubai's experience in smart implementation",
-      image: "/images/banner-1.svg",
+      image: "/images/joshua-henry.png",
     },
   ];
 
@@ -861,7 +861,7 @@ const BannerSection = () => (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/events/uganda-s-journey-to-the-digital-age">
           <Image
-            src="/images/banner-1.svg"
+            src="/images/joshua-henry.png"
             alt="Banner"
             width={1200}
             height={300}
