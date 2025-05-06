@@ -8,8 +8,6 @@ import { fetchAPI } from "@/lib/api/api-config";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { Marquee } from "@/components/magicui/marquee";
-import { Globe } from "@/components/magicui/globe";
-import { AuroraText } from "@/components/magicui/aurora-text";
 
 // -------------------------------------------------------------------
 // Type Definitions - Maintained from original for Strapi compatibility
@@ -163,16 +161,19 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
           {/* Prominent Speaker Card (new, above marquee) - taking ~40% of available height */}
           {prominentSpeaker && (
             <div className="w-full flex items-start mb-6 px-4">
-              <div className="bg-white/90 dark:bg-slate-800/80 border-4 border-yellow-400 dark:border-blue-400 rounded-2xl shadow-2xl p-6 flex items-start w-full">
-                <img
-                  src={getSpeakerImage(prominentSpeaker.ProfileImage?.url)}
-                  alt={prominentSpeaker.Name}
-                  className="w-28 h-36 rounded-lg object-cover border-2 border-blue-400 shadow-lg bg-white mr-6"
-                />
-                <div className="flex flex-col">
-                  <span className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white">{prominentSpeaker.Name}</span>
-                  <span className="text-base text-blue-700 dark:text-blue-300 mt-1">{prominentSpeaker.Title}</span>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 overflow-hidden line-clamp-4">{prominentSpeaker.ShortBio}</p>
+              <div className="group relative p-[3px] bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-3xl overflow-hidden shadow-[0_0_10px_rgba(59,130,246,0.7),0_0_20px_rgba(156,64,255,0.5),0_0_30px_rgba(236,72,153,0.3)] transition-shadow duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.8),0_0_30px_rgba(156,64,255,0.6),0_0_40px_rgba(236,72,153,0.4)]">
+                <div className="relative bg-white dark:bg-slate-800/80 rounded-2xl p-6 flex items-start w-full">
+                  <div className="absolute inset-0 shine-effect pointer-events-none" />
+                  <img
+                    src={getSpeakerImage(prominentSpeaker.ProfileImage?.url)}
+                    alt={prominentSpeaker.Name}
+                    className="w-28 h-36 rounded-lg object-cover border-2 border-blue-400 shadow-lg bg-white mr-6"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white">{prominentSpeaker.Name}</span>
+                    <span className="text-base text-blue-700 dark:text-blue-300 mt-1">{prominentSpeaker.Title}</span>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 overflow-hidden line-clamp-4">{prominentSpeaker.ShortBio}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1840,24 +1841,47 @@ export default function HomePage() {
   // Smooth scroll handler for Speakers button
 
   return (
-    <main className="bg-white dark:bg-gray-900">
-      {/* New impactful hero section with marquee */}
-      <ImpactfulHeroSection speakers={speakers} />
-      <AnimatedStatsSection />
-      <PartnersMarquee3D />
-      <StrategicSectorsGrid />
-      <FeaturedSpeakersSection speakers={speakers} loading={loading.speakers} />
-      <BannerSection />
-      <BlockchainSection />
-      <InvestmentLandscapeSection
-        onInvestmentClick={() => scrollToSection(contactFormRef)}
-      />
-      <EventsGridSection events={events} />
-      <GlobalSignificanceSection />
-      <ImmersiveCTASection />
-      <SponsorsGridSection sponsors={sponsors} />
-      <ModernContactForm ref={contactFormRef} />
-      <NewsletterSection />
-    </main>
+    <>
+      <main className="bg-white dark:bg-gray-900">
+        {/* New impactful hero section with marquee */}
+        <ImpactfulHeroSection speakers={speakers} />
+        <AnimatedStatsSection />
+        <PartnersMarquee3D />
+        <StrategicSectorsGrid />
+        <FeaturedSpeakersSection speakers={speakers} loading={loading.speakers} />
+        <BannerSection />
+        <BlockchainSection />
+        <InvestmentLandscapeSection
+          onInvestmentClick={() => scrollToSection(contactFormRef)}
+        />
+        <EventsGridSection events={events} />
+        <GlobalSignificanceSection />
+        <ImmersiveCTASection />
+        <SponsorsGridSection sponsors={sponsors} />
+        <ModernContactForm ref={contactFormRef} />
+        <NewsletterSection />
+      </main>
+      {/* Global shine-animation styles */}
+      <style jsx global>{`  
+        @keyframes shine {
+          0% { transform: translateX(-100%) skewX(-30deg); }
+          100% { transform: translateX(200%) skewX(-30deg); }
+        }
+
+        .shine-effect {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+          transform: translateX(-100%) skewX(-30deg);
+        }
+
+        .group:hover .shine-effect {
+          animation: shine 1s forwards;
+        }
+      `}</style>
+    </>
   );
 }
