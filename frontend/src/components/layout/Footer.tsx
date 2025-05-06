@@ -20,11 +20,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About section */}
           <div className="col-span-1 md:col-span-1">
-            <h2 className="text-lg font-semibold mb-4">About UNITE</h2>
+            <h2 className="text-lg font-semibold mb-4">About MEA Summit</h2>
             <p className="text-gray-300 text-sm">
-              Uganda Next - Investment & Trade Expo (UNITE) 2025 is the premier
-              platform for showcasing investment opportunities and trade
-              partnerships in Uganda.
+              Middle East & Africa Digital Transformation Summit 2025 brings together
+              global leaders, innovators, and investors for three days of insights,
+              collaboration, and networking in Kampala, Uganda.
             </p>
           </div>
 
@@ -140,7 +140,8 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-1">
             <h2 className="text-lg font-semibold mb-4">Newsletter</h2>
             <p className="text-gray-300 text-sm mb-4">
-              Subscribe to receive updates about UNITE Expo 2025.
+              Subscribe to receive policy briefings, investment insights, and
+              program announcements.
             </p>
             <form className="flex flex-col sm:flex-row gap-2">
               <input
@@ -213,7 +214,7 @@ export default function Footer() {
             </a>
           </div>
           <div className="text-gray-400 text-sm">
-            © {currentYear} UNITE Expo. All rights reserved.
+            © {currentYear} MEA Summit. All rights reserved.
           </div>
         </div>
       </div>
