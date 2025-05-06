@@ -96,12 +96,17 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
     return getImageUrl(url);
   };
 
-  // Split speakers into two columns for the marquee
-  const col1 = speakers.filter((_, i) => i % 2 === 0);
-  const col2 = speakers.filter((_, i) => i % 2 === 1);
+  // Find the prominent speaker by slug
+  const prominentSpeaker = speakers.find(s => s.Slug === 'h-e-yoweri-kaguta-museveni');
+  // Filter out the prominent speaker from the rest for the marquee
+  const marqueeSpeakers = speakers.filter(s => s.Slug !== 'h-e-yoweri-kaguta-museveni');
+
+  // Split marquee speakers into two columns for the marquee
+  const col1 = marqueeSpeakers.filter((_, i) => i % 2 === 0);
+  const col2 = marqueeSpeakers.filter((_, i) => i % 2 === 1);
 
   return (
-    <section className="relative flex items-center min-h-[calc(100vh-60px)] overflow-hidden bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-[#0a1622] dark:via-[#1e2233] dark:to-[#10131a]">
+    <section className="relative flex items-center h-[calc(100vh-60px)] overflow-hidden bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-[#0a1622] dark:via-[#1e2233] dark:to-[#10131a]">
       {/* Subtle SVG grid pattern overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
         <svg width="100%" height="100%">
@@ -115,17 +120,17 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
       </div>
       {/* Soft blue accent in top-left corner */}
       <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-300 opacity-20 blur-3xl rounded-full pointer-events-none z-0 dark:bg-blue-500" />
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full py-8">
         {/* Left: Content */}
-        <div className="w-full md:w-1/2 max-w-2xl py-16 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+        <div className="w-full md:w-1/2 max-w-2xl py-8 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
           {/* Logo and event year */}
           <div className="flex items-center gap-3 mb-4">
             <img src="/mea-icon.svg" alt="MEA Summit Icon" className="w-14 h-14 drop-shadow-xl" style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }} />
             <span className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-lg text-xs shadow-md">2025</span>
           </div>
           {/* Headline */}
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 text-slate-900 dark:text-white leading-tight">
-            Unleashing the Future of <span className="text-orange-400 dark:text-blue-300">Middle East</span> & <span className="text-pink-400 dark:text-pink-300">Africa</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white leading-tight">
+            <span className="text-orange-400 dark:text-blue-300">Middle East</span> & <span className="text-pink-400 dark:text-pink-300">Africa </span>Digital Transformation Summit
           </h1>
           {/* Subheadline */}
           <p className="text-lg md:text-2xl text-slate-700 dark:text-white/90 font-light max-w-xl mb-6">
@@ -153,53 +158,73 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
             </a>
           </div>
         </div>
-        {/* Right: Two-column Vertical Marquee of Speakers (desktop only) */}
-        <div className="hidden md:flex flex-1 items-center justify-center relative min-w-[380px] max-w-lg h-[480px] gap-4">
-          {/* Column 1: scrolls up */}
-          <div className="w-1/2 h-full">
-            <Marquee vertical pauseOnHover className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
-              {col1 && col1.length > 0 ? (
-                col1.map((speaker) => (
-                  <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
-                    <img
-                      src={getSpeakerImage(speaker.ProfileImage?.url)}
-                      alt={speaker.Name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
-                      <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
-                      <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+        {/* Right: Prominent Speaker Card above Marquee - fixed maximum height */}
+        <div className="hidden md:flex flex-col items-center justify-center relative min-w-[380px] max-w-lg h-full overflow-visible">
+          {/* Prominent Speaker Card (new, above marquee) - taking ~40% of available height */}
+          {prominentSpeaker && (
+            <div className="w-full flex items-center mb-4 px-4">
+              <div className="bg-white/90 dark:bg-slate-800/80 border-4 border-yellow-400 dark:border-blue-400 rounded-2xl shadow-2xl p-4 flex items-center w-full">
+                <img
+                  src={getSpeakerImage(prominentSpeaker.ProfileImage?.url)}
+                  alt={prominentSpeaker.Name}
+                  className="w-16 h-16 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white mr-4"
+                />
+                <div className="flex flex-col">
+                  <span className="font-extrabold text-md md:text-lg text-slate-900 dark:text-white truncate">{prominentSpeaker.Name}</span>
+                  <span className="text-sm text-blue-700 dark:text-blue-300 truncate">{prominentSpeaker.Title}</span>
+                  <span className="text-sm text-blue-400 dark:text-blue-400 truncate">{prominentSpeaker.Organization}</span>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Marquee area with fixed height - taking ~60% of available height */}
+          <div className="flex w-full items-center justify-center relative gap-4 h-[400px]">
+            {/* Column 1: scrolls up */}
+            <div className="w-1/2 h-full">
+              <Marquee vertical pauseOnHover className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+                {col1 && col1.length > 0 ? (
+                  col1.map((speaker) => (
+                    <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                      <img
+                        src={getSpeakerImage(speaker.ProfileImage?.url)}
+                        alt={speaker.Name}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
+                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
+                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                      </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
-              )}
-            </Marquee>
-          </div>
-          {/* Column 2: scrolls down (reverse) */}
-          <div className="w-1/2 h-full">
-            <Marquee vertical pauseOnHover reverse className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
-              {col2 && col2.length > 0 ? (
-                col2.map((speaker) => (
-                  <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
-                    <img
-                      src={getSpeakerImage(speaker.ProfileImage?.url)}
-                      alt={speaker.Name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
-                      <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
-                      <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                  ))
+                ) : (
+                  <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+                )}
+              </Marquee>
+            </div>
+            {/* Column 2: scrolls down (reverse) */}
+            <div className="w-1/2 h-full">
+              <Marquee vertical pauseOnHover reverse className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+                {col2 && col2.length > 0 ? (
+                  col2.map((speaker) => (
+                    <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                      <img
+                        src={getSpeakerImage(speaker.ProfileImage?.url)}
+                        alt={speaker.Name}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
+                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
+                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                      </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
-              )}
-            </Marquee>
+                  ))
+                ) : (
+                  <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+                )}
+              </Marquee>
+            </div>
           </div>
         </div>
       </div>
@@ -1386,9 +1411,8 @@ const ImmersiveCTASection = () => (
       </h2>
 
       <p className="text-xl text-gray-100 mb-10 max-w-3xl mx-auto">
-        MEA Summit 2025 is implementing a phased integration framework to
-        address structural, political, and institutional barriers to deeper
-        Middle East-Africa economic partnership.
+        MEA 2025 is implementing a phased integration framework to
+        structure and transform the Middle East-Africa economic partnership with a focus on digital transformation using blockchain and AI.
       </p>
 
       <div className="flex flex-wrap justify-center gap-4">
@@ -1403,7 +1427,7 @@ const ImmersiveCTASection = () => (
           href="/contact"
           className="inline-block px-8 py-3 backdrop-blur-md bg-white/20 border border-white/30 text-white font-bold rounded-md hover:bg-white/30 transition-all duration-300"
         >
-          Contact Organizers
+          Become An Exhibitor
         </a>
       </div>
     </div>
@@ -1465,11 +1489,11 @@ const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
                   Email
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  General Inquiries: info@measummit.org
+                  General Inquiries: info@coinsforcollege.org
                   <br />
-                  Participation: delegates@measummit.org
+                  Participation: delegates@coinsforcollege.org
                   <br />
-                  Media Inquiries: media@measummit.org
+                  Media Inquiries: media@coinsforcollege.org
                 </p>
               </div>
             </div>
@@ -1497,7 +1521,7 @@ const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
                 <p className="text-gray-600 dark:text-gray-300">
                   Dubai Office: +971 4 123 4567
                   <br />
-                  Nairobi Office: +254 20 987 6543
+                  Kampala Office: +256 20 987 6543
                 </p>
               </div>
             </div>
@@ -1531,11 +1555,10 @@ const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
                 <p className="text-gray-600 dark:text-gray-300">
                   MEA Summit Secretariat
                   <br />
-                  Dubai International Financial Centre
+                  Kampala Serena Hotel
                   <br />
-                  Level 14, Gate Building
-                  <br />
-                  Dubai, United Arab Emirates
+                  Uganda
+                  
                 </p>
               </div>
             </div>
@@ -1710,7 +1733,7 @@ const NewsletterSection = () => (
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
         <div className="md:col-span-8">
           <h2 className="text-3xl font-bold mb-2 text-white">
-            Stay Updated on MEA Summit 2025
+            Tune into the hype
           </h2>
           <p className="text-white text-opacity-80">
             Subscribe to receive policy briefings, investment insights, and
