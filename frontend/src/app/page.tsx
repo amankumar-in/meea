@@ -1875,7 +1875,7 @@ export default function HomePage() {
           width: 50%;
           height: 200%;
           background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-          transform: translateX(-100%) skewX(-30deg);
+          transform: translateX(-120%) skewX(-30deg);
         }
 
         .group:hover .shine-effect {
