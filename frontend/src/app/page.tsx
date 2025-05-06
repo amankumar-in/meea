@@ -162,17 +162,17 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
         <div className="hidden md:flex flex-col items-center justify-center relative min-w-[380px] max-w-lg h-full overflow-visible">
           {/* Prominent Speaker Card (new, above marquee) - taking ~40% of available height */}
           {prominentSpeaker && (
-            <div className="w-full flex items-center mb-4 px-4">
-              <div className="bg-white/90 dark:bg-slate-800/80 border-4 border-yellow-400 dark:border-blue-400 rounded-2xl shadow-2xl p-4 flex items-center w-full">
+            <div className="w-full flex items-start mb-6 px-4">
+              <div className="bg-white/90 dark:bg-slate-800/80 border-4 border-yellow-400 dark:border-blue-400 rounded-2xl shadow-2xl p-6 flex items-start w-full">
                 <img
                   src={getSpeakerImage(prominentSpeaker.ProfileImage?.url)}
                   alt={prominentSpeaker.Name}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white mr-4"
+                  className="w-28 h-36 rounded-lg object-cover border-2 border-blue-400 shadow-lg bg-white mr-6"
                 />
                 <div className="flex flex-col">
-                  <span className="font-extrabold text-md md:text-lg text-slate-900 dark:text-white truncate">{prominentSpeaker.Name}</span>
-                  <span className="text-sm text-blue-700 dark:text-blue-300 truncate">{prominentSpeaker.Title}</span>
-                  <span className="text-sm text-blue-400 dark:text-blue-400 truncate">{prominentSpeaker.Organization}</span>
+                  <span className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white">{prominentSpeaker.Name}</span>
+                  <span className="text-base text-blue-700 dark:text-blue-300 mt-1">{prominentSpeaker.Title}</span>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 overflow-hidden line-clamp-4">{prominentSpeaker.ShortBio}</p>
                 </div>
               </div>
             </div>
