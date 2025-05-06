@@ -351,7 +351,7 @@ export default function SpeakerDetailPage({
                   </h3>
 
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    Interested in connecting with {speaker.Name.split(" ")[0]}?
+                    Interested in connecting {speaker.Name.split(" ")[0]}? 
                     You can reach out via social media or contact our team for
                     introduction opportunities.
                   </p>
