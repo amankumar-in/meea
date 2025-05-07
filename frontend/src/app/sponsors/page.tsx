@@ -5,6 +5,7 @@ import Link from "next/link";
 import { fetchAPI } from "@/lib/api/api-config";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { Bitcoin, Coins, Brain, Server, Users } from "lucide-react";
 
 interface Sponsor {
   id: number;
@@ -49,8 +50,6 @@ export default function SponsorsPage() {
     const fetchSponsors = async () => {
       try {
         const response = await fetchAPI("/sponsors?populate=*");
-        console.log("Sponsors response:", response);
-
         if (response && response.data) {
           setSponsors(response.data);
           setFilteredSponsors(response.data);
@@ -59,16 +58,13 @@ export default function SponsorsPage() {
         }
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching sponsors:", err);
         setError("Failed to load sponsors. Please try again later.");
         setLoading(false);
       }
     };
-
     fetchSponsors();
   }, []);
 
-  // Filter sponsors based on tier
   useEffect(() => {
     if (activeTier === "All") {
       setFilteredSponsors(sponsors);
@@ -79,131 +75,113 @@ export default function SponsorsPage() {
     }
   }, [activeTier, sponsors]);
 
-  // Get counts by tier
+  // Stats
   const platinumCount = sponsors.filter((s) => s.Tier === "Platinum").length;
   const goldCount = sponsors.filter((s) => s.Tier === "Gold").length;
   const silverCount = sponsors.filter((s) => s.Tier === "Silver").length;
 
+  // Helper for logo url
+  const getLogoUrl = (logo: any) => {
+    if (!logo?.url) return "";
+    if (logo.url.startsWith("http")) return logo.url;
+    return `${process.env.NEXT_PUBLIC_API_URL}${logo.url}`;
+  };
+
+  // Helper for description truncation
+  const truncate = (str: string, n: number) =>
+    str.length > n ? str.slice(0, n - 1) + "…" : str;
+
   return (
     <main className="bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <span className="inline-block mb-3 h-1 w-16 bg-yellow-500"></span>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-                Our Sponsors
-              </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-                Meet the organizations supporting Uganda's economic growth
-                through UNITE Expo 2025
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button variant="primary" href="/contact">
-                  Sponsorship Enquiries
-                </Button>
-                <Button
-                  variant="dark"
-                  buttonType="outline"
-                  href="#partners"
-                  className="dark:border-white dark:text-white"
-                >
-                  View Partnership Information
-                </Button>
-              </div>
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-6 border border-gray-200 dark:border-gray-600">
-              <div className="p-8 bg-black text-white dark:bg-white dark:text-black relative">
-                <div className="absolute top-0 right-0 w-16 h-16 bg-blue-600"></div>
-                <h2 className="text-2xl font-bold mb-4">Sponsor Overview</h2>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Platinum Partners: {platinumCount}</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Gold Partners: {goldCount}</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Silver Partners: {silverCount}</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Total Organizations: {sponsors.length}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+      <section className="relative w-full overflow-hidden py-20 bg-gradient-to-br from-blue-900 via-purple-900 to-blue-700 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12 w-full">
+          {/* Left: Text */}
+          <div className="flex-1 w-full flex flex-col items-start justify-center text-left">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-md">
+              Shape the Future of Digital Transformation
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 font-light mb-0 max-w-2xl">
+              Collaborate with leading organizations to drive innovation across
+              Africa and the Middle East. Your involvement accelerates progress,
+              builds networks, and creates lasting impact.
+            </p>
+          </div>
+          {/* Right: Visual + CTA */}
+          <div className="flex-1 w-full flex flex-col items-center md:items-end justify-center mb-10 md:mb-0">
+            <img
+              src="/mea-icon.svg"
+              alt="Summit Logo"
+              className="w-32 h-32 md:w-48 md:h-48 mb-6 drop-shadow-xl"
+            />
+            <Button
+              variant="primary"
+              href="/contact"
+              className="w-full md:w-auto px-10 py-4 text-lg font-bold"
+            >
+              Contact Us
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="py-8 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                Sponsorship Tiers
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Filter sponsors by their partnership level
-              </p>
-            </div>
-
-            <div className="flex flex-wrap">
-              {tiers.map((tier) => (
-                <button
-                  key={tier}
-                  onClick={() => setActiveTier(tier)}
-                  className={`px-4 py-2 font-medium mr-0 border border-gray-200 dark:border-gray-600 ${
+      {/* Tier Filter */}
+      <section className="py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+              Sponsorship Tiers
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Filter by partnership level
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 mt-2 md:mt-0">
+            {tiers.map((tier) => (
+              <button
+                key={tier}
+                onClick={() => setActiveTier(tier)}
+                className={`px-5 py-2 rounded-full font-medium border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+                  ${
                     activeTier === tier
-                      ? "bg-black text-white dark:bg-white dark:text-black"
-                      : "bg-white text-black hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-600"
-                  }`}
-                >
-                  {tier}
-                </button>
-              ))}
-            </div>
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-600 shadow-lg"
+                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-gray-700"
+                  }
+                `}
+              >
+                {tier}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Loading and Error States */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-16 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800">
-          <div className="mb-6">
-            <div className="w-12 h-12 border-t-2 border-yellow-500 border-solid rounded-full animate-spin"></div>
-          </div>
+        <div className="flex flex-col items-center justify-center py-24">
+          <div className="w-12 h-12 border-t-2 border-yellow-500 border-solid rounded-full animate-spin mb-6"></div>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             Loading sponsors...
           </p>
         </div>
       )}
-
       {error && !loading && (
-        <div className="text-center py-16 border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
-          <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-yellow-500">
-              <svg
-                className="w-6 h-6 text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-            </div>
+        <div className="text-center py-24">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-yellow-500 mb-6">
+            <svg
+              className="w-6 h-6 text-black"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
           </div>
           <p className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
             Error Loading Sponsors
@@ -214,9 +192,8 @@ export default function SponsorsPage() {
           </Button>
         </div>
       )}
-
       {!loading && !error && filteredSponsors.length === 0 && (
-        <div className="text-center py-16 border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+        <div className="text-center py-24">
           <p className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
             No Sponsors Found
           </p>
@@ -229,509 +206,289 @@ export default function SponsorsPage() {
         </div>
       )}
 
-      {/* Platinum Sponsors - Bigger Display */}
-      {!loading &&
-        !error &&
-        (activeTier === "All" || activeTier === "Platinum") &&
-        filteredSponsors.some((sponsor) => sponsor.Tier === "Platinum") && (
-          <section className="py-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-                Platinum Partners
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mb-10">
-                Our Platinum partners are instrumental in making UNITE Expo 2025
-                a landmark event for Uganda's economic development
-              </p>
+      {/* Sponsor Cards Grid */}
+      {!loading && !error && filteredSponsors.length > 0 && (
+        <section className="py-16 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {filteredSponsors.map((sponsor) => {
+                let borderGradient = "";
+                let badgeBg = "";
+                let badgeText = "";
 
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {filteredSponsors
-                  .filter((sponsor) => sponsor.Tier === "Platinum")
-                  .map((sponsor) => (
-                    <Link
-                      href={`/sponsors/${sponsor.Slug}`}
-                      key={sponsor.id}
-                      className="group"
+                if (sponsor.Tier === "Platinum") {
+                  borderGradient =
+                    "bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-[3px] rounded-3xl shadow-[0_0_10px_rgba(59,130,246,0.7),0_0_20px_rgba(156,64,255,0.5),0_0_30px_rgba(236,72,153,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.8),0_0_30px_rgba(156,64,255,0.6),0_0_40px_rgba(236,72,153,0.4)] transition-shadow duration-300";
+                  badgeBg =
+                    "bg-gradient-to-r from-blue-600 to-purple-600 text-white";
+                  badgeText = "Platinum Partner";
+                } else if (sponsor.Tier === "Gold") {
+                  borderGradient =
+                    "bg-gradient-to-r from-yellow-500 to-yellow-600 p-[3px] rounded-3xl shadow-[0_0_10px_rgba(255,215,0,0.7),0_0_20px_rgba(255,193,7,0.5),0_0_30px_rgba(255,152,0,0.3)] hover:shadow-[0_0_20px_rgba(255,215,0,0.8),0_0_30px_rgba(255,193,7,0.6),0_0_40px_rgba(255,152,0,0.4)] transition-shadow duration-300";
+                  badgeBg =
+                    "bg-gradient-to-r from-yellow-500 to-yellow-600 text-black";
+                  badgeText = "Gold Partner";
+                } else {
+                  borderGradient =
+                    "bg-gradient-to-r from-gray-400 to-gray-500 p-[3px] rounded-3xl shadow-[0_0_10px_rgba(107,114,128,0.7),0_0_20px_rgba(156,163,175,0.5),0_0_30px_rgba(176,180,190,0.3)] hover:shadow-[0_0_20px_rgba(107,114,128,0.8),0_0_30px_rgba(156,163,175,0.6),0_0_40px_rgba(176,180,190,0.4)] transition-shadow duration-300";
+                  badgeBg =
+                    "bg-gradient-to-r from-gray-400 to-gray-500 text-white";
+                  badgeText = "Silver Partner";
+                }
+
+                return (
+                  <Link
+                    href={`/sponsors/${sponsor.Slug}`}
+                    key={sponsor.id}
+                    className="block h-full"
+                  >
+                    <div
+                      className={
+                        "group w-full h-full flex flex-col items-center " +
+                        borderGradient
+                      }
                     >
-                      <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 h-full flex flex-col hover:border-yellow-500 transition-colors">
-                        {/* Logo */}
-                        <div className="p-8 flex justify-center items-center bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                      <div className="relative bg-gray-100 dark:bg-slate-800/80 border border-gray-200 dark:border-none rounded-2xl p-6 flex flex-col items-center w-full h-full overflow-hidden">
+                        {/* Shine effect for platinum */}
+                        {sponsor.Tier === "Platinum" && (
+                          <div className="absolute inset-0 shine-effect pointer-events-none" />
+                        )}
+                        {/* Tier badge */}
+                        <div
+                          className={`absolute top-4 left-4 px-2 py-0.5 rounded-md text-[10px] font-bold shadow ${badgeBg}`}
+                        >
+                          {badgeText}
+                        </div>
+                        <div className="w-full h-20 flex items-center justify-center mb-4">
                           {sponsor.Logo ? (
                             <img
-                              src={`${process.env.NEXT_PUBLIC_API_URL}${sponsor.Logo.url}`}
+                              src={getLogoUrl(sponsor.Logo)}
                               alt={sponsor.Name}
-                              className="max-h-32 max-w-full object-contain"
+                              className="max-h-20 max-w-full object-contain w-full h-full transition-transform duration-300 group-hover:scale-110"
                             />
                           ) : (
-                            <div className="h-32 w-full flex items-center justify-center bg-black dark:bg-white text-white dark:text-black text-xl font-semibold">
-                              {sponsor.Name}
+                            <div className="h-20 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg">
+                              <span className="text-gray-400 text-xs uppercase tracking-wider">
+                                {sponsor.Name}
+                              </span>
                             </div>
                           )}
                         </div>
-
-                        {/* Content */}
-                        <div className="p-6 flex-grow flex flex-col">
-                          <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-yellow-500 transition-colors">
-                              {sponsor.Name}
-                            </h3>
-                            <Chip variant="primary" size="sm">
-                              Platinum
-                            </Chip>
-                          </div>
-
-                          <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">
-                            {sponsor.Description.length > 150
-                              ? `${sponsor.Description.substring(0, 150)}...`
-                              : sponsor.Description}
-                          </p>
-
-                          {sponsor.sponsoredEvents &&
-                            sponsor.sponsoredEvents.length > 0 && (
-                              <div className="mt-auto mb-4 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4">
-                                Sponsoring {sponsor.sponsoredEvents.length}{" "}
-                                {sponsor.sponsoredEvents.length === 1
-                                  ? "event"
-                                  : "events"}
-                              </div>
-                            )}
-
-                          <div className="flex justify-end">
-                            <span className="inline-flex items-center text-sm font-medium text-black dark:text-white group-hover:text-yellow-500 transition-colors">
-                              View Partner
-                              <svg
-                                className="ml-2 h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-      {/* Gold Sponsors */}
-      {!loading &&
-        !error &&
-        (activeTier === "All" || activeTier === "Gold") &&
-        filteredSponsors.some((sponsor) => sponsor.Tier === "Gold") && (
-          <section className="py-16 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span className="inline-block mb-3 h-1 w-16 bg-yellow-500"></span>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-                Gold Partners
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mb-10">
-                Gold partners provide significant support for Uganda's
-                investment promotion activities
-              </p>
-
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredSponsors
-                  .filter((sponsor) => sponsor.Tier === "Gold")
-                  .map((sponsor) => (
-                    <Link
-                      href={`/sponsors/${sponsor.Slug}`}
-                      key={sponsor.id}
-                      className="group"
-                    >
-                      <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 h-full flex flex-col hover:border-yellow-500 transition-colors">
-                        {/* Logo */}
-                        <div className="p-6 flex justify-center items-center bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                          {sponsor.Logo ? (
-                            <img
-                              src={`${process.env.NEXT_PUBLIC_API_URL}${sponsor.Logo.url}`}
-                              alt={sponsor.Name}
-                              className="max-h-24 max-w-full object-contain"
-                            />
-                          ) : (
-                            <div className="h-24 w-full flex items-center justify-center bg-black dark:bg-white text-white dark:text-black text-lg font-semibold">
-                              {sponsor.Name}
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-5 flex-grow flex flex-col">
-                          <div className="flex justify-between items-start mb-3">
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-yellow-500 transition-colors">
-                              {sponsor.Name}
-                            </h3>
-                            <Chip variant="secondary" size="sm">
-                              Gold
-                            </Chip>
-                          </div>
-
-                          <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 flex-grow">
-                            {sponsor.Description.length > 100
-                              ? `${sponsor.Description.substring(0, 100)}...`
-                              : sponsor.Description}
-                          </p>
-
-                          <div className="flex justify-end mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                            <span className="inline-flex items-center text-sm font-medium text-black dark:text-white group-hover:text-yellow-500 transition-colors">
-                              View Details
-                              <svg
-                                className="ml-2 h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-      {/* Silver Sponsors */}
-      {!loading &&
-        !error &&
-        (activeTier === "All" || activeTier === "Silver") &&
-        filteredSponsors.some((sponsor) => sponsor.Tier === "Silver") && (
-          <section className="py-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-                Silver Partners
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mb-10">
-                Silver partners contribute to the success of UNITE Expo 2025 and
-                Uganda's economic development
-              </p>
-
-              <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {filteredSponsors
-                  .filter((sponsor) => sponsor.Tier === "Silver")
-                  .map((sponsor) => (
-                    <Link
-                      href={`/sponsors/${sponsor.Slug}`}
-                      key={sponsor.id}
-                      className="group"
-                    >
-                      <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 h-full hover:border-yellow-500 transition-colors">
-                        {/* Logo */}
-                        <div className="p-4 h-24 flex justify-center items-center bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                          {sponsor.Logo ? (
-                            <img
-                              src={`${process.env.NEXT_PUBLIC_API_URL}${sponsor.Logo.url}`}
-                              alt={sponsor.Name}
-                              className="max-h-16 max-w-full object-contain"
-                            />
-                          ) : (
-                            <div className="h-16 w-full flex items-center justify-center bg-black dark:bg-white text-white dark:text-black text-base font-semibold">
-                              {sponsor.Name.substring(0, 2).toUpperCase()}
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-4 text-center">
-                          <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-yellow-500 transition-colors mb-1">
+                        <div className="text-center w-full">
+                          <div className="font-bold text-gray-900 dark:text-white text-lg mb-1 truncate">
                             {sponsor.Name}
-                          </h3>
-                          <Chip variant="outline" size="sm">
-                            Silver
-                          </Chip>
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-300 text-sm mb-3 min-h-[48px]">
+                            {truncate(sponsor.Description, 110)}
+                          </div>
+                          {sponsor.Website && (
+                            <a
+                              href={sponsor.Website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block mt-2 px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium text-xs shadow hover:from-blue-500 hover:to-purple-500 transition-all"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Visit Website
+                            </a>
+                          )}
                         </div>
                       </div>
-                    </Link>
-                  ))}
-              </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
       {/* Public-Private Partnership Section */}
-      <section
-        id="partners"
-        className="py-16 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8">
-              <span className="inline-block mb-3 h-1 w-16 bg-yellow-500"></span>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-                Public-Private Partnership
-              </h2>
-              <div className="space-y-6 text-gray-600 dark:text-gray-300">
-                <p>
-                  The UNITE Expo 2025 represents a strategic public-private
-                  partnership designed to accelerate Uganda's economic
-                  development through increased investment, knowledge transfer,
-                  and market access.
-                </p>
-                <p>
-                  This collaboration brings together government institutions,
-                  international development partners, and private sector
-                  organizations to create a comprehensive platform for economic
-                  engagement.
-                </p>
-
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
-                  Partnership Framework
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-3">
-                      Government Commitment
-                    </h4>
-                    <p>
-                      The Government of Uganda, through its relevant ministries
-                      and agencies, provides policy direction, regulatory
-                      framework, and institutional support to ensure the success
-                      of the Expo.
-                    </p>
-                  </div>
-
-                  <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-3">
-                      Private Sector Engagement
-                    </h4>
-                    <p>
-                      Private organizations contribute financial resources,
-                      technical expertise, and market connections to enhance the
-                      Expo's impact and reach.
-                    </p>
-                  </div>
-
-                  <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-3">
-                      International Cooperation
-                    </h4>
-                    <p>
-                      Development partners and international organizations
-                      provide technical assistance, capacity building, and
-                      international networking opportunities.
-                    </p>
-                  </div>
-
-                  <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-3">
-                      Community Inclusion
-                    </h4>
-                    <p>
-                      Local communities and civil society organizations ensure
-                      that development initiatives are inclusive, sustainable,
-                      and aligned with the needs of Ugandans.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-4">
-              <div className="bg-black text-white dark:bg-white dark:text-black p-8 relative">
-                <div className="absolute top-0 right-0 w-16 h-16 bg-blue-600"></div>
-                <h3 className="text-2xl font-bold mb-6">Economic Impact</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="w-4 h-4 bg-yellow-500 inline-block mt-1 mr-3"></span>
-                    <div>
-                      <p className="font-bold">$5 Billion</p>
-                      <p className="text-sm">Investment target by 2026</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-4 h-4 bg-yellow-500 inline-block mt-1 mr-3"></span>
-                    <div>
-                      <p className="font-bold">50,000+</p>
-                      <p className="text-sm">New jobs to be created</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-4 h-4 bg-yellow-500 inline-block mt-1 mr-3"></span>
-                    <div>
-                      <p className="font-bold">30%</p>
-                      <p className="text-sm">Increase in export volumes</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="w-4 h-4 bg-yellow-500 inline-block mt-1 mr-3"></span>
-                    <div>
-                      <p className="font-bold">500+</p>
-                      <p className="text-sm">International business linkages</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+      <section className="py-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="inline-block mb-4 px-4 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-sm font-semibold">
+              PARTNERSHIP MODEL
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Public-Private Partnership
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              The summit partnership network brings together government, private
+              sector, international organizations, and community groups to
+              support sustainable economic growth and innovation.
+            </p>
+            <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+              <li>
+                <span className="font-semibold text-blue-700 dark:text-blue-400">
+                  Government:
+                </span>{" "}
+                Policy direction and institutional support
+              </li>
+              <li>
+                <span className="font-semibold text-blue-700 dark:text-blue-400">
+                  Private Sector:
+                </span>{" "}
+                Financial resources and technical expertise
+              </li>
+              <li>
+                <span className="font-semibold text-blue-700 dark:text-blue-400">
+                  International:
+                </span>{" "}
+                Global networks and capacity building
+              </li>
+              <li>
+                <span className="font-semibold text-blue-700 dark:text-blue-400">
+                  Community:
+                </span>{" "}
+                Inclusive and sustainable development
+              </li>
+            </ul>
+          </div>
+          <div className="bg-gradient-to-br from-blue-50 to-blue-200 dark:from-gray-800 dark:to-blue-900 rounded-xl shadow-lg p-10 flex flex-col items-center justify-center">
+            <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-4">
+              Summit Impact
+            </h3>
+            <ul className="space-y-2 text-blue-900 dark:text-blue-100 text-lg">
+              <li>
+                <span className="font-bold">$5B+</span> Investment Target
+              </li>
+              <li>
+                <span className="font-bold">50,000+</span> New Jobs
+              </li>
+              <li>
+                <span className="font-bold">30%</span> Export Growth
+              </li>
+              <li>
+                <span className="font-bold">500+</span> International Linkages
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
       {/* Strategic Focus Areas */}
-      <section className="py-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="inline-block mb-3 h-1 w-16 bg-blue-600"></span>
-          <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-            Strategic Focus Areas
+      <section className="py-20 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <span className="inline-block mb-4 px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm font-semibold">
+              STRATEGIC FOCUS
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Key Areas of Partnership
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              The summit highlights investment and collaboration across digital
+              transformation themes.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-8 flex flex-col items-center">
+              <div className="mb-4 text-yellow-500">
+                {/* Prefer Bitcoin icon, fallback to Coins if not available */}
+                {Bitcoin ? (
+                  <Bitcoin size={40} className="text-yellow-500" />
+                ) : (
+                  <Coins size={40} className="text-yellow-500" />
+                )}
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Blockchain & Digital Currencies
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-center">
+                Cross-border payments, digital assets, and financial innovation.
+              </p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-8 flex flex-col items-center">
+              <div className="mb-4 text-yellow-500">
+                <Brain size={40} className="text-yellow-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Artificial Intelligence
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-center">
+                AI-driven solutions for business, government, and society.
+              </p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-8 flex flex-col items-center">
+              <div className="mb-4 text-yellow-500">
+                <Server size={40} className="text-yellow-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Digital Infrastructure
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-center">
+                Connectivity, cloud, and secure digital platforms.
+              </p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-8 flex flex-col items-center">
+              <div className="mb-4 text-yellow-500">
+                <Users size={40} className="text-yellow-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Innovation & Inclusion
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-center">
+                Startups, SMEs, and inclusive digital growth.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Special Partnership CTA */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900">
+        <div className="absolute inset-0 bg-[url('/images/uganda-landscape.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-black opacity-60"></div>
+        <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center z-10">
+          <span className="inline-block mb-4 px-4 py-1 rounded-full bg-blue-500/80 text-white text-sm font-semibold">
+            PARTNER INVITATION
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            Partner with the Summit
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mb-10">
-            The UNITE Expo 2025 focuses on key sectors that represent Uganda's
-            greatest investment potential and strategic development priorities
+          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+            We welcome organizations of all sizes—from local businesses to
+            global enterprises—to join our partnership network. For more
+            information, contact our team.
           </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-              <div className="text-yellow-500 mb-4">
-                <svg
-                  className="h-12 w-12"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                Agriculture & Agro-processing
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Leveraging Uganda's fertile land and favorable climate to
-                develop commercial farming, value addition, and food security
-                initiatives.
-              </p>
-            </div>
-
-            <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-              <div className="text-yellow-500 mb-4">
-                <svg
-                  className="h-12 w-12"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                Energy & Minerals
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Harnessing Uganda's substantial energy resources including
-                hydropower, oil and gas, and renewable energy potential.
-              </p>
-            </div>
-
-            <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-              <div className="text-yellow-500 mb-4">
-                <svg
-                  className="h-12 w-12"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                Manufacturing
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Building industrial capacity through light manufacturing,
-                textiles, pharmaceuticals, and value-added processing.
-              </p>
-            </div>
-
-            <div className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-              <div className="text-yellow-500 mb-4">
-                <svg
-                  className="h-12 w-12"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                Infrastructure
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Developing critical infrastructure including transportation,
-                logistics, real estate, and urban development projects.
-              </p>
-            </div>
-          </div>
+          <a
+            href="/contact"
+            className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white font-bold rounded-md shadow-lg transition-all duration-300"
+          >
+            Contact Us
+          </a>
         </div>
       </section>
+      <style jsx global>{`
+        @keyframes shine {
+          0% {
+            transform: translateX(-100%) skewX(-30deg);
+          }
+          100% {
+            transform: translateX(200%) skewX(-30deg);
+          }
+        }
 
-      {/* Sponsorship Information CTA */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-8">
-              <span className="inline-block mb-3 h-1 w-16 bg-yellow-500"></span>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-                Partner with UNITE Expo 2025
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                Join other forward-thinking organizations in supporting Uganda's
-                premier investment and trade exhibition. As a sponsor, your
-                organization will be recognized as a key contributor to Uganda's
-                economic development while gaining visibility with international
-                investors, government leaders, and industry stakeholders.
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 mb-8">
-                For detailed information about partnership opportunities, please
-                contact the UNITE Expo Secretariat. Our team will provide
-                comprehensive information about the available partnership
-                packages, benefits, and the application process.
-              </p>
-            </div>
-            <div className="md:col-span-4 flex justify-center md:justify-end">
-              <Button variant="primary" href="/contact">
-                Contact Sponsorship Team
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+        .shine-effect {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.6) 50%,
+            transparent 100%
+          );
+          transform: translateX(-120%) skewX(-30deg);
+        }
+
+        .group:hover .shine-effect {
+          animation: shine 1s forwards;
+        }
+      `}</style>
     </main>
   );
 }

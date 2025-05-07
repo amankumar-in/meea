@@ -5,7 +5,7 @@ import Link from "next/link";
 import { fetchAPI } from "@/lib/api/api-config";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
-import { BorderBeam } from '@/components/magicui/border-beam';
+import { BorderBeam } from "@/components/magicui/border-beam";
 
 interface Speaker {
   id: number;
@@ -49,7 +49,9 @@ export default function SpeakersPage() {
   useEffect(() => {
     const fetchSpeakers = async () => {
       try {
-        const response = await fetchAPI("/speakers?populate=*&sort[0]=SortOrder:asc&sort[1]=Name:asc");
+        const response = await fetchAPI(
+          "/speakers?populate=*&sort[0]=SortOrder:asc&sort[1]=Name:asc"
+        );
         console.log("Speakers response:", response);
 
         if (response && response.data) {
@@ -105,8 +107,9 @@ export default function SpeakersPage() {
                 Meet Our Speakers
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-                Industry leaders and experts bringing valuable insights to UNITE
-                Expo 2025
+                Industry leaders and experts bringing valuable insights to the
+                Middle East & Africa Digital Transformation Summit (MEA Summit
+                2025)
               </p>
               <Button variant="primary" href="/contact">
                 Apply to Speak
@@ -119,19 +122,27 @@ export default function SpeakersPage() {
                 <ul className="space-y-2">
                   <li className="flex items-center">
                     <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Investment Opportunities</span>
+                    <span>Energy Transformation</span>
                   </li>
                   <li className="flex items-center">
                     <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Market Development</span>
+                    <span>Agricultural Security</span>
                   </li>
                   <li className="flex items-center">
                     <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Industry Innovations</span>
+                    <span>Infrastructure Projects</span>
                   </li>
                   <li className="flex items-center">
                     <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
-                    <span>Policy & Regulation</span>
+                    <span>Financial Integration</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
+                    <span>Digital Economy</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-4 h-4 inline-block bg-yellow-500 mr-3"></span>
+                    <span>Smart City Initiatives</span>
                   </li>
                 </ul>
               </div>
@@ -298,12 +309,17 @@ export default function SpeakersPage() {
                             <div className="absolute top-4 right-4 z-20">
                               <span
                                 className="relative overflow-hidden inline-flex items-center justify-center px-2 py-0.5 text-[11px] font-semibold tracking-wide min-w-[48px] min-h-[20px] text-yellow-800 dark:text-yellow-200 bg-white/80 dark:bg-gray-900/80 rounded-xl"
-                                style={{ fontSize: '0.72rem', lineHeight: 1.1 }}
+                                style={{ fontSize: "0.72rem", lineHeight: 1.1 }}
                                 tabIndex={-1}
                                 aria-label="Featured Speaker"
                               >
                                 <span className="relative z-10">Featured</span>
-                                <BorderBeam size={28} duration={2.5} colorFrom="#FFD700" colorTo="#EC4899" />
+                                <BorderBeam
+                                  size={28}
+                                  duration={2.5}
+                                  colorFrom="#FFD700"
+                                  colorTo="#EC4899"
+                                />
                               </span>
                             </div>
                           )}
@@ -314,9 +330,15 @@ export default function SpeakersPage() {
                             {speaker.Name}
                           </h3>
                           <div className="flex items-center gap-2 mb-4">
-                            <span className="text-yellow-500 text-sm font-medium">{speaker.Title}</span>
-                            <span className="text-gray-400 dark:text-gray-500 text-lg">•</span>
-                            <span className="text-gray-600 dark:text-gray-400 text-sm">{speaker.Organization}</span>
+                            <span className="text-yellow-500 text-sm font-medium">
+                              {speaker.Title}
+                            </span>
+                            <span className="text-gray-400 dark:text-gray-500 text-lg">
+                              •
+                            </span>
+                            <span className="text-gray-600 dark:text-gray-400 text-sm">
+                              {speaker.Organization}
+                            </span>
                           </div>
                           <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow text-sm">
                             {speaker.ShortBio.length > 150
@@ -324,10 +346,13 @@ export default function SpeakersPage() {
                               : speaker.ShortBio}
                           </p>
                           {/* Event Count and View Profile - same line */}
-                          {(speaker.events && speaker.events.length > 0) ? (
+                          {speaker.events && speaker.events.length > 0 ? (
                             <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 text-sm">
                               <span className="text-gray-600 dark:text-gray-400">
-                                Speaking at {speaker.events.length} {speaker.events.length === 1 ? "event" : "events"}
+                                Speaking at {speaker.events.length}{" "}
+                                {speaker.events.length === 1
+                                  ? "event"
+                                  : "events"}
                               </span>
                               <span className="inline-flex items-center font-medium text-black dark:text-white group-hover:text-pink-500 transition-colors cursor-pointer">
                                 View Profile
@@ -398,7 +423,10 @@ export default function SpeakersPage() {
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-yellow-500 inline-block mt-2 mr-3"></span>
-                    <span>Contribute to Uganda's economic growth</span>
+                    <span>
+                      Contribute to the Middle East & Africa's digital
+                      transformation
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -410,14 +438,16 @@ export default function SpeakersPage() {
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 Share your expertise and insights with international investors
-                and business leaders at Uganda's premier investment expo. We're
-                looking for speakers with experience in key sectors including
-                agriculture, energy, technology, manufacturing, and finance.
+                and business leaders at the Middle East & Africa Digital
+                Transformation Summit (MEA Summit 2025). We're looking for
+                speakers with experience in key sectors including energy,
+                agriculture, infrastructure, finance, digital economy, and smart
+                cities.
               </p>
               <p className="text-gray-600 dark:text-gray-300 mb-8">
-                Speaker applications for UNITE Expo 2025 are now open. The
-                deadline for submissions is December 15, 2024. Our committee
-                reviews all applications and will respond within two weeks of
+                Speaker applications for MEA Summit 2025 are now open. The
+                deadline for submissions is May 31, 2025. Our committee reviews
+                all applications and will respond within two weeks of
                 submission.
               </p>
               <div className="flex flex-wrap gap-4">

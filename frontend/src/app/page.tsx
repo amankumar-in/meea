@@ -82,9 +82,9 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
   // Smooth scroll handler for Speakers button
   const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const section = document.getElementById('speakers');
+    const section = document.getElementById("speakers");
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -95,9 +95,13 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
   };
 
   // Find the prominent speaker by slug
-  const prominentSpeaker = speakers.find(s => s.Slug === 'h-e-yoweri-kaguta-museveni');
+  const prominentSpeaker = speakers.find(
+    (s) => s.Slug === "h-e-yoweri-kaguta-museveni"
+  );
   // Filter out the prominent speaker from the rest for the marquee
-  const marqueeSpeakers = speakers.filter(s => s.Slug !== 'h-e-yoweri-kaguta-museveni');
+  const marqueeSpeakers = speakers.filter(
+    (s) => s.Slug !== "h-e-yoweri-kaguta-museveni"
+  );
 
   // Split marquee speakers into two columns for the marquee
   const col1 = marqueeSpeakers.filter((_, i) => i % 2 === 0);
@@ -109,8 +113,18 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
       <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
         <svg width="100%" height="100%">
           <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" strokeWidth="0.5" />
+            <pattern
+              id="grid"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 20 0 L 0 0 0 20"
+                fill="none"
+                stroke="#cbd5e1"
+                strokeWidth="0.5"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -123,16 +137,28 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
         <div className="w-full md:w-1/2 max-w-2xl py-8 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
           {/* Logo and event year */}
           <div className="flex items-center gap-3 mb-4">
-            <img src="/mea-icon.svg" alt="MEA Summit Icon" className="w-14 h-14 drop-shadow-xl" style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }} />
-            <span className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-lg text-xs shadow-md">2025</span>
+            <img
+              src="/mea-icon.svg"
+              alt="MEA Summit Icon"
+              className="w-14 h-14 drop-shadow-xl"
+              style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }}
+            />
+            <span className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-lg text-xs shadow-md">
+              2025
+            </span>
           </div>
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white leading-tight">
-            <span className="text-orange-400 dark:text-blue-300">Middle East</span> & <span className="text-pink-400 dark:text-pink-300">Africa </span>Digital Transformation Summit
+            <span className="text-orange-400 dark:text-blue-300">
+              Middle East
+            </span>{" "}
+            & <span className="text-pink-400 dark:text-pink-300">Africa </span>
+            Digital Transformation Summit
           </h1>
           {/* Subheadline */}
           <p className="text-lg md:text-2xl text-slate-700 dark:text-white/90 font-light max-w-xl mb-6">
-            Join global leaders, innovators, and investors at the region&apos;s most influential summit.
+            Join global leaders, innovators, and investors at the region&apos;s
+            most influential summit.
           </p>
           {/* Date/location */}
           <div className="inline-flex items-center bg-yellow-400/90 px-3 py-1 rounded-full text-black mb-4 shadow-lg text-sm font-bold tracking-wide">
@@ -143,7 +169,10 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
             <a
               href="/tickets"
               className="relative inline-block px-6 py-3 rounded-lg text-lg font-bold text-white shadow-xl border border-white/30 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 hover:scale-105 hover:brightness-110"
-              style={{ backgroundSize: '200% 200%', backgroundPosition: '0% 50%' }}
+              style={{
+                backgroundSize: "200% 200%",
+                backgroundPosition: "0% 50%",
+              }}
             >
               Register Now
             </a>
@@ -170,9 +199,15 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
                     className="w-28 h-36 rounded-lg object-cover border-2 border-blue-400 shadow-lg bg-white mr-6"
                   />
                   <div className="flex flex-col">
-                    <span className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white">{prominentSpeaker.Name}</span>
-                    <span className="text-base text-blue-700 dark:text-blue-300 mt-1">{prominentSpeaker.Title}</span>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 overflow-hidden line-clamp-4">{prominentSpeaker.ShortBio}</p>
+                    <span className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white">
+                      {prominentSpeaker.Name}
+                    </span>
+                    <span className="text-base text-blue-700 dark:text-blue-300 mt-1">
+                      {prominentSpeaker.Title}
+                    </span>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 overflow-hidden line-clamp-4">
+                      {prominentSpeaker.ShortBio}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -182,47 +217,90 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
           <div className="flex w-full items-center justify-center relative gap-4 h-[400px]">
             {/* Column 1: scrolls up */}
             <div className="w-1/2 h-full">
-              <Marquee vertical pauseOnHover className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+              <Marquee
+                vertical
+                pauseOnHover
+                className="h-full w-full [--duration:12s]"
+                style={{
+                  maskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+                }}
+              >
                 {col1 && col1.length > 0 ? (
                   col1.map((speaker) => (
-                    <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                    <div
+                      key={speaker.id}
+                      className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105"
+                    >
                       <img
                         src={getSpeakerImage(speaker.ProfileImage?.url)}
                         alt={speaker.Name}
                         className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
                       />
                       <div className="flex flex-col">
-                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
-                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
-                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">
+                          {speaker.Name}
+                        </span>
+                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">
+                          {speaker.Title}
+                        </span>
+                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">
+                          {speaker.Organization}
+                        </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+                  <div className="text-slate-500 dark:text-white/70 text-center w-full">
+                    Speakers coming soon…
+                  </div>
                 )}
               </Marquee>
             </div>
             {/* Column 2: scrolls down (reverse) */}
             <div className="w-1/2 h-full">
-              <Marquee vertical pauseOnHover reverse className="h-full w-full [--duration:12s]" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+              <Marquee
+                vertical
+                pauseOnHover
+                reverse
+                className="h-full w-full [--duration:12s]"
+                style={{
+                  maskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+                }}
+              >
                 {col2 && col2.length > 0 ? (
                   col2.map((speaker) => (
-                    <div key={speaker.id} className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105">
+                    <div
+                      key={speaker.id}
+                      className="flex items-center gap-4 py-4 px-2 bg-white/80 border border-blue-200 dark:bg-slate-800/60 dark:border-blue-400/20 rounded-xl shadow-md mb-4 mx-2 transition-transform hover:scale-105"
+                    >
                       <img
                         src={getSpeakerImage(speaker.ProfileImage?.url)}
                         alt={speaker.Name}
                         className="w-14 h-14 rounded-full object-cover border-2 border-blue-400 shadow-lg bg-white"
                       />
                       <div className="flex flex-col">
-                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">{speaker.Name}</span>
-                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">{speaker.Title}</span>
-                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">{speaker.Organization}</span>
+                        <span className="font-bold text-slate-900 dark:text-white text-base leading-tight truncate max-w-[120px]">
+                          {speaker.Name}
+                        </span>
+                        <span className="text-xs text-blue-700 dark:text-blue-300 truncate max-w-[120px]">
+                          {speaker.Title}
+                        </span>
+                        <span className="text-xs text-blue-400 dark:text-blue-400 truncate max-w-[120px]">
+                          {speaker.Organization}
+                        </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-slate-500 dark:text-white/70 text-center w-full">Speakers coming soon…</div>
+                  <div className="text-slate-500 dark:text-white/70 text-center w-full">
+                    Speakers coming soon…
+                  </div>
                 )}
               </Marquee>
             </div>
@@ -408,7 +486,8 @@ const PartnersMarquee3D = () => {
               Supported by Global Partners
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto md:mx-0">
-              Leading organizations supporting Middle East-Africa economic integration
+              Leading organizations supporting Middle East-Africa economic
+              integration
             </p>
           </div>
           {/* 3D Marquee: right on desktop, below on mobile */}
@@ -553,24 +632,6 @@ const StrategicSectorsGrid = () => {
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   {sector.description}
                 </p>
-              </div>
-              <div className="px-6 pb-4 pt-2 border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
-                <button className="text-blue-600 dark:text-blue-400 text-sm font-semibold flex items-center group-hover:text-blue-800">
-                  Learn more
-                  <svg
-                    className="h-4 w-4 ml-1 transform transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </button>
               </div>
             </div>
           ))}
@@ -886,8 +947,8 @@ const GlobalSignificanceSection = () => {
             Strategic Global Significance
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Middle East-Africa partnerships are reshaping global trade
-            routes and geopolitical dynamics
+            Middle East-Africa partnerships are reshaping global trade routes
+            and geopolitical dynamics
           </p>
         </div>
 
@@ -1207,8 +1268,7 @@ const FeaturedSpeakersSection = ({
             Distinguished Speakers
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Connect with decision makers shaping Middle East-Africa
-            partnerships
+            Connect with decision makers shaping Middle East-Africa partnerships
           </p>
         </div>
         <Button
@@ -1412,8 +1472,9 @@ const ImmersiveCTASection = () => (
       </h2>
 
       <p className="text-xl text-gray-100 mb-10 max-w-3xl mx-auto">
-        MEA 2025 is implementing a phased integration framework to
-        structure and transform the Middle East-Africa economic partnership with a focus on digital transformation using blockchain and AI.
+        MEA 2025 is implementing a phased integration framework to structure and
+        transform the Middle East-Africa economic partnership with a focus on
+        digital transformation using blockchain and AI.
       </p>
 
       <div className="flex flex-wrap justify-center gap-4">
@@ -1559,7 +1620,6 @@ const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
                   Kampala Serena Hotel
                   <br />
                   Uganda
-                  
                 </p>
               </div>
             </div>
@@ -1848,7 +1908,10 @@ export default function HomePage() {
         <AnimatedStatsSection />
         <PartnersMarquee3D />
         <StrategicSectorsGrid />
-        <FeaturedSpeakersSection speakers={speakers} loading={loading.speakers} />
+        <FeaturedSpeakersSection
+          speakers={speakers}
+          loading={loading.speakers}
+        />
         <BannerSection />
         <BlockchainSection />
         <InvestmentLandscapeSection
@@ -1862,10 +1925,14 @@ export default function HomePage() {
         <NewsletterSection />
       </main>
       {/* Global shine-animation styles */}
-      <style jsx global>{`  
+      <style jsx global>{`
         @keyframes shine {
-          0% { transform: translateX(-100%) skewX(-30deg); }
-          100% { transform: translateX(200%) skewX(-30deg); }
+          0% {
+            transform: translateX(-100%) skewX(-30deg);
+          }
+          100% {
+            transform: translateX(200%) skewX(-30deg);
+          }
         }
 
         .shine-effect {
@@ -1874,7 +1941,12 @@ export default function HomePage() {
           left: 0;
           width: 50%;
           height: 200%;
-          background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.6) 50%,
+            transparent 100%
+          );
           transform: translateX(-120%) skewX(-30deg);
         }
 
