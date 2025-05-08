@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle() {
+interface ThemeToggleProps {
+  disableCircle?: boolean;
+}
+
+export function ThemeToggle({ disableCircle = false }: ThemeToggleProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -34,7 +38,11 @@ export function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-      className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className={`flex items-center justify-center ${
+        disableCircle
+          ? "w-auto h-auto"
+          : "w-9 h-9 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800"
+      } transition-colors`}
       type="button"
     >
       {isDarkMode ? (

@@ -7,7 +7,6 @@ import { NavigationLink } from "@/components/ui/NavigationLink";
 import { MobileMenuButton } from "@/components/ui/MobileMenuButton";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 // Remove Venue from navItems
@@ -61,14 +60,14 @@ export default function Header() {
           scrolled ? "shadow-md" : ""
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-1.5 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo with 2025 chip */}
             <div className="flex items-center">
-              <Logo />
-              <Chip variant="primary" size="sm" className="ml-2">
+              <Logo className="md:scale-100 scale-90" />
+              <span className="ml-2 hidden md:inline-block bg-yellow-400 text-black font-bold px-2 py-1 rounded-lg text-xs shadow-md">
                 2025
-              </Chip>
+              </span>
             </div>
 
             {/* Desktop Navigation */}
@@ -91,7 +90,7 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center space-x-3">
-              <ThemeToggle />
+              <ThemeToggle disableCircle={true} />
               <Button variant="primary" size="sm" href="/tickets">
                 Tickets
               </Button>
@@ -131,16 +130,16 @@ export default function Header() {
             </button>
             {/* Logo at top of mobile menu */}
             <div className="py-4 flex items-center">
-              <Logo />
-              <Chip variant="primary" size="sm" className="ml-2">
+              <Logo className="scale-90" />
+              <span className="ml-2 hidden bg-yellow-400 text-black font-bold px-2 py-1 rounded-lg text-xs shadow-md">
                 2025
-              </Chip>
+              </span>
             </div>
 
             {/* Action Buttons before links */}
             <div className="py-4 space-y-3">
               <div className="flex justify-center">
-                <ThemeToggle />
+                <ThemeToggle disableCircle={true} />
               </div>
               <Button variant="primary" fullWidth href="/tickets">
                 Get Tickets
