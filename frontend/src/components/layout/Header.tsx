@@ -8,14 +8,14 @@ import { MobileMenuButton } from "@/components/ui/MobileMenuButton";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
-// Remove Contact from mobile nav items
+// Remove Venue from navItems
 const navItems = [
   { name: "About", href: "/about" },
   { name: "Events", href: "/events" },
   { name: "Speakers", href: "/speakers" },
   { name: "Sponsors", href: "/sponsors" },
-  { name: "Venue", href: "/venue" },
 ];
 
 // Separate desktop nav items to include Contact
@@ -82,13 +82,16 @@ export default function Header() {
 
             {/* Desktop Action Button */}
             <div className="hidden md:flex items-center space-x-4">
+              {/* Light/Dark Toggle */}
+              <ThemeToggle />
               <Button variant="primary" href="/tickets">
                 Get Tickets
               </Button>
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex md:hidden items-center space-x-4">
+            <div className="flex md:hidden items-center space-x-3">
+              <ThemeToggle />
               <Button variant="primary" size="sm" href="/tickets">
                 Tickets
               </Button>
@@ -120,7 +123,7 @@ export default function Header() {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="square"
-                strokeLinejoin="arcs"
+                strokeLinejoin="round"
               >
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -135,7 +138,10 @@ export default function Header() {
             </div>
 
             {/* Action Buttons before links */}
-            <div className="py-6 space-y-4">
+            <div className="py-4 space-y-3">
+              <div className="flex justify-center">
+                <ThemeToggle />
+              </div>
               <Button variant="primary" fullWidth href="/tickets">
                 Get Tickets
               </Button>

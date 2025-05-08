@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Switch } from "@headlessui/react";
+import { Sun, Moon } from "lucide-react";
 
 export function ThemeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -15,34 +15,33 @@ export function ThemeToggle() {
   }, []);
 
   // Toggle theme function
-  const toggleTheme = (enabled: boolean) => {
-    if (enabled) {
+  const toggleTheme = () => {
+    if (!isDarkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
     }
-    setIsDarkMode(enabled);
   };
 
   // Prevent hydration mismatch
   if (!mounted) return null;
 
   return (
-    <Switch
-      checked={isDarkMode}
-      onChange={toggleTheme}
-      className={`${
-        isDarkMode ? "bg-black" : "bg-gray-200"
-      } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white`}
+    <button
+      onClick={toggleTheme}
+      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+      className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      type="button"
     >
-      <span className="sr-only">Toggle dark mode</span>
-      <span
-        className={`${
-          isDarkMode ? "translate-x-6 bg-white" : "translate-x-1 bg-black"
-        } inline-block h-4 w-4 transform rounded-full transition-transform`}
-      />
-    </Switch>
+      {isDarkMode ? (
+        <Sun className="w-5 h-5 text-yellow-500" />
+      ) : (
+        <Moon className="w-5 h-5 text-gray-700" />
+      )}
+    </button>
   );
 }
