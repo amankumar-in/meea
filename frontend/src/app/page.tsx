@@ -1583,7 +1583,7 @@ const ModernContactForm = React.forwardRef<HTMLElement>((props, ref) => (
                 <p className="text-gray-600 dark:text-gray-300">
                   Dubai Office: +971 4 123 4567
                   <br />
-                  Kampala Office: +256 20 987 6543
+                  Kampala Office:  +256 779 345 331
                 </p>
               </div>
             </div>

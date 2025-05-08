@@ -622,9 +622,9 @@ export default function SpeakerDetailPage({
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 Discover other industry experts and thought leaders who will be
-                sharing their insights at UNITE Expo 2025. Our diverse lineup of
-                speakers represents various sectors including agriculture,
-                energy, manufacturing, technology, finance, and more.
+                sharing their insights at MEA Summit 2025. Our diverse lineup of
+                speakers represents various sectors including blockchain,
+                energy, manufacturing, technology, digital finance, and more.
               </p>
             </div>
             <div className="md:col-span-4 flex justify-center md:justify-end">

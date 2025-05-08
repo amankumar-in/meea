@@ -280,7 +280,7 @@ export default function SponsorDetailPage({
                   href="/contact"
                   className="dark:border-white dark:text-white"
                 >
-                  Contact Partner
+                  Connect Through MEA
                 </Button>
               </div>
             </div>
@@ -426,7 +426,7 @@ export default function SponsorDetailPage({
                       Sponsored Events
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300">
-                      {sponsor.Name} is supporting the following events at UNITE Expo 2025:
+                      {sponsor.Name} is supporting the following events at MEA Summit:
                     </p>
                   </div>
                   <div className="p-0">
@@ -517,7 +517,7 @@ export default function SponsorDetailPage({
                 <div className="absolute top-0 right-0 w-16 h-16 bg-yellow-500"></div>
                 <h3 className="text-2xl font-bold mb-4">Join as a Partner</h3>
                 <p className="mb-6">
-                  Become a UNITE Expo 2025 partner and connect your brand with Uganda's premier investment and trade exhibition.
+                  Become a MEA Summit partner and connect your brand with Uganda's premier investment and trade exhibition.
                 </p>
                 <Button 
                   variant="light" 
@@ -543,7 +543,7 @@ export default function SponsorDetailPage({
                 Partnership Opportunities
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                UNITE Expo 2025 offers various partnership levels designed to meet different marketing objectives and budgets. Each tier provides a unique set of benefits and exposure opportunities.
+                MEA Summit offers various partnership levels designed to meet different marketing objectives and budgets. Each tier provides a unique set of benefits and exposure opportunities.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button variant="primary" href="/sponsors">

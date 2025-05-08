@@ -877,20 +877,20 @@ export default function EventDetailPage({
             <div className="md:col-span-4">
               <div className="bg-black text-white dark:bg-white dark:text-black p-8 relative">
                 <div className="absolute top-0 right-0 w-16 h-16 bg-blue-600"></div>
-                <h3 className="text-2xl font-bold mb-4">UNITE Expo 2025</h3>
-                <p className="mb-6">July 7-14, 2025</p>
+                <h3 className="text-2xl font-bold mb-4">MEA Summit 2025</h3>
+                <p className="mb-6">JUNE 25-27, 2025</p>
                 <ul className="space-y-3">
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-yellow-500 inline-block mr-3"></span>
-                    <span>300+ Exhibition Booths</span>
+                    <span>300+ Speakers</span>
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-yellow-500 inline-block mr-3"></span>
-                    <span>50+ Speakers</span>
+                    <span>50+ Countries</span>
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-yellow-500 inline-block mr-3"></span>
-                    <span>100+ Educational Sessions</span>
+                    <span>5000+ Attendees</span>
                   </li>
                 </ul>
               </div>
@@ -901,10 +901,10 @@ export default function EventDetailPage({
                 Explore More Events
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                Discover other exciting opportunities at UNITE Expo 2025. From
+                Discover other exciting opportunities at MEA Summit 2025. From
                 industry-specific forums to networking sessions, there's
                 something for every business professional interested in the
-                Ugandan market.
+                East African market.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button variant="primary" href="/events">
