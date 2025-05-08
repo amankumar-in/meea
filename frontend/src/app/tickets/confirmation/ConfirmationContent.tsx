@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { fetchAPI } from "@/lib/api/api-config";
@@ -11,7 +11,7 @@ import { generateQRCodeDataURL } from "@/lib/qrcode";
 // ScaleWrapper Component
 // -------------------------------------------------------------------
 // Renders children at a fixed design width (default 800px) and scales the
-// entire block based on the container’s current width.
+// entire block based on the container's current width.
 // (Note: the ticket preview inside will have its own forced white/black styling)
 function ScaleWrapper({
   children,
@@ -122,7 +122,6 @@ export default function ConfirmationContent() {
   const searchParams = useSearchParams();
   const orderTrackingId = searchParams.get("OrderTrackingId");
   const orderMerchantReference = searchParams.get("OrderMerchantReference");
-  const orderNotificationType = searchParams.get("OrderNotificationType");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -188,59 +187,60 @@ export default function ConfirmationContent() {
       tempDiv.style.left = "-9999px";
       tempDiv.style.top = "-9999px";
       tempDiv.style.width = "800px";
+      tempDiv.style.backgroundColor = "white";
 
       // Render the ticket with fixed styles (forcing white background & black text)
       tempDiv.innerHTML = `
-      <div style="border: 1px solid #e5e7eb; width: 800px; box-sizing: border-box;">
+      <div style="background-color: white; border: 1px solid #e5e7eb; width: 800px; box-sizing: border-box;">
         <div style="display: flex;">
           <!-- Main Ticket Content -->
           <div style="width: 75%; background-color: white;">
             <!-- Header -->
             <div style="background-color: #2563eb; color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <h3 style="font-weight: bold; font-size: 20px; margin: 0;">UNITE EXPO 2025</h3>
-                <p style="font-size: 14px; margin: 0; color:rgb(255, 255, 255);">Uganda Next Investment & Trade Expo</p>
+                <h3 style="font-weight: bold; font-size: 20px; margin: 0; color: #fff; background-color: #2563eb;">MEA Summit 2025</h3>
+                <p style="font-size: 14px; margin: 0; color: #fff; background-color: #2563eb;">Middle East Africa Digital Transformation Summit</p>
               </div>
               <div style="text-align: right;">
-                <p style="font-size: 14px; margin: 0; color:rgb(255, 255, 255);">${
+                <p style="font-size: 14px; margin: 0; color: #fff; background-color: #2563eb;">${
                   ticket.ticketCategory?.name || "Single Event Ticket"
                 }</p>
               </div>
             </div>
             <!-- Attendee Info -->
-            <div style="padding: 16px;">
-              <h4 style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0; color: #000;">${
+            <div style="padding: 16px; background-color: white;">
+              <h4 style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0; color: #000; background-color: white;">${
                 ticket.attendeeName
               }</h4>
-              <p style="margin: 0 0 4px 0; color: #000;">${
+              <p style="margin: 0 0 4px 0; color: #000; background-color: white;">${
                 ticket.attendeeEmail
               }</p>
               ${
                 ticket.attendeePhone
-                  ? `<p style="margin: 0; color: #000;">${ticket.attendeePhone}</p>`
+                  ? `<p style="margin: 0; color: #000; background-color: white;">${ticket.attendeePhone}</p>`
                   : ""
               }
             </div>
             <!-- Ticket Details -->
-            <div style="padding: 0 16px 16px 16px;">
+            <div style="padding: 0 16px 16px 16px; background-color: white;">
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                 <div>
-                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Ticket Type</p>
-                  <p style="font-weight: 500; margin: 0; color: #000">${
+                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Ticket Type</p>
+                  <p style="font-weight: 500; margin: 0; color: #000; background-color: white;">${
                     ticket.ticketCategory?.name || "Single Event Ticket"
                   }</p>
                 </div>
                 <div>
-                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Ticket #</p>
-                  <p style="font-weight: 500; font-size: 14px; word-break: break-all; margin: 0; color: #000">${
+                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Ticket #</p>
+                  <p style="font-weight: 500; font-size: 14px; word-break: break-all; margin: 0; color: #000; background-color: white;">${
                     ticket.ticketNumber
                   }</p>
                 </div>
               </div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div>
-                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Valid From</p>
-                  <p style="font-weight: 500; margin: 0; color: #000">${
+                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Valid From</p>
+                  <p style="font-weight: 500; margin: 0; color: #000; background-color: white;">${
                     ticket.ticketCategory?.validFrom
                       ? new Date(
                           ticket.ticketCategory.validFrom
@@ -253,8 +253,8 @@ export default function ConfirmationContent() {
                   }</p>
                 </div>
                 <div>
-                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Valid Until</p>
-                  <p style="font-weight: 500; margin: 0; color: #000">${
+                  <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Valid Until</p>
+                  <p style="font-weight: 500; margin: 0; color: #000; background-color: white;">${
                     ticket.ticketCategory?.validUntil
                       ? new Date(
                           ticket.ticketCategory.validUntil
@@ -268,24 +268,24 @@ export default function ConfirmationContent() {
                 </div>
               </div>
               <!-- Location -->
-              <div style="display: flex; align-items: center; margin-top: 16px;">
-                <svg style="height: 16px; width: 16px; margin-right: 8px; color: #6b7280;" viewBox="0 0 24 24" fill="currentColor">
+              <div style="display: flex; align-items: center; margin-top: 16px; background-color: white;">
+                <svg style="height: 16px; width: 16px; margin-right: 8px; color: #6b7280; background-color: white;" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
-                <span style="font-size: 14px; color: #000;">Kampala International Convention Centre, Uganda</span>
+                <span style="font-size: 14px; color: #000; background-color: white;">Serena Hotel, Kampala, Uganda</span>
               </div>
             </div>
           </div>
           <!-- QR Code Section -->
           <div style="width: 25%; background-color: #f9fafb; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px;">
-            <p style="font-weight: bold; text-align: center; margin: 0 0 12px 0; color: #000;">ADMIT ONE</p>
-            <div style="width: 100%; aspect-ratio: 1; margin-bottom: 12px;">
+            <p style="font-weight: bold; text-align: center; margin: 0 0 12px 0; color: #000; background-color: #f9fafb;">ADMIT ONE</p>
+            <div style="width: 100%; aspect-ratio: 1; margin-bottom: 12px; background-color: #f9fafb;">
               <img src="${
                 ticket.qrCodeImage
               }" alt="Ticket QR Code" style="width: 100%; height: 100%; object-fit: contain;" />
             </div>
-            <p style="font-size: 12px; text-align: center; color: #000; margin: 0 0 4px 0;">SCAN TO VERIFY</p>
-            <p style="font-size: 12px; text-align: center; font-weight: bold; margin: 0; color: #000;">UNITE EXPO 2025</p>
+            <p style="font-size: 12px; text-align: center; color: #000; margin: 0 0 4px 0; background-color: #f9fafb;">SCAN TO VERIFY</p>
+            <p style="font-size: 12px; text-align: center; font-weight: bold; margin: 0; color: #000; background-color: #f9fafb;">MEA Summit 2025</p>
           </div>
         </div>
       </div>
@@ -334,52 +334,52 @@ export default function ConfirmationContent() {
         tempDiv.style.top = "-9999px";
         tempDiv.style.width = "800px";
         tempDiv.innerHTML = `
-        <div style="border: 1px solid #e5e7eb; width: 800px; box-sizing: border-box;">
+        <div style="background-color: white; border: 1px solid #e5e7eb; width: 800px; box-sizing: border-box;">
           <div style="display: flex;">
             <div style="width: 75%; background-color: white;">
               <div style="background-color: #2563eb; color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <h3 style="font-weight: bold; font-size: 20px; margin: 0;">UNITE EXPO 2025</h3>
-                  <p style="font-size: 14px; margin: 0; color: #fff;">Uganda Next Investment & Trade Expo</p>
+                  <h3 style="font-weight: bold; font-size: 20px; margin: 0; color: #fff; background-color: #2563eb;">MEA Summit 2025</h3>
+                  <p style="font-size: 14px; margin: 0; color: #fff; background-color: #2563eb;">Middle East Africa Digital Transformation Summit</p>
                 </div>
                 <div style="text-align: right;">
-                  <p style="font-size: 14px; margin: 0; color: #fff;">${
+                  <p style="font-size: 14px; margin: 0; color: #fff; background-color: #2563eb;">${
                     ticket.ticketCategory?.name || "Single Event Ticket"
                   }</p>
                 </div>
               </div>
-              <div style="padding: 16px;">
-                <h4 style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0; color: #000;">${
+              <div style="padding: 16px; background-color: white;">
+                <h4 style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0; color: #000; background-color: white;">${
                   ticket.attendeeName
                 }</h4>
-                <p style="margin: 0 0 4px 0; color: #000;">${
+                <p style="margin: 0 0 4px 0; color: #000; background-color: white;">${
                   ticket.attendeeEmail
                 }</p>
                 ${
                   ticket.attendeePhone
-                    ? `<p style="margin: 0; color: #000;">${ticket.attendeePhone}</p>`
+                    ? `<p style="margin: 0; color: #000; background-color: white;">${ticket.attendeePhone}</p>`
                     : ""
                 }
               </div>
-              <div style="padding: 0 16px 16px 16px;">
+              <div style="padding: 0 16px 16px 16px; background-color: white;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                   <div>
-                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Ticket Type</p>
-                    <p style="font-weight: 500; margin: 0; color:#000">${
+                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Ticket Type</p>
+                    <p style="font-weight: 500; margin: 0; color:#000; background-color: white;">${
                       ticket.ticketCategory?.name || "Single Event Ticket"
                     }</p>
                   </div>
                   <div>
-                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Ticket #</p>
-                    <p style="font-weight: 500; font-size: 14px; word-break: break-all; margin: 0; color:#000">${
+                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Ticket #</p>
+                    <p style="font-weight: 500; font-size: 14px; word-break: break-all; margin: 0; color:#000; background-color: white;">${
                       ticket.ticketNumber
                     }</p>
                   </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                   <div>
-                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Valid From</p>
-                    <p style="font-weight: 500; margin: 0; color:#000">${
+                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Valid From</p>
+                    <p style="font-weight: 500; margin: 0; color:#000; background-color: white;">${
                       ticket.ticketCategory?.validFrom
                         ? new Date(
                             ticket.ticketCategory.validFrom
@@ -392,8 +392,8 @@ export default function ConfirmationContent() {
                     }</p>
                   </div>
                   <div>
-                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0;">Valid Until</p>
-                    <p style="font-weight: 500; margin: 0; color:#000">${
+                    <p style="font-size: 12px; text-transform: uppercase; color: #6b7280; margin: 0 0 4px 0; background-color: white;">Valid Until</p>
+                    <p style="font-weight: 500; margin: 0; color:#000; background-color: white;">${
                       ticket.ticketCategory?.validUntil
                         ? new Date(
                             ticket.ticketCategory.validUntil
@@ -406,24 +406,24 @@ export default function ConfirmationContent() {
                     }</p>
                   </div>
                 </div>
-                <div style="display: flex; align-items: center; margin-top: 16px;">
-                  <svg style="height: 16px; width: 16px; margin-right: 8px; color: #6b7280;" viewBox="0 0 24 24" fill="currentColor">
+                <div style="display: flex; align-items: center; margin-top: 16px; background-color: white;">
+                  <svg style="height: 16px; width: 16px; margin-right: 8px; color: #6b7280; background-color: white;" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
-                  <span style="font-size: 14px; color: #000;">Kampala International Convention Centre, Uganda</span>
+                  <span style="font-size: 14px; color: #000; background-color: white;">Serena Hotel, Kampala, Uganda</span>
                 </div>
               </div>
             </div>
             <div style="border-left: 1px solid #e5e7eb;"></div>
             <div style="width: 25%; background-color: #f9fafb; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px;">
-              <p style="font-weight: bold; text-align: center; margin: 0 0 12px 0; color: #000;">ADMIT ONE</p>
-              <div style="width: 100%; aspect-ratio: 1; margin-bottom: 12px;">
+              <p style="font-weight: bold; text-align: center; margin: 0 0 12px 0; color: #000; background-color: #f9fafb;">ADMIT ONE</p>
+              <div style="width: 100%; aspect-ratio: 1; margin-bottom: 12px; background-color: #f9fafb;">
                 <img src="${
                   ticket.qrCodeImage
                 }" alt="Ticket QR Code" style="width: 100%; height: 100%; object-fit: contain;" />
               </div>
-              <p style="font-size: 12px; text-align: center; color: #000; margin: 0 0 4px 0;">SCAN TO VERIFY</p>
-              <p style="font-size: 12px; text-align: center; font-weight: bold; margin: 0; color: #000;">UNITE EXPO 2025</p>
+              <p style="font-size: 12px; text-align: center; color: #000; margin: 0 0 4px 0; background-color: #f9fafb;">SCAN TO VERIFY</p>
+              <p style="font-size: 12px; text-align: center; font-weight: bold; margin: 0; color: #000; background-color: #f9fafb;">MEA Summit 2025</p>
             </div>
           </div>
         </div>
@@ -747,7 +747,7 @@ export default function ConfirmationContent() {
               ticketCategory: ticket.ticketCategory,
             })),
             eventDate: "April 12-30, 2025",
-            eventLocation: "Kampala International Convention Centre, Uganda",
+            eventLocation: "Serena Hotel, Kampala, Uganda",
             confirmationUrl,
           };
           const emailResponse = await fetch("/api/tickets/send-email", {
@@ -1154,13 +1154,13 @@ export default function ConfirmationContent() {
                                 <div className="bg-blue-600 dark:bg-blue-600 text-white dark:text-white py-3 px-5 flex justify-between items-center">
                                   <div>
                                     <h3 className="font-bold text-2xl m-0">
-                                      UNITE EXPO 2025
+                                      MEA Summit 2025
                                     </h3>
                                     <p
                                       className="text-xs m-0"
                                       style={{ color: "#ffffff" }}
                                     >
-                                      Uganda Next Investment & Trade Expo
+                                      Middle East Africa Digital Transformation Summit
                                     </p>
                                   </div>
                                   <div className="text-right">
@@ -1180,6 +1180,11 @@ export default function ConfirmationContent() {
                                   <p className="m-0 text-black dark:text-black">
                                     {ticket.attendeeEmail}
                                   </p>
+                                  {ticket.attendeePhone && (
+                                    <p className="m-0 text-black dark:text-black">
+                                      {ticket.attendeePhone}
+                                    </p>
+                                  )}
                                 </div>
                                 <div className="px-4 pb-4">
                                   <div className="grid grid-cols-2 gap-4 mb-4">
@@ -1257,7 +1262,7 @@ export default function ConfirmationContent() {
                                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                                     </svg>
                                     <span className="text-sm text-black dark:text-black">
-                                      Kampala International Convention Centre,
+                                      Serena Hotel, Kampala
                                       Uganda
                                     </span>
                                   </div>
@@ -1287,7 +1292,7 @@ export default function ConfirmationContent() {
                                   SCAN TO VERIFY
                                 </p>
                                 <p className="text-xs text-center font-bold text-black">
-                                  UNITE EXPO 2025
+                                  MEA Summit 2025
                                 </p>
                               </div>
                             </div>
