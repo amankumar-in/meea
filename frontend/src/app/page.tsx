@@ -73,12 +73,8 @@ const getImageUrl = (path: string) => {
   return `${apiUrl}${path}`;
 };
 
-// -------------------------------------------------------------------
-// Completely New Section Components
-// -------------------------------------------------------------------
-
 // 1. Impactful Hero Section with Vertical Marquee of Speakers
-const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
+const ImpactfulHeroSection = ({ speakers, onOrganizerClick }: { speakers: Speaker[]; onOrganizerClick?: () => void }) => {
   // Smooth scroll handler for Speakers button
   const handleScrollToSpeakers = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -135,30 +131,30 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full py-8">
         {/* Left: Content */}
         <div className="w-full md:w-1/2 max-w-2xl py-8 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
-          {/* Organizers element replacing logo and year */}
+          {/* Organizers element - clickable to scroll to HiPipo section */}
           <div className="flex items-center gap-4 mb-4">
-            <div className="flex items-center px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-xl border border-white/30 animate-organizer-fade">
-              <span className="text-sm font-semibold text-white tracking-wider mr-4 drop-shadow-sm">Co-Organized by</span>
+            <button
+              type="button"
+              onClick={onOrganizerClick}
+              className="flex items-center px-5 py-0 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-xl border border-white/30 animate-organizer-fade focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 hover:scale-105 cursor-pointer"
+              aria-label="Scroll to HiPipo Organizer Section"
+            >
+              <span className="text-sm font-semibold text-white tracking-wider mr-4 drop-shadow-sm">Organized by</span>
               <div className="flex items-center gap-3">
-                <Image
-                  src="/images/partners/CFC-logo-square-blue-transparent-bg.png"
-                  alt="Coins For College Logo"
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 rounded-xl bg-white/80 shadow-md object-contain transition-transform duration-300 hover:scale-105"
-                  priority
-                />
-                <span className="text-white text-2xl font-bold mx-2">+</span>
-                <Image
-                  src="/images/partners/HiPipo-logo-square-blue-transparent-bg.png"
-                  alt="HiPipo Logo"
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 rounded-xl bg-white/80 shadow-md object-contain transition-transform duration-300 hover:scale-105"
-                  priority
-                />
+                {/* Show blue logo in light mode, white logo in dark mode */}
+                
+                <span>
+                  <Image
+                    src="/images/HiPipo-logo-square-white-transparent-bg.svg"
+                    alt="HiPipo Logo"
+                    width={64}
+                    height={64}
+                    className="w-20 h-18 rounded-xl object-contain transition-transform duration-300 hover:scale-105"
+                    priority
+                  />
+                </span>
               </div>
-            </div>
+            </button>
             <span className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg text-sm shadow-md ml-2 hidden lg:inline-block">2025</span>
           </div>
           {/* Headline */}
@@ -1835,6 +1831,158 @@ const NewsletterSection = () => (
   </section>
 );
 
+// --- HiPipo Section Component ---
+const HiPipoSection = React.forwardRef<HTMLElement>((props, ref) => {
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  // Allow parent to pass a ref for smooth scroll
+  const mergedRef = (node: HTMLElement | null) => {
+    sectionRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+  };
+
+  return (
+    <section
+      ref={mergedRef}
+      className="relative py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-[#0a1622] dark:via-[#1e2233] dark:to-[#10131a]"
+    >
+      {/* Decorative background */}
+      <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
+        <svg width="100%" height="100%">
+          <defs>
+            <pattern id="hipipo-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="12" cy="12" r="2" fill="#4f46e5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hipipo-grid)" />
+        </svg>
+      </div>
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-300 opacity-20 blur-3xl rounded-full pointer-events-none z-0 dark:bg-blue-500" />
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          {/* Logo and badge */}
+          <div className="flex flex-col gap-4 items-center md:items-start md:w-1/3">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 flex flex-col items-center animate-organizer-fade">
+              {/* Show blue logo in light mode, white logo in dark mode */}
+              <span className="block dark:hidden">
+                <img
+                  src="/images/HiPipo-logo-square-blue-transparent-bg.svg"
+                  alt="HiPipo Logo"
+                  width={120}
+                  height={120}
+                  className="w-28 h-28 object-contain mb-4 drop-shadow-xl"
+                />
+              </span>
+              <span className="hidden dark:block">
+                <img
+                  src="/images/HiPipo-logo-square-white-transparent-bg.svg"
+                  alt="HiPipo Logo"
+                  width={120}
+                  height={120}
+                  className="w-28 h-28 object-contain mb-4 drop-shadow-xl"
+                />
+              </span>
+              <Chip variant="primary" size="md" className="mb-2">Summit Organizer</Chip>
+              <span className="text-blue-700 dark:text-blue-300 font-bold text-lg text-center">Championing Digital & Financial Inclusion</span>
+            </div>
+            {/* Add event image below the card, width matches card */}
+            <img
+              src="/images/HiPipo-section-event.png"
+              alt="HiPipo Event"
+              className="w-full rounded-2xl shadow-lg object-cover hidden md:block"
+              style={{ maxWidth: '100%', marginTop: '0.5rem' }}
+            />
+          </div>
+          {/* Content */}
+          <div className="flex-1">
+            <div
+              className="transition-all duration-1000"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'none' : 'translateY(40px)',
+              }}
+            >
+              <span className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold mb-4">
+                Meet The Organizer
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                HiPipo Foundation
+              </h2>
+              <p className="text-lg text-gray-700 dark:text-gray-200 mb-6 max-w-2xl">
+                HiPipo is a leading advocate for digital innovation and financial inclusion across Africa. Through the <b>Include Everyone Program</b>, HiPipo empowers underserved communities, drives adoption of digital financial services, and champions instant, inclusive payment systems. Their work spans grassroots empowerment, women in FinTech, and global advocacy for transformative digital finance.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white/80 dark:bg-gray-800/80 rounded-xl shadow p-5 flex flex-col gap-2 border border-blue-100 dark:border-blue-900">
+                  <span className="font-bold text-blue-700 dark:text-blue-300">Key Initiatives</span>
+                  <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm">
+                    <li>Include Everyone Program</li>
+                    <li>#40Days40FinTechs Event Series</li>
+                    <li>Women in FinTech Hackathon & Summit</li>
+                    <li>Digital Impact Awards Africa</li>
+                    <li>Digital & Financial Inclusion Summit</li>
+                  </ul>
+                </div>
+                <div className="bg-white/80 dark:bg-gray-800/80 rounded-xl shadow p-5 flex flex-col gap-2 border border-pink-100 dark:border-pink-900">
+                  <span className="font-bold text-pink-600 dark:text-pink-300">Impact Focus</span>
+                  <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm">
+                    <li>Empowering women, youth, and the unbanked</li>
+                    <li>Promoting digital skills and financial literacy</li>
+                    <li>Advocating for inclusive payment systems</li>
+                    <li>Supporting special interest groups</li>
+                    <li>Driving social transformation through technology</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-4 mt-4">
+                <a
+                  href="https://www.hipipo.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center font-medium transition-colors px-5 py-2 text-base bg-yellow-500 text-black hover:bg-yellow-400 shadow-xl rounded-md"
+                >
+                  Learn More
+                </a>
+                <a
+                  href="https://www.hipipo.org/include-everyone/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center font-medium transition-colors px-5 py-2 text-base bg-white text-black border border-black hover:bg-gray-100 shadow rounded-md"
+                >
+                  Include Everyone Program
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .animate-organizer-fade {
+          animation: organizer-fade 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+        }
+      `}</style>
+    </section>
+  );
+});
+HiPipoSection.displayName = "HiPipoSection";
+
 // -------------------------------------------------------------------
 // Main HomePage Component
 // -------------------------------------------------------------------
@@ -1850,6 +1998,7 @@ export default function HomePage() {
     sponsors: true,
   });
   const contactFormRef = useRef<HTMLElement>(null);
+  const hipipoSectionRef = useRef<HTMLElement>(null);
 
   const scrollToSection = (sectionRef: RefObject<HTMLElement | null>) => {
     if (sectionRef && sectionRef.current) {
@@ -1918,7 +2067,7 @@ export default function HomePage() {
     <>
       <main className="bg-white dark:bg-gray-900">
         {/* New impactful hero section with marquee */}
-        <ImpactfulHeroSection speakers={speakers} />
+        <ImpactfulHeroSection speakers={speakers} onOrganizerClick={() => scrollToSection(hipipoSectionRef)} />
         <AnimatedStatsSection />
         <PartnersMarquee3D />
         <StrategicSectorsGrid />
@@ -1935,6 +2084,8 @@ export default function HomePage() {
         <GlobalSignificanceSection />
         <ImmersiveCTASection />
         <SponsorsGridSection sponsors={sponsors} />
+        {/* --- HiPipo Organizer Section --- */}
+        <HiPipoSection ref={hipipoSectionRef} />
         <ModernContactForm ref={contactFormRef} />
         <NewsletterSection />
       </main>
