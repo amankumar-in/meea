@@ -135,17 +135,31 @@ const ImpactfulHeroSection = ({ speakers }: { speakers: Speaker[] }) => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 h-full py-8">
         {/* Left: Content */}
         <div className="w-full md:w-1/2 max-w-2xl py-8 md:py-0 flex flex-col justify-center items-center md:items-start text-center md:text-left">
-          {/* Logo and event year */}
-          <div className="flex items-center gap-3 mb-4">
-            <img
-              src="/mea-icon.svg"
-              alt="MEA Summit Icon"
-              className="w-14 h-14 drop-shadow-xl"
-              style={{ filter: "drop-shadow(0 0 8px #38bdf8)" }}
-            />
-            <span className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-lg text-xs shadow-md">
-              2025
-            </span>
+          {/* Organizers element replacing logo and year */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-xl border border-white/30 animate-organizer-fade">
+              <span className="text-sm font-semibold text-white tracking-wider mr-4 drop-shadow-sm">Co-Organized by</span>
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/images/partners/CFC-logo-square-blue-transparent-bg.png"
+                  alt="Coins For College Logo"
+                  width={56}
+                  height={56}
+                  className="w-14 h-14 rounded-xl bg-white/80 shadow-md object-contain transition-transform duration-300 hover:scale-105"
+                  priority
+                />
+                <span className="text-white text-2xl font-bold mx-2">+</span>
+                <Image
+                  src="/images/partners/HiPipo-logo-square-blue-transparent-bg.png"
+                  alt="HiPipo Logo"
+                  width={56}
+                  height={56}
+                  className="w-14 h-14 rounded-xl bg-white/80 shadow-md object-contain transition-transform duration-300 hover:scale-105"
+                  priority
+                />
+              </div>
+            </div>
+            <span className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg text-sm shadow-md ml-2 hidden lg:inline-block">2025</span>
           </div>
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white leading-tight">
@@ -1952,6 +1966,20 @@ export default function HomePage() {
 
         .group:hover .shine-effect {
           animation: shine 1s forwards;
+        }
+
+        @keyframes organizer-fade {
+          0% {
+            opacity: 0;
+            transform: translateY(-16px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .animate-organizer-fade {
+          animation: organizer-fade 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
         }
       `}</style>
     </>
