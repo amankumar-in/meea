@@ -463,11 +463,11 @@ const PartnersMarquee3D = () => {
     "/images/partners/partner-logo-5.png",
     "/images/partners/partner-logo-6.svg",
     "/images/partners/partner-logo-7.png",
-    "/images/partners/partner-logo-8.webp",
-    "/images/partners/partner-logo-9.svg",
+    "/images/partners/partner-logo-8.svg",
+    "/images/partners/partner-logo-9.png",
     "/images/partners/partner-logo-10.webp",
     "/images/partners/partner-logo-11.png",
-    "/images/partners/partner-logo-12.png",
+    "/images/partners/partner-logo-12.svg",
   ];
 
   // Split logos into 4 rows for the 3D effect
@@ -493,11 +493,10 @@ const PartnersMarquee3D = () => {
           {/* Title and description: left on desktop, top on mobile */}
           <div className="md:w-1/3 flex-shrink-0 text-center md:text-left mb-6 md:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white pb-4">
-              Supported by Global Partners
+              Technology Innovation Network
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto md:mx-0">
-              Leading organizations supporting Middle East-Africa economic
-              integration
+              Part of the global movement advancing digital finance and blockchain adoption
             </p>
           </div>
           {/* 3D Marquee: right on desktop, below on mobile */}
